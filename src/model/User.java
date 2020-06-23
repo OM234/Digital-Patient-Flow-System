@@ -5,24 +5,30 @@ import java.util.Map;
 
 public abstract class User {
 
-    String userName;
+    String userID;
     String passWord;
     System system;
     Map<String, Unit> unitsOfUser;
 
-    public User(String userName, String passWord) {
-        this.userName = userName;
+    public User(String userID, String passWord) {
+
+        this.system = System.getInstance();
+
+        if(system.hasUser(userID)){
+            throw new IllegalArgumentException("User already exists");
+        }
+
+        this.userID = userID;
         this.passWord = passWord;
         this.unitsOfUser = new HashMap<>();
-        this.system = System.getInstance();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getPassWord() {

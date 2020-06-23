@@ -44,6 +44,11 @@ public class System {
         }
     }
 
+    public boolean hasUser(String userID) {
+
+        return listOfUsers.containsKey(userID);
+    }
+
     public boolean addUnit(String unitID, Unit unit) {
 
         if(listOfUnits.containsKey(unitID)) {
