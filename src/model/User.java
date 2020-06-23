@@ -5,10 +5,10 @@ import java.util.Map;
 
 public abstract class User {
 
-    String userID;
-    String passWord;
-    System system;
-    Map<String, Unit> unitsOfUser;
+    private String userID;
+    private String passWord;
+    private System system;
+    private Map<String, Unit> unitsOfUser;
 
     public User(String userID, String passWord) {
 
@@ -39,6 +39,35 @@ public abstract class User {
         this.passWord = passWord;
     }
 
+    public boolean createUnit(String unitID, String unitName) {
+
+        if(!system.hasUnit(unitID)) {
+
+            Unit unitToAdd = new AUnit(unitID, unitName);
+
+            unitsOfUser.put(unitID, unitToAdd);
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    public boolean deleteUnit(String unitID) {
+
+        if(system.hasUnit(unitID)) {
+
+            system.removeUnit(unitID);
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
     public boolean addUnitToUser(String unitID) {
 
         if(system.hasUnit(unitID)){
@@ -65,6 +94,24 @@ public abstract class User {
 
         } else {
 
+            return false;
+        }
+    }
+
+    public boolean hasUnitInList(String unitID) {
+
+        return unitsOfUser.containsKey(unitID);
+    }
+
+    //public boolean createPatient(){}; //TODO
+
+    public boolean deletePatient(String patientID) {
+
+        if(system.hasPatient(patientID)) {
+
+            return system.removePatient(patientID);
+
+        } else {
             return false;
         }
     }

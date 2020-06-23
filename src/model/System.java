@@ -59,6 +59,29 @@ public class System {
         }
     }
 
+    public boolean removeUnit(String unitID) {
+
+        if(listOfUnits.containsKey(unitID)) {
+
+            for(String userID : listOfUsers.keySet()) {
+
+                User user = listOfUsers.get(userID);
+                if(user.hasUnitInList(unitID)) {
+
+                    user.removeUnitFromUser(unitID);
+                }
+            }
+
+            listOfUnits.remove(unitID);
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
     public boolean hasUnit(String unitID) {
 
         return(listOfUnits.containsKey(unitID));
@@ -69,22 +92,16 @@ public class System {
         return listOfUnits.getOrDefault(unitID, null);
     }
 
-    public boolean removeUnit(String unitID) {
-
-        if(listOfUnits.containsKey(unitID)) {
-            listOfUnits.remove(unitID);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public boolean addPatient(String patientID, Patient patient) {
 
         if(listOfPatients.containsKey(patientID)) {
+
             return false;
+
         } else {
+
             listOfPatients.put(patientID, patient);
+
             return true;
         }
     }
@@ -92,11 +109,34 @@ public class System {
     public boolean removePatient(String patientID) {
 
         if(listOfPatients.containsKey(patientID)) {
+
+            for(String unitID : listOfUnits.keySet()) {
+
+                Unit unit = listOfUnits.get(unitID);
+                if(unit.hasPatient(patientID)) {
+
+                    unit.removePatientFromUnit(patientID);
+                }
+            }
+
             listOfPatients.remove(patientID);
+
             return true;
+
         } else {
+
             return false;
         }
+    }
+
+    public boolean hasPatient(String patientID) {
+
+        return(listOfPatients.containsKey(patientID));
+    }
+
+    public Patient getPatient(String patientID) {
+
+        return listOfPatients.getOrDefault(patientID, null);
     }
 
 }
