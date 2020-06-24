@@ -1,5 +1,5 @@
-package sample;
-/*
+package controller;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,12 +8,16 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    Debugging debug = new Debugging();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/passwordPrompt.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("DigiHealth");
+        primaryStage.setScene(scene);
         primaryStage.show();
+        debug.debug();
     }
 
 
@@ -21,10 +25,6 @@ public class Main extends Application {
         launch(args);
     }
 
-}*/
-
-public class Main{
-    public static void main(String[] args) {
-
-    }
 }
+
+

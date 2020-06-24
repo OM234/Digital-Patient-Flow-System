@@ -3,28 +3,30 @@ package model;
 import java.util.Map;
 import java.util.HashMap;
 
-public class System {
+public class DigiSystem {
 
-    private static System singleInstance = null; // Singleton design pattern
+    private static DigiSystem singleInstance = null; // Singleton design pattern
     private Map<String, User> listOfUsers;
     private Map<String, Unit> listOfUnits;
     private Map<String, Patient> listOfPatients;
 
-    private System() {
+    private DigiSystem() {
         listOfUsers = new HashMap<>();
         listOfUnits = new HashMap<>();
         listOfPatients = new HashMap<>();
     }
 
-    public static System getInstance() { // Singleton design pattern
+    public static DigiSystem getInstance() { // Singleton design pattern
 
         if(singleInstance == null) {
-            singleInstance = new System();
+            singleInstance = new DigiSystem();
         }
         return singleInstance;
     }
 
-    public boolean addUser(String userID, User user) {
+    public boolean addUser(User user) {
+
+        String userID = user.getUserID();
 
         if(listOfUsers.containsKey(userID)) {
             return false;
@@ -49,7 +51,9 @@ public class System {
         return listOfUsers.containsKey(userID);
     }
 
-    public boolean addUnit(String unitID, Unit unit) {
+    public boolean addUnit(Unit unit) {
+
+        String unitID = unit.getUnitID();
 
         if(listOfUnits.containsKey(unitID)) {
             return false;
@@ -92,7 +96,9 @@ public class System {
         return listOfUnits.getOrDefault(unitID, null);
     }
 
-    public boolean addPatient(String patientID, Patient patient) {
+    public boolean addPatient(Patient patient) {
+
+        String patientID = patient.getPatientID();
 
         if(listOfPatients.containsKey(patientID)) {
 
@@ -137,6 +143,18 @@ public class System {
     public Patient getPatient(String patientID) {
 
         return listOfPatients.getOrDefault(patientID, null);
+    }
+
+    public boolean passChecker(String userID, String password) {
+
+        if(listOfUsers.containsKey(userID) && listOfUsers.get(userID).getPassword().equals(password)) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
     }
 
 }

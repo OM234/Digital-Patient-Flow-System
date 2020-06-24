@@ -7,14 +7,14 @@ public abstract class Unit {
 
     private String unitID;
     private String unitName;
-    private System system;
+    private DigiSystem digiSystem;
     private Map<String, Patient> patientsOnUnit;
 
     public Unit(String unitID, String unitName) {
 
-        this.system = System.getInstance();
+        this.digiSystem = DigiSystem.getInstance();
 
-        if(system.hasUnit(unitID)){
+        if(digiSystem.hasUnit(unitID)){
             throw new IllegalArgumentException("Unit already exists");
         }
 
@@ -41,9 +41,9 @@ public abstract class Unit {
 
     public boolean addPatientToUnit(String patientID){
 
-        if(system.hasPatient(patientID) && !patientsOnUnit.containsKey(patientID)) {
+        if(digiSystem.hasPatient(patientID) && !patientsOnUnit.containsKey(patientID)) {
 
-            Patient patientToAdd = system.getPatient(patientID);
+            Patient patientToAdd = digiSystem.getPatient(patientID);
             patientsOnUnit.put(patientID, patientToAdd);
 
             return true;

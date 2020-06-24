@@ -2,8 +2,8 @@ package model;
 
 public class AUser extends User {
 
-    public AUser(String userName, String passWord){
+    public AUser(String userID, String passWord){
 
-        super(userName, passWord);
+        super(userID, passWord);
     }
 }

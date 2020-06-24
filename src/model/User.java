@@ -6,20 +6,20 @@ import java.util.Map;
 public abstract class User {
 
     private String userID;
-    private String passWord;
-    private System system;
+    private String password;
+    private DigiSystem digiSystem;
     private Map<String, Unit> unitsOfUser;
 
-    public User(String userID, String passWord) {
+    public User(String userID, String password) {
 
-        this.system = System.getInstance();
+        this.digiSystem = DigiSystem.getInstance();
 
-        if(system.hasUser(userID)){
+        if(digiSystem.hasUser(userID)){
             throw new IllegalArgumentException("User already exists");
         }
 
         this.userID = userID;
-        this.passWord = passWord;
+        this.password = password;
         this.unitsOfUser = new HashMap<>();
     }
 
@@ -31,17 +31,17 @@ public abstract class User {
         this.userID = userID;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean createUnit(String unitID, String unitName) {
 
-        if(!system.hasUnit(unitID)) {
+        if(!digiSystem.hasUnit(unitID)) {
 
             Unit unitToAdd = new AUnit(unitID, unitName);
 
@@ -56,9 +56,9 @@ public abstract class User {
 
     public boolean deleteUnit(String unitID) {
 
-        if(system.hasUnit(unitID)) {
+        if(digiSystem.hasUnit(unitID)) {
 
-            system.removeUnit(unitID);
+            digiSystem.removeUnit(unitID);
 
             return true;
 
@@ -70,9 +70,9 @@ public abstract class User {
 
     public boolean addUnitToUser(String unitID) {
 
-        if(system.hasUnit(unitID)){
+        if(digiSystem.hasUnit(unitID)){
 
-            Unit unitToAdd = system.getUnit(unitID);
+            Unit unitToAdd = digiSystem.getUnit(unitID);
 
             unitsOfUser.put(unitID, unitToAdd);
 
@@ -107,9 +107,9 @@ public abstract class User {
 
     public boolean deletePatient(String patientID) {
 
-        if(system.hasPatient(patientID)) {
+        if(digiSystem.hasPatient(patientID)) {
 
-            return system.removePatient(patientID);
+            return digiSystem.removePatient(patientID);
 
         } else {
             return false;
