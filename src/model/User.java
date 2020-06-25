@@ -8,7 +8,7 @@ public abstract class User {
     private String userID;
     private String password;
     private DigiSystem digiSystem;
-    private Map<String, Unit> unitsOfUser;
+    private Map<String, Unit2> unitsOfUser;
 
     public User(String userID, String password) {
 
@@ -43,7 +43,7 @@ public abstract class User {
 
         if(!digiSystem.hasUnit(unitID)) {
 
-            Unit unitToAdd = new AUnit(unitID, unitName);
+            Unit2 unitToAdd = new Unit2(unitID, unitName);
 
             unitsOfUser.put(unitID, unitToAdd);
 
@@ -72,7 +72,7 @@ public abstract class User {
 
         if(digiSystem.hasUnit(unitID)){
 
-            Unit unitToAdd = digiSystem.getUnit(unitID);
+            Unit2 unitToAdd = digiSystem.getUnit(unitID);
 
             unitsOfUser.put(unitID, unitToAdd);
 

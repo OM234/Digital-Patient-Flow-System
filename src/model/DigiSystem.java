@@ -7,7 +7,7 @@ public class DigiSystem {
 
     private static DigiSystem singleInstance = null; // Singleton design pattern
     private Map<String, User> listOfUsers;
-    private Map<String, Unit> listOfUnits;
+    private Map<String, Unit2> listOfUnits;
     private Map<String, Patient> listOfPatients;
 
     private DigiSystem() {
@@ -51,7 +51,7 @@ public class DigiSystem {
         return listOfUsers.containsKey(userID);
     }
 
-    public boolean addUnit(Unit unit) {
+    public boolean addUnit(Unit2 unit) {
 
         String unitID = unit.getUnitID();
 
@@ -91,7 +91,7 @@ public class DigiSystem {
         return(listOfUnits.containsKey(unitID));
     }
 
-    public Unit getUnit(String unitID) {
+    public Unit2 getUnit(String unitID) {
 
         return listOfUnits.getOrDefault(unitID, null);
     }
@@ -118,7 +118,7 @@ public class DigiSystem {
 
             for(String unitID : listOfUnits.keySet()) {
 
-                Unit unit = listOfUnits.get(unitID);
+                Unit2 unit = listOfUnits.get(unitID);
                 if(unit.hasPatient(patientID)) {
 
                     unit.removePatientFromUnit(patientID);
@@ -157,4 +157,5 @@ public class DigiSystem {
         }
     }
 
+    public Map<String, Unit2> getListOfUnits(){return listOfUnits;} //TODO: Delete?
 }

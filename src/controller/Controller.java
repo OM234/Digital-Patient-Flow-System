@@ -1,37 +1,31 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.DigiSystem;
-import model.*;
+import model.Unit2;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class Controller {
 
     DigiSystem digiSystem = DigiSystem.getInstance();
 
-    @FXML
-    private TextField userIDTextBox;
-    @FXML
-    private PasswordField passPassField;
-    @FXML
-    private Button viewUnitsButton;
-    @FXML
-    private Button viewPatientsButton;
-    @FXML
-    private ListView centerLists;
+    @FXML private TextField userIDTextBox;
+    @FXML private PasswordField passPassField;
+    @FXML private Button viewUnitsButton;
+    @FXML private Button viewPatientsButton;
+    @FXML private TableView<Unit2> centerLists;
 
-    public void passChecker() throws IOException {
+    public void passChecker(ActionEvent event) throws IOException {
 
         String userID = userIDTextBox.getText();
         String pass = passPassField.getText();
@@ -41,35 +35,53 @@ public class Controller {
 
         if(digiSystem.passChecker(userID, pass)) {
 
-            //System.out.println("good pass");
             loadDigiHealth();
 
         } else {
 
             userIDTextBox.setPromptText("Try again");
-
-            //System.out.println("wrong pass");
+            userIDTextBox.setStyle("-fx-control-inner-background: RED;");
         }
     }
 
-    public void listViewAppear(ActionEvent event) {
+    public void turnUserBoxToDefaultColor() {
+        userIDTextBox.setPromptText("Enter your user ID");
+        userIDTextBox.setStyle("-fx-control-inner-background: WHITE;");
+    }
+
+    public void TableViewAppear(ActionEvent event) {
 
         centerLists.setVisible(true);
 
-        Unit unit = new AUnit("123", "ER");
 
-        System.out.println(unit.toString());
         if(event.getSource() == viewUnitsButton) {
-//            centerLists.getItems().add(unit);
-//            centerLists.getItems().add("unit2");
-//            centerLists.getItems().add("unit3");
+
+            populateUnitsTable();
         }
 
         if(event.getSource() == viewPatientsButton) {
-//            centerLists.getItems().add("patient1");
-//            centerLists.getItems().add("patient2");
-//            centerLists.getItems().add("patient3");
+
         }
+
+    }
+
+    private void populateUnitsTable(){
+
+        centerLists.getColumns().clear(); //TODO: This isn't efficient
+
+        TableColumn<Unit2, String> unitIDCol = new TableColumn<>("Unit ID");
+        TableColumn<Unit2, String> unitNameCol = new TableColumn<>("Unit Name");
+        TableColumn<Unit2, String> numPatCol = new TableColumn<>("# Patients");
+
+        unitIDCol.setCellValueFactory(new PropertyValueFactory<Unit2, String>("unitID"));
+        unitNameCol.setCellValueFactory(new PropertyValueFactory<Unit2, String>("unitName"));
+        numPatCol.setCellValueFactory(new PropertyValueFactory<Unit2, String>("NumPatients"));
+
+        centerLists.getColumns().addAll(unitIDCol, unitNameCol, numPatCol);
+
+
+        ObservableList<Unit2> obsList = getUnitsObsList();
+        centerLists.setItems(obsList);
 
     }
 
@@ -82,7 +94,20 @@ public class Controller {
         Parent root = FXMLLoader.load(getClass().getResource("../view/DigiHealth.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("../view/Styles.css").toExternalForm());
         primaryStage.setTitle("DigiHealth");
         primaryStage.show();
+    }
+
+    private ObservableList<Unit2> getUnitsObsList() {
+
+        ObservableList<Unit2> allUnits = FXCollections.observableArrayList();
+
+        for(String unitID : digiSystem.getListOfUnits().keySet()) {
+
+            allUnits.add(digiSystem.getListOfUnits().get(unitID));
+        }
+
+        return allUnits;
     }
 }

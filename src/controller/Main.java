@@ -15,8 +15,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../view/passwordPrompt.fxml"));
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("../view/Styles.css").toExternalForm());
         primaryStage.setTitle("DigiHealth");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
         primaryStage.show();
         debug.debug();
     }
