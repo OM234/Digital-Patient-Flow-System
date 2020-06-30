@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DigiHealthController">
+   <children>
+      <Label fx:id="DigiHealthLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="600.0" text="DigiHealth" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="viewUnitsButton" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" onAction="#TableViewAppear" prefHeight="54.0" prefWidth="116.0" text="All Units" />
+      <Button fx:id="viewPatientsButton" layoutX="13.0" layoutY="132.0" mnemonicParsing="false" onAction="#TableViewAppear" prefHeight="54.0" prefWidth="116.0" text="All Patients" textOverrun="CLIP" />
+      <TableView fx:id="centerLists" layoutX="155.0" layoutY="69.0" prefHeight="347.0" prefWidth="390.0" visible="false" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="69.0" />
+      <TableView fx:id="patientsTableView" layoutX="154.0" layoutY="69.0" prefHeight="347.0" prefWidth="390.0" visible="false" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="69.0" />
+      <Label fx:id="numResultsLabel" alignment="CENTER" layoutX="164.0" layoutY="368.0" prefHeight="24.0" prefWidth="417.0" text="Label" visible="false" AnchorPane.bottomAnchor="6.0" />
+      <Button fx:id="patientsOnUnitButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" disable="true" layoutX="569.0" layoutY="69.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#populatePatientsOnUnitTable" opacity="0.3" prefHeight="54.0" prefWidth="116.0" text="Patients On &#10;Unit&#10;" textAlignment="CENTER" textOverrun="CLIP" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="69.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
+   </children>
+</AnchorPane>
