@@ -78,7 +78,7 @@ public class DigiHealthController {
 
     public void populatePatientsTable() {
 
-        patientsTableView.getItems().clear(); //TODO: This isn't efficient
+        patientsTableView.getItems().clear();
 
         ObservableList<Patient> obsList = getPatientsObsList();
         patientsTableView.setItems(obsList);
@@ -98,7 +98,7 @@ public class DigiHealthController {
 
         if(selected != null) {
 
-            patientsTableView.getItems().clear(); //TODO: This isn't efficient
+            patientsTableView.getItems().clear();
             ObservableList<Patient> obsList = getPatientsOnUnitObsList(selected);
             patientsTableView.setItems(obsList);
 

@@ -21,6 +21,8 @@ public abstract class User {
         this.userID = userID;
         this.password = password;
         this.unitsOfUser = new HashMap<>();
+
+        digiSystem.addUser(this);
     }
 
     public String getUserID() {
