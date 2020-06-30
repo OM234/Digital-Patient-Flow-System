@@ -3,8 +3,12 @@ package model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public /*abstract*/ class Unit2 {
 
@@ -23,7 +27,7 @@ public /*abstract*/ class Unit2 {
 
         this.unitID = new SimpleStringProperty(unitID);
         this.unitName = new SimpleStringProperty(unitName);
-        patientsOnUnit = new SimpleMapProperty<String, Patient>();
+        patientsOnUnit = new SimpleMapProperty<>(FXCollections.observableHashMap());
 
         digiSystem.addUnit(this);
     }
@@ -42,6 +46,11 @@ public /*abstract*/ class Unit2 {
 
     public void setUnitName(String unitName) {
         this.unitName.set(unitName);
+    }
+
+    public Set<String> getUnitPatientIDs() {
+
+        return patientsOnUnit.keySet();
     }
 
     public boolean addPatientToUnit(String patientID){

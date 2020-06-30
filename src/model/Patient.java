@@ -1,42 +1,53 @@
 package model;
 
-public abstract class Patient {
+import javafx.beans.property.SimpleStringProperty;
 
-    private String patientID;
-    private String firstName;
-    private String lastName;
+public class Patient {
+
+    private DigiSystem digiSystem;
+    private SimpleStringProperty patientID;
+    private SimpleStringProperty firstName;
+    private SimpleStringProperty lastName;
     private char gender;
 
     public Patient(String patientID, String firstName, String lastName, char gender) {
 
-        this.patientID = patientID;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        digiSystem = DigiSystem.getInstance();
+
+        if(digiSystem.hasPatient(patientID)) {
+            throw new IllegalArgumentException("Patient already exists");
+        }
+
+        this.patientID = new SimpleStringProperty(patientID);
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
         this.gender = gender;
+
+        digiSystem.addPatient(this);
     }
 
     public String getPatientID() {
-        return patientID;
+        return patientID.get();
     }
 
     public void setPatientID(String patientID) {
-        this.patientID = patientID;
+        this.patientID.set(patientID);
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstName.get();
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName.set(firstName);
     }
 
     public String getLastName() {
-        return lastName;
+        return lastName.get();
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName.set(lastName);
     }
 
     public char getGender() {

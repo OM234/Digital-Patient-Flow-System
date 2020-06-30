@@ -157,5 +157,6 @@ public class DigiSystem {
         }
     }
 
-    public Map<String, Unit2> getListOfUnits(){return listOfUnits;} //TODO: Delete?
+    public Map<String, Unit2> getMapOfUnits(){return listOfUnits;} //TODO: Delete?
+    public Map<String, Patient> getMapOfPatients(){return listOfPatients;} //TODO: Delete?
 }
