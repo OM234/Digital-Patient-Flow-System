@@ -28,10 +28,11 @@ public class makeData {
 
     public void makeUnits() {
 
-        String[] unitNames = {"ER", "ICU", "Medicine", "Surgery", "Ophthalmology", "Cardiology", "Geriatrics", "Psychiatry"};
+        String[] unitNames = {"ER", "ICU", "Medicine", "Surgery", "Ophthalmology", "Cardiology", "Geriatrics", "Psychiatry",
+            "Pediatrics", "Rehabilitation", "Dialysis"};
 
         Random rand = new Random();
-        for (int i = 0; i < 150; i++) {
+        for (int i = 0; i < 50; i++) {
             int indexNames = rand.nextInt(unitNames.length);
             new Unit2(Integer.toString(i * 123), unitNames[indexNames] + "#" + i);
         }
@@ -49,7 +50,7 @@ public class makeData {
         }
 
         Random rand = new Random();
-        for (int i = 0; i < 25000; i++) {
+        for (int i = 0; i < 500; i++) {
             int index = rand.nextInt(namesList.size());
             String firstName = namesList.get(index);
             index = rand.nextInt(namesList.size());

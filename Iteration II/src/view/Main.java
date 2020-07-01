@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/passwordPrompt.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PasswordPrompt.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
         primaryStage.setTitle("DigiHealth");
