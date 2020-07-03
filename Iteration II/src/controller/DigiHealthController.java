@@ -29,6 +29,8 @@ public class DigiHealthController {
     @FXML
     private Button addButton;
     @FXML
+    private Button addPatientToUnitButton;
+    @FXML
     private Button removeButton;
     @FXML
     private Button patientsOnUnitButton;
@@ -122,16 +124,21 @@ public class DigiHealthController {
     public void populatePatientsOnUnitTable() {
 
         Unit2 selected = unitsTableView.getSelectionModel().getSelectedItem();
-        viewingPatientsOnUnits = true;
 
-        if(selected == null) {
+        if(selected == null && viewingPatientsOnUnits) {
 
             selected = digiSystem.getUnit(patientOnUnitID);
+
+        } else if (selected == null && !viewingPatientsOnUnits) {
+
+            return;
 
         } else {
 
             patientOnUnitID = unitsTableView.getSelectionModel().getSelectedItem().getUnitID();
         }
+
+        viewingPatientsOnUnits = true;
 
         bigUnitNameLabel.setVisible(true);
         bigUnitNameLabel.setText(selected.getUnitName());
@@ -282,12 +289,28 @@ public class DigiHealthController {
 
     public void addUnitOrPatient() throws IOException {
 
-        Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AddUnitPatient.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
-        primaryStage.setTitle("Add Patient or Unit");
-        primaryStage.show();
+        if(!viewingPatientsOnUnits) {
+            Stage primaryStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/AddUnitPatient.fxml"));
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+            primaryStage.setTitle("Add Patient or Unit");
+            primaryStage.show();
+
+        } else {
+
+            Stage primaryStage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddPatientToUnit.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+            primaryStage.setTitle("Add Patient or Unit");
+            primaryStage.show();
+
+            AddPatientToUnitController addPatientToUnitController = fxmlLoader.getController();
+            addPatientToUnitController.setUnitID(patientOnUnitID);
+        }
     }
 }

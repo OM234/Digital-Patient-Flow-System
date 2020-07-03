@@ -75,7 +75,7 @@ public class makeData {
             patList.add(digiSystem.getMapOfPatients().get(patientID));
         }
 
-        for (int i = 0; i < 25000; i++) {
+        for (int i = 0; i < 800; i++) {
             int patInd = rand.nextInt(patList.size());
             int unitInd = rand.nextInt(unitsList.size());
             unitsList.get(unitInd).addPatientToUnit(patList.get(patInd).getPatientID());

@@ -170,6 +170,34 @@ public class DigiSystem {
         }
     }
 
+    public boolean addPatientToUnit(String patientID, String unitID) {
+
+        if(hasUnit(unitID) && hasPatient(patientID)) {
+
+            Unit2 unit = getUnit(unitID);
+
+            return unit.addPatientToUnit(patientID);
+
+        } else {
+
+            return false;
+        }
+    }
+
+    public boolean patientOnUnit(String patientID, String unitID) {
+
+        if(hasUnit(unitID) && hasPatient(patientID)) {
+
+            Unit2 unit = getUnit(unitID);
+
+            return unit.hasPatient(patientID);
+
+        } else {
+
+            return false;
+        }
+    }
+
     public boolean hasPatient(String patientID) {
 
         return(listOfPatients.containsKey(patientID));
