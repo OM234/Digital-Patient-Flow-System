@@ -13,11 +13,14 @@ import javafx.stage.Stage;
 import model.DigiSystem;
 import model.Patient;
 import model.Unit2;
+
 import java.io.IOException;
 
 public class DigiHealthController {
 
-    public DigiSystem digiSystem = DigiSystem.getInstance();
+    private DigiSystem digiSystem = DigiSystem.getInstance();
+    private boolean viewingPatientsOnUnits = false;
+    private String patientOnUnitID;
 
     @FXML
     private Button viewUnitsButton;
@@ -35,6 +38,8 @@ public class DigiHealthController {
     private TableView<Patient> patientsTableView;
     @FXML
     private Label bottomViewingLabel;
+    @FXML
+    private Label bigUnitNameLabel;
 
 
     public void initialize() {
@@ -80,6 +85,9 @@ public class DigiHealthController {
 
         addButton.setDisable(false);
         removeButton.setDisable(false);
+        bigUnitNameLabel.setVisible(false);
+
+        viewingPatientsOnUnits = false;
 
         if (event.getSource() == viewUnitsButton) {
 
@@ -114,22 +122,35 @@ public class DigiHealthController {
     public void populatePatientsOnUnitTable() {
 
         Unit2 selected = unitsTableView.getSelectionModel().getSelectedItem();
+        viewingPatientsOnUnits = true;
 
-        if (selected != null) {
+        if(selected == null) {
 
-            patientsTableView.getItems().clear();
-            ObservableList<Patient> obsList = getPatientsOnUnitObsList(selected);
-            patientsTableView.setItems(obsList);
+            selected = digiSystem.getUnit(patientOnUnitID);
 
-            patientsTableView.setVisible(true);
-            unitsTableView.setVisible(false);
+        } else {
 
-            bottomViewingLabel.setVisible(true);
-            bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on unit " + selected.getUnitName());
-
-            patientsOnUnitButton.setDisable(true);
-            patientsOnUnitButton.setOpacity(0.3);
+            patientOnUnitID = unitsTableView.getSelectionModel().getSelectedItem().getUnitID();
         }
+
+        bigUnitNameLabel.setVisible(true);
+        bigUnitNameLabel.setText(selected.getUnitName());
+
+        patientsTableView.getItems().clear();
+        ObservableList<Patient> obsList = getPatientsOnUnitObsList(selected);
+        patientsTableView.setItems(obsList);
+
+        patientsTableView.setVisible(true);
+        unitsTableView.setVisible(false);
+
+        bottomViewingLabel.setVisible(true);
+        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on unit " + selected.getUnitName());
+
+        patientsOnUnitButton.setDisable(true);
+        patientsOnUnitButton.setOpacity(0.3);
+
+        unitsTableView.getSelectionModel().clearSelection();
+
     }
 
     private ObservableList<Patient> getPatientsObsList() {
@@ -185,7 +206,7 @@ public class DigiHealthController {
         return allUnits;
     }
 
-    public void deletePatOrUnit() throws IOException {
+    public void deletePatOrUnit() {
 
         if (unitsTableView.getSelectionModel().getSelectedItem() != null) {
 
@@ -194,7 +215,7 @@ public class DigiHealthController {
 
         } else if (patientsTableView.getSelectionModel().getSelectedItem() != null) {
 
-            deletePatient();
+            deletePatientFromSystemOrUnit();
             patientsTableView.getSelectionModel().clearSelection();
         }
     }
@@ -214,7 +235,20 @@ public class DigiHealthController {
         }
     }
 
-    public void deletePatient() {
+    public void deletePatientFromSystemOrUnit() {
+
+        if (viewingPatientsOnUnits == false) {
+
+            deletePatientFromSystem();
+
+        } else {
+
+            deletePatientFromUnit();
+        }
+
+    }
+
+    public void deletePatientFromSystem() {
 
         Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
 
@@ -227,6 +261,22 @@ public class DigiHealthController {
             patientsTableView.getItems().remove(selected);
             digiSystem.removePatient(selected.getPatientID());
             bottomViewingLabel.setText("Viewing " + patientsTableView.getItems().size() + " patients");
+        }
+    }
+
+    public void deletePatientFromUnit() {
+
+        String patientSelectedID = patientsTableView.getSelectionModel().getSelectedItem().getPatientID();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + digiSystem.getPatientFirstName(patientSelectedID) +
+                " " + digiSystem.getPatientLastName(patientSelectedID) + " from " + digiSystem.getUnitName(patientOnUnitID) +
+                "? ", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+
+            digiSystem.removePatientFromUnit(patientSelectedID, patientOnUnitID);
+            populatePatientsOnUnitTable();
         }
     }
 

@@ -2,7 +2,7 @@ package model;
 
 import java.util.Map;
 import java.util.HashMap;
-
+//TODO: make all objects private, tighten up encapsulation
 public class DigiSystem {
 
     private static DigiSystem singleInstance = null; // Singleton design pattern
@@ -96,6 +96,18 @@ public class DigiSystem {
         return listOfUnits.getOrDefault(unitID, null);
     }
 
+    public String getUnitName(String unitID) {
+
+        if(hasUnit(unitID)) {
+
+            return(getUnit(unitID).getUnitName());
+
+        } else {
+
+            return ("");
+        }
+    }
+
     public boolean addPatient(Patient patient) {
 
         String patientID = patient.getPatientID();
@@ -135,9 +147,56 @@ public class DigiSystem {
         }
     }
 
+    public boolean removePatientFromUnit(String patientID, String unitID) {
+
+        Unit2 unit;
+
+        if(hasUnit(unitID)) {
+
+            unit = getUnit(unitID);
+
+        } else {
+
+            return false;
+        }
+
+        if(unit.hasPatient(patientID)) {
+
+            return unit.removePatientFromUnit(patientID);
+
+        } else {
+
+            return false;
+        }
+    }
+
     public boolean hasPatient(String patientID) {
 
         return(listOfPatients.containsKey(patientID));
+    }
+
+    public String getPatientFirstName(String patientID) {
+
+        if(hasPatient(patientID)) {
+
+            return(getPatient(patientID).getFirstName());
+
+        } else {
+
+            return ("");
+        }
+    }
+
+    public String getPatientLastName(String patientID) {
+
+        if(hasPatient(patientID)) {
+
+            return(getPatient(patientID).getLastName());
+
+        } else {
+
+            return ("");
+        }
     }
 
     public Patient getPatient(String patientID) {
