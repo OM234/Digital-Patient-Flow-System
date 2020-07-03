@@ -4,8 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.DigiSystem;
 import model.Patient;
 import model.Unit2;
@@ -224,5 +228,16 @@ public class DigiHealthController {
             digiSystem.removePatient(selected.getPatientID());
             bottomViewingLabel.setText("Viewing " + patientsTableView.getItems().size() + " patients");
         }
+    }
+
+    public void addUnitOrPatient() throws IOException {
+
+        Stage primaryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddUnitPatient.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+        primaryStage.setTitle("Add Patient or Unit");
+        primaryStage.show();
     }
 }

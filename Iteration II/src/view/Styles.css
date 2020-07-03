@@ -1,4 +1,4 @@
-#enterButton {
+#enterButton, #addUnitButton, #addPatientButton  {
     -fx-background-color:
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
