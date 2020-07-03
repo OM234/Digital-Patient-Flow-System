@@ -22,7 +22,6 @@ public class Main extends Application {
         debug.debug();
     }
 
-
     public static void main(String[] args) {
         launch(args);
     }

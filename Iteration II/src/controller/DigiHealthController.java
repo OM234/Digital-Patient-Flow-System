@@ -83,11 +83,13 @@ public class DigiHealthController {
 
         if (event.getSource() == viewUnitsButton) {
 
+            patientsTableView.getSelectionModel().clearSelection();
             populateUnitsTable();
         }
 
         if (event.getSource() == viewPatientsButton) {
 
+            unitsTableView.getSelectionModel().clearSelection();
             populatePatientsTable();
         }
     }
@@ -128,8 +130,6 @@ public class DigiHealthController {
             patientsOnUnitButton.setDisable(true);
             patientsOnUnitButton.setOpacity(0.3);
         }
-
-        unitsTableView.getSelectionModel().clearSelection();
     }
 
     private ObservableList<Patient> getPatientsObsList() {

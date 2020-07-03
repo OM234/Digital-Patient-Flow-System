@@ -28,9 +28,9 @@ public class AddUnitPatientController {
     @FXML
     private TextField lastNameTextArea;
     @FXML
-    TextField unitIDTextField;
+    private TextField unitIDTextField;
     @FXML
-    TextField unitNameTextField;
+    private TextField unitNameTextField;
     @FXML
     private ToggleGroup genderToggleGroup;
     @FXML
