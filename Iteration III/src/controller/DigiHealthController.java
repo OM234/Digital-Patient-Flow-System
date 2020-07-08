@@ -35,6 +35,8 @@ public class DigiHealthController {
     @FXML
     private Button patientsOnUnitButton;
     @FXML
+    private Button patientSummaryButton;
+    @FXML
     private TableView<Unit2> unitsTableView;
     @FXML
     private TableView<Patient> patientsTableView;
@@ -117,8 +119,9 @@ public class DigiHealthController {
         bottomViewingLabel.setVisible(true);
         bottomViewingLabel.setText("Viewing " + obsList.size() + " patients");
 
-        patientsOnUnitButton.setDisable(true);
-        patientsOnUnitButton.setOpacity(0.3);
+        patientsOnUnitButton.setVisible(false);
+        patientSummaryButton.setVisible(true);
+        //patientsOnUnitButton.setOpacity(0.3);
     }
 
     public void populatePatientsOnUnitTable() {
@@ -153,8 +156,9 @@ public class DigiHealthController {
         bottomViewingLabel.setVisible(true);
         bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on unit " + selected.getUnitName());
 
-        patientsOnUnitButton.setDisable(true);
-        patientsOnUnitButton.setOpacity(0.3);
+        patientsOnUnitButton.setVisible(false);
+        patientSummaryButton.setVisible(true);
+        //patientsOnUnitButton.setOpacity(0.3);
 
         unitsTableView.getSelectionModel().clearSelection();
 
@@ -197,8 +201,9 @@ public class DigiHealthController {
         bottomViewingLabel.setVisible(true);
         bottomViewingLabel.setText("Viewing " + obsList.size() + " units");
 
-        patientsOnUnitButton.setDisable(false);
-        patientsOnUnitButton.setOpacity(1);
+        patientsOnUnitButton.setVisible(true);
+        patientSummaryButton.setVisible(false);
+        //patientsOnUnitButton.setOpacity(1);
     }
 
     private ObservableList<Unit2> getUnitsObsList() {
@@ -312,5 +317,28 @@ public class DigiHealthController {
             AddPatientToUnitController addPatientToUnitController = fxmlLoader.getController();
             addPatientToUnitController.setUnitID(patientOnUnitID);
         }
+    }
+
+    public void viewPatientSummary() throws IOException {
+
+        if(patientsTableView.getSelectionModel().getSelectedItem() == null) {
+
+            return;
+        }
+
+        String patientID = patientsTableView.getSelectionModel().getSelectedItem().getPatientID();
+        String firstName = patientsTableView.getSelectionModel().getSelectedItem().getFirstName();
+        String lastName = patientsTableView.getSelectionModel().getSelectedItem().getLastName();
+
+        Stage primaryStage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PatientSummary.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+        primaryStage.show();
+
+        PatientSummaryController patientSummaryController = fxmlLoader.getController();
+        patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
     }
 }
