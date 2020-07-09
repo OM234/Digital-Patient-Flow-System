@@ -295,13 +295,18 @@ public class DigiHealthController {
     public void addUnitOrPatient() throws IOException {
 
         if(!viewingPatientsOnUnits) {
+
             Stage primaryStage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AddUnitPatient.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddUnitPatient.fxml"));
+            Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
             primaryStage.setTitle("Add Patient or Unit");
             primaryStage.show();
+
+            AddUnitPatientController addUnitPatientController = fxmlLoader.getController();
+            addUnitPatientController.setTableViews(patientsTableView, unitsTableView);
 
         } else {
 
@@ -340,5 +345,7 @@ public class DigiHealthController {
 
         PatientSummaryController patientSummaryController = fxmlLoader.getController();
         patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
+        patientSummaryController.setPatient(digiSystem.getPatient(patientID));
+        patientSummaryController.setPatientTableView(patientsTableView);
     }
 }

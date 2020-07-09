@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="307.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientSummaryController">
+<AnchorPane prefHeight="377.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientSummaryController">
    <children>
       <Label fx:id="patientSummaryLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="554.0" text="Patient Summary" textFill="WHITE" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <font>
@@ -23,140 +27,193 @@
         <columnConstraints>
           <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" prefWidth="34.13330030441284" />
           <ColumnConstraints hgrow="NEVER" maxWidth="293.4000244140625" minWidth="10.0" prefWidth="96.86664428710938" />
-            <ColumnConstraints hgrow="NEVER" maxWidth="531.7999801635742" minWidth="10.0" prefWidth="186.2" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="531.7999801635742" minWidth="10.0" prefWidth="175.0" />
             <ColumnConstraints hgrow="NEVER" maxWidth="531.7999801635742" minWidth="2.0000488281249886" prefWidth="29.399999999999977" />
             <ColumnConstraints hgrow="NEVER" maxWidth="427.8" minWidth="10.0" prefWidth="121.60002441406249" />
-            <ColumnConstraints hgrow="NEVER" maxWidth="427.8" minWidth="6.200048828124977" prefWidth="176.5999633789063" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="427.8" minWidth="6.200048828124977" prefWidth="175.0" />
             <ColumnConstraints hgrow="NEVER" maxWidth="254.7999267578125" minWidth="10.0" prefWidth="162.20000000000005" />
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="23.266699218749977" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints fillHeight="false" prefHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
-            <RowConstraints fillHeight="false" maxHeight="234.80000839233398" minHeight="10.0" prefHeight="195.1999969482422" valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints fillHeight="false" maxHeight="263.20000000000005" minHeight="10.0" prefHeight="263.20000000000005" valignment="CENTER" vgrow="NEVER" />
             <RowConstraints fillHeight="false" prefHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <VBox fillWidth="false" maxHeight="162.0" minHeight="162.0" prefHeight="162.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+            <VBox fillWidth="false" maxHeight="240.0" minHeight="240.0" prefHeight="240.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <children>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Patient ID:" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="Patient ID:" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="First Name:" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="First Name:" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Last Name:" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="Last Name:" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="DOB, age" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="DOB, age" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Gender:" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="Height (cm):" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Height (cm):" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="Weight (kg):" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Weight (kg):" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="BMI:" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="BMI:" VBox.vgrow="NEVER">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" text="Gender:" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox fillWidth="false" maxHeight="162.0" minHeight="162.0" prefHeight="162.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+            <VBox fillWidth="false" maxHeight="162.0" minHeight="240.0" prefHeight="240.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <children>
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" VBox.vgrow="NEVER" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" VBox.vgrow="NEVER" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
+                  <TextField fx:id="patientIDTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="NEVER" />
+                  <TextField fx:id="firstNameTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" VBox.vgrow="NEVER" />
+                  <TextField fx:id="lastNameTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <DatePicker fx:id="DOBDatePicker" disable="true" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="182.0" />
+                        <TextField fx:id="ageTextField" editable="false" prefHeight="46.0" prefWidth="97.0" />
+                     </children>
+                  </HBox>
+                  <TextField fx:id="heightTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="weightTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="BMITextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+                    </rowConstraints>
+                     <children>
+                        <RadioButton fx:id="maleRadioButton" disable="true" mnemonicParsing="false" prefHeight="18.0" prefWidth="55.0" text="M">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="genderToggleGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="femaleRadioButton" disable="true" mnemonicParsing="false" text="F" toggleGroup="$genderToggleGroup" GridPane.columnIndex="1" />
+                        <RadioButton fx:id="otherRadioButton" disable="true" mnemonicParsing="false" text="O" toggleGroup="$genderToggleGroup" GridPane.columnIndex="2" />
+                     </children>
+                  </GridPane>
                </children>
             </VBox>
-            <VBox maxHeight="175.0" minHeight="162.0" prefHeight="162.0" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <VBox maxHeight="175.0" minHeight="240.0" prefHeight="240.0" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <children>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Street Number:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Street Number:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Street Name:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Street Name:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Postal Code:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Postal Code:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="City:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="City:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Province:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Province:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Country:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Country:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Telephone:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Telephone:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Email:">
+                  <Label maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="104.0" text="Email:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox maxHeight="162.0" minHeight="162.0" prefHeight="162.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+            <VBox maxHeight="162.0" minHeight="240.0" prefHeight="240.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
                <children>
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
-                  <TextField editable="false" maxHeight="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" />
+                  <TextField fx:id="streetNumberTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="streetNameTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="postalCodeTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="cityTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="provinceTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="countryTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="telephoneTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
+                  <TextField fx:id="emailTextField" editable="false" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="20.0" prefHeight="30.0" prefWidth="200.0" />
                </children>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="116.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <graphic>
-                  <ImageView fitHeight="44.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Images/Edit%20image.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <GridPane maxHeight="195.1999969482422" minHeight="195.1999969482422" prefHeight="195.1999969482422" prefWidth="162.0" GridPane.columnIndex="6" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="editButton" mnemonicParsing="false" onAction="#makeEditable" prefHeight="54.0" prefWidth="116.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="44.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Images/Edit%20image.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="acceptButton" mnemonicParsing="false" onAction="#acceptChanges" prefHeight="38.0" prefWidth="38.0" visible="false" GridPane.halignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Images/checkmark.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="rejectButton" mnemonicParsing="false" onAction="#finishModification" prefHeight="38.0" prefWidth="38.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Images/x.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </children>

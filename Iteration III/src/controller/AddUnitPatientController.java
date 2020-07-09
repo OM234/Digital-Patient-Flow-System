@@ -16,27 +16,19 @@ import java.util.List;
 public class AddUnitPatientController {
 
     DigiSystem digiSystem = DigiSystem.getInstance();
+    TableView<Patient> patientsTableView;
+    TableView<Unit2> unitsTableView;
 
-    @FXML
-    private Label patientCreatedLabel;
-    @FXML
-    private Label unitCreatedLabel;
-    @FXML
-    private TextField ptIDTextArea;
-    @FXML
-    private TextField firstNameTextArea;
-    @FXML
-    private TextField lastNameTextArea;
-    @FXML
-    private TextField unitIDTextField;
-    @FXML
-    private TextField unitNameTextField;
-    @FXML
-    private ToggleGroup genderToggleGroup;
-    @FXML
-    private ToggleButton maleToggleButton;
-    @FXML
-    private ToggleButton femaleToggleButton;
+    @FXML private Label patientCreatedLabel;
+    @FXML private Label unitCreatedLabel;
+    @FXML private TextField ptIDTextArea;
+    @FXML private TextField firstNameTextArea;
+    @FXML private TextField lastNameTextArea;
+    @FXML private TextField unitIDTextField;
+    @FXML private TextField unitNameTextField;
+    @FXML private ToggleGroup genderToggleGroup;
+    @FXML private ToggleButton maleToggleButton;
+    @FXML private ToggleButton femaleToggleButton;
 
     public void addPatient() {
 
@@ -52,7 +44,7 @@ public class AddUnitPatientController {
 
         if (allInputtedWell && !digiSystem.hasPatient(patientID)) {
 
-            new Patient(patientID, firstName, lastName, gender);
+            Patient added = new Patient(patientID, firstName, lastName, gender);
 
             ptIDTextArea.clear();
             firstNameTextArea.clear();
@@ -61,6 +53,8 @@ public class AddUnitPatientController {
 
             patientCreatedLabel.setVisible(true);
             patientCreatedLabel.setText("Patient #" + patientID + " " + firstName + " " + lastName + " created");
+
+            scrollToPatientSelection(added);
 
         } else if (digiSystem.hasPatient(patientID)) {
 
@@ -80,13 +74,15 @@ public class AddUnitPatientController {
 
         if (allInputtedWell && !digiSystem.hasUnit(unitID)) {
 
-            new Unit2(unitID, unitName);
+            Unit2 added = new Unit2(unitID, unitName);
 
             unitIDTextField.clear();
             unitNameTextField.clear();
 
             unitCreatedLabel.setVisible(true);
             unitCreatedLabel.setText("Unit #" + unitID + " " + unitName + " created");
+
+            scrollToSelection(added);
 
         } else if (digiSystem.hasUnit(unitID)) {
 
@@ -196,4 +192,31 @@ public class AddUnitPatientController {
         return !(genderToggleGroup.getSelectedToggle() == null);
     }
 
+    public void setTableViews(TableView<Patient> patientsTableView, TableView<Unit2> unitsTableView) {
+
+        this.patientsTableView = patientsTableView;
+        this.unitsTableView = unitsTableView;
+    }
+
+    public void scrollToSelection(Unit2 added) {
+
+        int index;
+
+        unitsTableView.getItems().add(added);
+        unitsTableView.setItems(unitsTableView.getItems());
+        index = unitsTableView.getItems().indexOf(added);
+        unitsTableView.getSelectionModel().select(added);
+        unitsTableView.scrollTo(index);
+    }
+
+    public void scrollToPatientSelection(Patient added) {
+
+        int index;
+
+        patientsTableView.getItems().add(added);
+        patientsTableView.setItems(patientsTableView.getItems());
+        index = patientsTableView.getItems().indexOf(added);
+        patientsTableView.getSelectionModel().select(added);
+        patientsTableView.scrollTo(index);
+    }
 }
