@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import model.DigiSystem;
 import model.Patient;
 import model.Unit2;
-
 import java.io.IOException;
 
 public class DigiHealthController {
@@ -22,28 +21,16 @@ public class DigiHealthController {
     private boolean viewingPatientsOnUnits = false;
     private String patientOnUnitID;
 
-    @FXML
-    private Button viewUnitsButton;
-    @FXML
-    private Button viewPatientsButton;
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button addPatientToUnitButton;
-    @FXML
-    private Button removeButton;
-    @FXML
-    private Button patientsOnUnitButton;
-    @FXML
-    private Button patientSummaryButton;
-    @FXML
-    private TableView<Unit2> unitsTableView;
-    @FXML
-    private TableView<Patient> patientsTableView;
-    @FXML
-    private Label bottomViewingLabel;
-    @FXML
-    private Label bigUnitNameLabel;
+    @FXML private Button viewUnitsButton;
+    @FXML private Button viewPatientsButton;
+    @FXML private Button addButton;
+    @FXML private Button removeButton;
+    @FXML private Button patientsOnUnitButton;
+    @FXML private Button patientSummaryButton;
+    @FXML private TableView<Unit2> unitsTableView;
+    @FXML private TableView<Patient> patientsTableView;
+    @FXML private Label bottomViewingLabel;
+    @FXML private Label bigUnitNameLabel;
 
 
     public void initialize() {
@@ -347,5 +334,13 @@ public class DigiHealthController {
         patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
         patientSummaryController.setPatient(digiSystem.getPatient(patientID));
         patientSummaryController.setPatientTableView(patientsTableView);
+    }
+
+    public void patientView() {
+
+    }
+
+    public void unitView() {
+
     }
 }
