@@ -34,9 +34,6 @@ public class DigiHealthController {
     @FXML private RadioButton allPatientsRadioButton;
     @FXML private RadioButton patientsOnUnitRadioButton;
     @FXML private TextField searchTextField;
-//    @FXML private Button removeButton;
-//    @FXML private Button patientsOnUnitButton;
-//    @FXML private Button patientSummaryButton;
     @FXML private TableView<Unit2> unitsTableView;
     @FXML private TableView<Patient> patientsTableView;
     @FXML private Label bottomViewingLabel;
@@ -112,15 +109,16 @@ public class DigiHealthController {
         ObservableList<Patient> obsList = getPatientsObsList();
         patientsTableView.setItems(obsList);
 
-        patientsTableView.setVisible(true);
-        unitsTableView.setVisible(false);
-
-        bottomViewingLabel.setVisible(true);
-        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients");
-
-        patientsOnUnitButton.setVisible(false);
-        patientSummaryButton.setVisible(true);
-        //patientsOnUnitButton.setOpacity(0.3);
+        patientView(obsList.size());
+//
+//        patientsTableView.setVisible(true);
+//        unitsTableView.setVisible(false);
+//
+//        bottomViewingLabel.setVisible(true);
+//        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients");
+//
+//        patientsOnUnitButton.setVisible(false);
+//        patientSummaryButton.setVisible(true);
     }
 
     public void populatePatientsOnUnitTable() {
@@ -149,14 +147,16 @@ public class DigiHealthController {
         ObservableList<Patient> obsList = getPatientsOnUnitObsList(selected);
         patientsTableView.setItems(obsList);
 
-        patientsTableView.setVisible(true);
-        unitsTableView.setVisible(false);
-
-        bottomViewingLabel.setVisible(true);
-        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on this unit");
-
-        patientsOnUnitButton.setVisible(false);
-        patientSummaryButton.setVisible(true);
+        patientView(obsList.size());
+//
+//        patientsTableView.setVisible(true);
+//        unitsTableView.setVisible(false);
+//
+//        bottomViewingLabel.setVisible(true);
+//        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on this unit");
+//
+//        patientsOnUnitButton.setVisible(false);
+//        patientSummaryButton.setVisible(true);
 
         patientsOnUnitRadioButton.setDisable(false);
 
@@ -194,14 +194,14 @@ public class DigiHealthController {
         ObservableList<Unit2> obsList = getUnitsObsList();
         unitsTableView.setItems(obsList);
 
-        unitsTableView.setVisible(true);
-        patientsTableView.setVisible(false);
-
-        bottomViewingLabel.setText("Viewing " + obsList.size() + " units");
-
-        patientsOnUnitButton.setVisible(true);
-        patientSummaryButton.setVisible(false);
-        //patientsOnUnitButton.setOpacity(1);
+        unitView(obsList.size());
+//        unitsTableView.setVisible(true);
+//        patientsTableView.setVisible(false);
+//
+//        bottomViewingLabel.setText("Viewing " + obsList.size() + " units");
+//
+//        patientsOnUnitButton.setVisible(true);
+//        patientSummaryButton.setVisible(false);
     }
 
     private ObservableList<Unit2> getUnitsObsList() {
@@ -405,11 +405,7 @@ public class DigiHealthController {
 
             patientsTableView.setItems(searchList);
 
-            unitsTableView.setVisible(false);
-            patientsTableView.setVisible(true);
-            patientSummaryButton.setVisible(true);
-            patientsOnUnitButton.setVisible(false);
-            bottomViewingLabel.setText("Viewing " + searchList.size() + " patients");
+            patientView(searchList.size());
         }
     }
 
@@ -425,19 +421,26 @@ public class DigiHealthController {
 
             unitsTableView.setItems(searchList);
 
-            unitsTableView.setVisible(true);
-            patientsTableView.setVisible(false);
-            patientSummaryButton.setVisible(false);
-            patientsOnUnitButton.setVisible(true);
-            bigUnitNameLabel.setVisible(false);
-            bottomViewingLabel.setText("Viewing " + searchList.size() + " units");
+            unitView(searchList.size());
         }
     }
-    public void patientView() {
 
+    public void patientView(int count) {
+
+        unitsTableView.setVisible(false);
+        patientsTableView.setVisible(true);
+        patientSummaryButton.setVisible(true);
+        patientsOnUnitButton.setVisible(false);
+        bottomViewingLabel.setText("Viewing " + count + " patients");
     }
 
-    public void unitView() {
+    public void unitView(int count) {
 
+        unitsTableView.setVisible(true);
+        patientsTableView.setVisible(false);
+        patientSummaryButton.setVisible(false);
+        patientsOnUnitButton.setVisible(true);
+        bigUnitNameLabel.setVisible(false);
+        bottomViewingLabel.setText("Viewing " + count + " units");
     }
 }
