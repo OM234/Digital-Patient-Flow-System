@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import model.DigiSystem;
 import model.Patient;
 import model.Unit2;
-
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,7 @@ public class DigiHealthController {
     @FXML private Button viewUnitsButton;
     @FXML private Button viewPatientsButton;
     @FXML private Button addButton;
+<<<<<<< HEAD
     @FXML private Button addPatientToUnitButton;
     @FXML private Button removeButton;
     @FXML private Button patientsOnUnitButton;
@@ -35,6 +35,11 @@ public class DigiHealthController {
     @FXML private RadioButton allPatientsRadioButton;
     @FXML private RadioButton patientsOnUnitRadioButton;
     @FXML private TextField searchTextField;
+=======
+    @FXML private Button removeButton;
+    @FXML private Button patientsOnUnitButton;
+    @FXML private Button patientSummaryButton;
+>>>>>>> patientNote
     @FXML private TableView<Unit2> unitsTableView;
     @FXML private TableView<Patient> patientsTableView;
     @FXML private Label bottomViewingLabel;
@@ -346,6 +351,7 @@ public class DigiHealthController {
         patientSummaryController.setPatientTableView(patientsTableView);
     }
 
+<<<<<<< HEAD
     public void search() {
 
         String search = searchTextField.getText();
@@ -430,5 +436,13 @@ public class DigiHealthController {
             bigUnitNameLabel.setVisible(false);
             bottomViewingLabel.setText("Viewing " + searchList.size() + " units");
         }
+=======
+    public void patientView() {
+
+    }
+
+    public void unitView() {
+
+>>>>>>> patientNote
     }
 }

@@ -1,4 +1,4 @@
-#enterButton, #addUnitButton, #addPatientButton  {
+#enterButton, #addUnitButton, #addPatientButton {
     -fx-background-color:
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
@@ -11,7 +11,7 @@
     -fx-font-size: 12px;
 }
 
-#DigiHealthLabel, #patientSummaryLabel{
+#DigiHealthLabel, #patientSummaryLabel, #medicalNoteLabel{
     -fx-background-color:
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
