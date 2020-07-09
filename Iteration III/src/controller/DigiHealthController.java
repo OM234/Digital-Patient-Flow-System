@@ -15,6 +15,7 @@ import model.Patient;
 import model.Unit2;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class DigiHealthController {
 
@@ -22,28 +23,22 @@ public class DigiHealthController {
     private boolean viewingPatientsOnUnits = false;
     private String patientOnUnitID;
 
-    @FXML
-    private Button viewUnitsButton;
-    @FXML
-    private Button viewPatientsButton;
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button addPatientToUnitButton;
-    @FXML
-    private Button removeButton;
-    @FXML
-    private Button patientsOnUnitButton;
-    @FXML
-    private Button patientSummaryButton;
-    @FXML
-    private TableView<Unit2> unitsTableView;
-    @FXML
-    private TableView<Patient> patientsTableView;
-    @FXML
-    private Label bottomViewingLabel;
-    @FXML
-    private Label bigUnitNameLabel;
+    @FXML private Button viewUnitsButton;
+    @FXML private Button viewPatientsButton;
+    @FXML private Button addButton;
+    @FXML private Button addPatientToUnitButton;
+    @FXML private Button removeButton;
+    @FXML private Button patientsOnUnitButton;
+    @FXML private Button patientSummaryButton;
+    @FXML private Button searchButton;
+    @FXML private RadioButton unitsRadioButton;
+    @FXML private RadioButton allPatientsRadioButton;
+    @FXML private RadioButton patientsOnUnitRadioButton;
+    @FXML private TextField searchTextField;
+    @FXML private TableView<Unit2> unitsTableView;
+    @FXML private TableView<Patient> patientsTableView;
+    @FXML private Label bottomViewingLabel;
+    @FXML private Label bigUnitNameLabel;
 
 
     public void initialize() {
@@ -90,6 +85,8 @@ public class DigiHealthController {
         addButton.setDisable(false);
         removeButton.setDisable(false);
         bigUnitNameLabel.setVisible(false);
+        patientsOnUnitRadioButton.setDisable(true);
+        patientsOnUnitRadioButton.setSelected(false);
 
         viewingPatientsOnUnits = false;
 
@@ -154,14 +151,14 @@ public class DigiHealthController {
         unitsTableView.setVisible(false);
 
         bottomViewingLabel.setVisible(true);
-        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on unit " + selected.getUnitName());
+        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on this unit");
 
         patientsOnUnitButton.setVisible(false);
         patientSummaryButton.setVisible(true);
-        //patientsOnUnitButton.setOpacity(0.3);
+
+        patientsOnUnitRadioButton.setDisable(false);
 
         unitsTableView.getSelectionModel().clearSelection();
-
     }
 
     private ObservableList<Patient> getPatientsObsList() {
@@ -198,7 +195,6 @@ public class DigiHealthController {
         unitsTableView.setVisible(true);
         patientsTableView.setVisible(false);
 
-        bottomViewingLabel.setVisible(true);
         bottomViewingLabel.setText("Viewing " + obsList.size() + " units");
 
         patientsOnUnitButton.setVisible(true);
@@ -343,9 +339,96 @@ public class DigiHealthController {
         scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
         primaryStage.show();
 
+
         PatientSummaryController patientSummaryController = fxmlLoader.getController();
         patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
         patientSummaryController.setPatient(digiSystem.getPatient(patientID));
         patientSummaryController.setPatientTableView(patientsTableView);
+    }
+
+    public void search() {
+
+        String search = searchTextField.getText();
+
+        if(search.equals("")) {
+
+            return;
+        }
+
+        if(unitsRadioButton.isSelected()) {
+
+            searchUnit(search);
+
+        } else if (allPatientsRadioButton.isSelected()) {
+
+            searchPatient(search, false);
+
+        } else if (patientsOnUnitRadioButton.isSelected() ) {
+
+            searchPatient(search, true);
+        }
+    }
+
+    private void searchPatient(String search, boolean onUnit) {
+
+        ObservableList<Patient> searchList;
+
+        if(!onUnit) {
+
+            searchList = FXCollections.observableArrayList(getPatientsObsList()
+                    .stream()
+                    .filter(e -> e.getPatientID().equals(search) ||
+                            e.getFirstName().equalsIgnoreCase(search) || e.getLastName().equalsIgnoreCase(search))
+                    .collect(Collectors.toList())
+            );
+
+        } else {
+
+            Unit2 selected = digiSystem.getUnit(patientOnUnitID);
+
+            searchList = FXCollections.observableArrayList(getPatientsOnUnitObsList(selected)
+                    .stream()
+                    .filter(e -> e.getPatientID().equals(search) ||
+                            e.getFirstName().equalsIgnoreCase(search) || e.getLastName().equalsIgnoreCase(search))
+                    .collect(Collectors.toList())
+            );
+        }
+
+        if(!searchList.isEmpty() && !onUnit) {
+
+            bigUnitNameLabel.setVisible(false);
+        }
+
+        if(!searchList.isEmpty()) {
+
+            patientsTableView.setItems(searchList);
+
+            unitsTableView.setVisible(false);
+            patientsTableView.setVisible(true);
+            patientSummaryButton.setVisible(true);
+            patientsOnUnitButton.setVisible(false);
+            bottomViewingLabel.setText("Viewing " + searchList.size() + " patients");
+        }
+    }
+
+    private void searchUnit(String search) {
+
+        ObservableList<Unit2> searchList = FXCollections.observableArrayList(getUnitsObsList()
+                .stream()
+                .filter(e -> e.getUnitID().equalsIgnoreCase(search) || e.getUnitName().equalsIgnoreCase(search))
+                .collect(Collectors.toList())
+        );
+
+        if(!searchList.isEmpty()) {
+
+            unitsTableView.setItems(searchList);
+
+            unitsTableView.setVisible(true);
+            patientsTableView.setVisible(false);
+            patientSummaryButton.setVisible(false);
+            patientsOnUnitButton.setVisible(true);
+            bigUnitNameLabel.setVisible(false);
+            bottomViewingLabel.setText("Viewing " + searchList.size() + " units");
+        }
     }
 }
