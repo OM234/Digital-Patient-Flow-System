@@ -4,6 +4,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Patient;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,12 +96,12 @@ public class PatientSummaryController {
         emailTextField.setText(patient.getContactInformation().getEmail());
         telephoneTextField.setText(patient.getContactInformation().getPhoneNumber());
 
-        if(patient.getWeight() != 0 && patient.getHeight() != 0) {
+        if (patient.getWeight() != 0 && patient.getHeight() != 0) {
 
             BMITextField.setText(String.format("%.2f", patient.getBMI()));
         }
-        if(patient.getDOB().compareTo(LocalDate.of(0000,1,1)) != 0 &&
-                patient.getDOB().compareTo(LocalDate.of(0001,1,1)) != 0) {
+        if (patient.getDOB().compareTo(LocalDate.of(0000, 1, 1)) != 0 &&
+                patient.getDOB().compareTo(LocalDate.of(0001, 1, 1)) != 0) {
 
             ageTextField.setText(Integer.toString(patient.getAge()));
         }
@@ -144,7 +145,7 @@ public class PatientSummaryController {
 
     public void setGender() {
 
-        if(genderToggleGroup.getSelectedToggle() == maleRadioButton) {
+        if (genderToggleGroup.getSelectedToggle() == maleRadioButton) {
 
             patient.setGender('M');
 
@@ -180,8 +181,16 @@ public class PatientSummaryController {
 
         finishModification();
 
-        patientsTableView.refresh();
-        patientsTableView.getSelectionModel().select(patient);
+        scrollToPatient();
+    }
+
+    private void scrollToPatient() {
+
+        patientsTableView.getItems().stream().filter(e -> e == patient).findAny().ifPresent(e -> {
+            patientsTableView.getSelectionModel().select(e);
+            patientsTableView.scrollTo(e);
+        });
+
     }
 
     public void finishModification() {
