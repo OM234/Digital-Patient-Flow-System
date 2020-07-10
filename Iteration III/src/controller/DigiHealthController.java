@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.DigiSystem;
 import model.Patient;
 import model.Unit2;
+
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -110,15 +111,6 @@ public class DigiHealthController {
         patientsTableView.setItems(obsList);
 
         patientView(obsList.size());
-//
-//        patientsTableView.setVisible(true);
-//        unitsTableView.setVisible(false);
-//
-//        bottomViewingLabel.setVisible(true);
-//        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients");
-//
-//        patientsOnUnitButton.setVisible(false);
-//        patientSummaryButton.setVisible(true);
     }
 
     public void populatePatientsOnUnitTable() {
@@ -148,15 +140,6 @@ public class DigiHealthController {
         patientsTableView.setItems(obsList);
 
         patientView(obsList.size());
-//
-//        patientsTableView.setVisible(true);
-//        unitsTableView.setVisible(false);
-//
-//        bottomViewingLabel.setVisible(true);
-//        bottomViewingLabel.setText("Viewing " + obsList.size() + " patients on this unit");
-//
-//        patientsOnUnitButton.setVisible(false);
-//        patientSummaryButton.setVisible(true);
 
         patientsOnUnitRadioButton.setDisable(false);
 
@@ -195,13 +178,6 @@ public class DigiHealthController {
         unitsTableView.setItems(obsList);
 
         unitView(obsList.size());
-//        unitsTableView.setVisible(true);
-//        patientsTableView.setVisible(false);
-//
-//        bottomViewingLabel.setText("Viewing " + obsList.size() + " units");
-//
-//        patientsOnUnitButton.setVisible(true);
-//        patientSummaryButton.setVisible(false);
     }
 
     private ObservableList<Unit2> getUnitsObsList() {
