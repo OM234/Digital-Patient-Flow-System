@@ -30,6 +30,7 @@ public class DigiHealthController {
     @FXML private Button removeButton;
     @FXML private Button patientsOnUnitButton;
     @FXML private Button patientSummaryButton;
+    @FXML private Button medicalNotesButton;
     @FXML private Button searchButton;
     @FXML private RadioButton unitsRadioButton;
     @FXML private RadioButton allPatientsRadioButton;
@@ -324,6 +325,28 @@ public class DigiHealthController {
         patientSummaryController.setPatientTableView(patientsTableView);
     }
 
+    public void viewMedicalNotes() throws IOException {
+
+        Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
+
+        if(patientsTableView.getSelectionModel().getSelectedItem() == null) {
+
+            return;
+        }
+
+        Stage primaryStage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MedicalNotes.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+        primaryStage.show();
+
+        MedicalNoteController medicalNoteController = fxmlLoader.getController();
+        medicalNoteController.setPatient(selected);
+        medicalNoteController.setTopLabel();
+    }
+
     public void search() {
 
         String search = searchTextField.getText();
@@ -406,6 +429,7 @@ public class DigiHealthController {
         unitsTableView.setVisible(false);
         patientsTableView.setVisible(true);
         patientSummaryButton.setVisible(true);
+        medicalNotesButton.setVisible(true);
         patientsOnUnitButton.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " patients");
     }
@@ -415,6 +439,7 @@ public class DigiHealthController {
         unitsTableView.setVisible(true);
         patientsTableView.setVisible(false);
         patientSummaryButton.setVisible(false);
+        medicalNotesButton.setVisible(false);
         patientsOnUnitButton.setVisible(true);
         bigUnitNameLabel.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " units");

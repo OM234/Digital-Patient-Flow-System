@@ -118,5 +118,10 @@
                 </HBox>
             </children>
         </GridPane>
+      <Button fx:id="medicalNotesButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="902.0" layoutY="197.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewMedicalNotes" prefHeight="54.0" prefWidth="116.0" text="Patient Notes&#10;&#10;" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="197.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
     </children>
 </AnchorPane>
