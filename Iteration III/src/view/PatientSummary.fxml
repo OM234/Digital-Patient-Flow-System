@@ -203,7 +203,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="rejectButton" mnemonicParsing="false" onAction="#finishModification" prefHeight="38.0" prefWidth="38.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Button fx:id="rejectButton" mnemonicParsing="false" onAction="#disableEdit" prefHeight="38.0" prefWidth="38.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>

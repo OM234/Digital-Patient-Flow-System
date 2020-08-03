@@ -179,21 +179,22 @@ public class PatientSummaryController {
         patient.getContactInformation().setEmail(emailTextField.getText());
         setGender();
 
-        finishModification();
+        disableEdit();
 
         scrollToPatient();
     }
 
     private void scrollToPatient() {
 
+        patientsTableView.refresh();
+
         patientsTableView.getItems().stream().filter(e -> e == patient).findAny().ifPresent(e -> {
             patientsTableView.getSelectionModel().select(e);
             patientsTableView.scrollTo(e);
         });
-
     }
 
-    public void finishModification() {
+    public void disableEdit() {
 
         acceptButton.setVisible(false);
         rejectButton.setVisible(false);
