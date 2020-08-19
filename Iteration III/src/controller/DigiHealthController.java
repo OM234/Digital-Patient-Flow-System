@@ -345,6 +345,7 @@ public class DigiHealthController {
         MedicalNoteController medicalNoteController = fxmlLoader.getController();
         medicalNoteController.setPatient(selected);
         medicalNoteController.setTopLabel();
+        medicalNoteController.setCellValueFactories();
     }
 
     public void search() {

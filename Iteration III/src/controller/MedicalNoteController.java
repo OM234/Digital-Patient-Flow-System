@@ -9,7 +9,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.MedicalNote;
 import model.Patient;
-import model.DigiSystem;
 
 public class MedicalNoteController {
 
@@ -21,15 +20,14 @@ public class MedicalNoteController {
     @FXML private TableColumn<MedicalNote, String> tempColumn;
     @FXML private TableColumn<MedicalNote, String> satColumn;
     @FXML private TableColumn<MedicalNote, String> noteColumn;
-
     Patient patient;
 
     public void initialize() {
 
-        setCellValueFactories();
+        //setCellValueFactories();
     }
 
-    private void setCellValueFactories() {
+    public void setCellValueFactories() {
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         pulseColumn.setCellValueFactory(new PropertyValueFactory<>("pulse"));
@@ -44,15 +42,15 @@ public class MedicalNoteController {
 
     private ObservableList<MedicalNote> getNotesObsList() {
 
-        ObservableList<MedicalNote> noteList = FXCollections.observableArrayList();
-
-        MedicalNote note = new MedicalNote();
-        note.setNote("this is a note");
-        note.setBP(100, 60);
-        note.setPulse(80);
-        note.setO2Sat(99);
-        note.setTemperature(36.7);
-        noteList.add(note);
+        //ObservableList<MedicalNote> noteList = FXCollections.observableArrayList();
+        ObservableList<MedicalNote> noteList = FXCollections.observableList(patient.getMedicalNotes());
+//        MedicalNote note = new MedicalNote();
+//        note.setNote("this is a note");
+//        note.setBP(100, 60);
+//        note.setPulse(80);
+//        note.setO2Sat(99);
+//        note.setTemperature(36.7);
+        //noteList.add(note);
 
         return noteList;
     }

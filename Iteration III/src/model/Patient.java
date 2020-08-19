@@ -4,9 +4,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Patient {
 
@@ -20,6 +21,7 @@ public class Patient {
     private LocalDate DOB;
     private ContactInformation contactInformation;
     private char gender;
+    private List<MedicalNote> medicalNotes;
 
     public Patient(String patientID, String firstName, String lastName, char gender) {
 
@@ -38,6 +40,7 @@ public class Patient {
         this.BMI = new SimpleDoubleProperty();
         this.DOB = LocalDate.of(0,1,1);
         this.contactInformation = new ContactInformation();
+        this.medicalNotes = new ArrayList<>();
 
         digiSystem.addPatient(this);
     }
@@ -129,5 +132,15 @@ public class Patient {
     public void setContactInformation(ContactInformation contactInformation) {
 
         this.contactInformation = contactInformation;
+    }
+
+    public void addMedicalNote(MedicalNote medicalNote){
+
+        medicalNotes.add(medicalNote);
+    }
+
+    public List<MedicalNote> getMedicalNotes(){
+
+        return medicalNotes;
     }
 }
