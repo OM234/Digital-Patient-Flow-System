@@ -1,10 +1,12 @@
 package controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.MedicalNote;
@@ -15,15 +17,14 @@ import java.time.LocalDate;
 public class MedicalNoteController {
 
     @FXML private Label medicalNoteLabel;
+    @FXML private Label medicalNoteLabel2;
     @FXML private TableView<MedicalNote> noteTableView;
     @FXML private TableColumn<MedicalNote, String> dateColumn;
     @FXML private TableColumn<MedicalNote, String> pulseColumn;
     @FXML private TableColumn<MedicalNote, String> bpColumn;
     @FXML private TableColumn<MedicalNote, String> tempColumn;
     @FXML private TableColumn<MedicalNote, String> satColumn;
-    @FXML private TableColumn<MedicalNote, String> noteColumn;
-    @FXML private Button enterButton;
-    @FXML private Button addNoteButton;
+    @FXML private TableColumn<MedicalNote, SimpleStringProperty> noteColumn;
     @FXML private AnchorPane allNotesPane;
     @FXML private AnchorPane newNotePane;
     @FXML private TextField sbpTextField;
@@ -36,7 +37,9 @@ public class MedicalNoteController {
 
     public void initialize() {
 
-        //setCellValueFactories();
+        allNotesPane.setVisible(true);
+        newNotePane.setVisible(false);
+
     }
 
     public void setCellValueFactories() {
@@ -50,6 +53,25 @@ public class MedicalNoteController {
 
         ObservableList<MedicalNote> obsList = getNotesObsList();
         noteTableView.setItems(obsList);
+
+        setCustomRowFactoryDeletedRow();
+    }
+
+    private void setCustomRowFactoryDeletedRow() {
+
+        noteTableView.setRowFactory( e -> new TableRow<MedicalNote>() {
+            @Override
+            public void updateItem(MedicalNote item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                }
+                else if (item.isDeleted()) {
+                    getStyleClass().add("deletedRow");
+                }
+            }
+        });
     }
 
     private ObservableList<MedicalNote> getNotesObsList() {
@@ -67,6 +89,8 @@ public class MedicalNoteController {
     public void setTopLabel() {
 
         medicalNoteLabel.setText("Medical Notes for Patient # " + patient.getPatientID() + " " + patient.getFirstName()
+                + " " + patient.getLastName() );
+        medicalNoteLabel2.setText("Medical Notes for Patient # " + patient.getPatientID() + " " + patient.getFirstName()
                 + " " + patient.getLastName() );
     }
 
@@ -158,6 +182,17 @@ public class MedicalNoteController {
         return true;
     }
 
+    public void deleteNote() {
+
+        MedicalNote medicalNote = noteTableView.getSelectionModel().getSelectedItem();
+
+        if(medicalNote != null) {
+            medicalNote.setDeleted(true);
+        }
+
+        noteTableView.refresh();
+    }
+
     public void viewEnterNotePane(){
 
         allNotesPane.setVisible(false);
@@ -176,6 +211,11 @@ public class MedicalNoteController {
     }
 
     public void turnTextFieldDefaultColor(MouseEvent e) {
+
+        ((TextField)e.getSource()).setStyle("-fx-control-inner-background: WHITE;");
+    }
+
+    public void turnTextFieldDefaultColorKey(KeyEvent e) {
 
         ((TextField)e.getSource()).setStyle("-fx-control-inner-background: WHITE;");
     }

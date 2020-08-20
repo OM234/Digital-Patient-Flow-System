@@ -1,27 +1,29 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.time.LocalDate;
 
 public class MedicalNote {
 
-    private int pulse;
+    private Integer pulse;
     private int noteID;
-    private int o2Sat;
+    private Integer o2Sat;
     private String BP;
     private BloodPressure bloodPressure;
-    private double temperature;
+    private Double temperature;
     private boolean deleted;
-    private String note;
+    private SimpleStringProperty note;
     private LocalDate date;
     
     public MedicalNote() {
 
         BP = "";
         bloodPressure = new BloodPressure(-1, -1);
-        pulse = -1;
-        temperature = -1;
+        pulse = null;
+        temperature = null;
         deleted = false;
-        note = "";
+        note = new SimpleStringProperty("");
         date = LocalDate.now();
     }
 
@@ -38,7 +40,7 @@ public class MedicalNote {
         BP = bloodPressure.toString();
     }
 
-    public int getPulse() {
+    public Integer getPulse() {
         return pulse;
     }
 
@@ -54,7 +56,7 @@ public class MedicalNote {
         this.noteID = noteID;
     }
 
-    public int getO2Sat() {
+    public Integer getO2Sat() {
 
         return o2Sat;
     }
@@ -64,7 +66,7 @@ public class MedicalNote {
         this.o2Sat = o2Sat;
     }
 
-    public double getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
@@ -81,11 +83,15 @@ public class MedicalNote {
     }
 
     public String getNote() {
+        return note.get();
+    }
+
+    public SimpleStringProperty noteProperty() {
         return note;
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.note.set(note);
     }
 
     public LocalDate getDate() {

@@ -1,4 +1,4 @@
-#enterButton, #addUnitButton, #addPatientButton {
+#enterButton, #addUnitButton, #addPatientButton, #goBackButton {
     -fx-background-color:
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
@@ -11,11 +11,19 @@
     -fx-font-size: 12px;
 }
 
-#DigiHealthLabel, #patientSummaryLabel, #medicalNoteLabel{
+#DigiHealthLabel, #patientSummaryLabel, #medicalNoteLabel, #medicalNoteLabel2{
     -fx-background-color:
         #000000,
         linear-gradient(#7ebcea, #2f4b8f),
         linear-gradient(#426ab7, #263e75),
         linear-gradient(#395cab, #223768);
 
+}
+
+.deletedRow {
+    -fx-background-color: tomato;
+}
+
+.deletedRow .text{
+    -fx-strikethrough: true;
 }
