@@ -166,7 +166,7 @@ public class makeData {
             for(int i = 0; i < random.nextInt(10)+1 ; i++) {
 
                 MedicalNote medicalNote = new MedicalNote();
-                medicalNote.setNoteID(patient.getMedicalNotes().size() + 1);
+                medicalNote.setNoteID(patient.getNextMedicalNoteID());
                 medicalNote.setTemperature(random.nextDouble() * 2.5 + 35.5);
                 medicalNote.setO2Sat(random.nextInt(8) + 93);
                 medicalNote.setPulse(random.nextInt(71) + 50);

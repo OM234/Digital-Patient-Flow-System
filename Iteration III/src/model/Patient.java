@@ -143,4 +143,9 @@ public class Patient {
 
         return medicalNotes;
     }
+
+    public int getNextMedicalNoteID(){
+
+        return medicalNotes.size() + 1;
+    }
 }

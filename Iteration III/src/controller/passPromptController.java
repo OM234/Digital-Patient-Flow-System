@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +21,7 @@ public class passPromptController {
     private PasswordField passPassField;
     @FXML
 
-    public void passChecker(ActionEvent event) throws IOException {
+    public void passChecker() throws IOException {
 
         String userID = userIDTextBox.getText();
         String pass = passPassField.getText();
