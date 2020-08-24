@@ -22,6 +22,7 @@ public class DigiHealthController {
     private DigiSystem digiSystem = DigiSystem.getInstance();
     private boolean viewingPatientsOnUnits = false;
     private String patientOnUnitID;
+    private Stage prevOpenStage;
 
     @FXML private Button viewUnitsButton;
     @FXML private Button viewPatientsButton;
@@ -43,6 +44,8 @@ public class DigiHealthController {
 
 
     public void initialize() {
+
+        prevOpenStage = null;
 
         initializePatientTable();
         initializeUnitTable();
@@ -283,6 +286,9 @@ public class DigiHealthController {
             AddUnitPatientController addUnitPatientController = fxmlLoader.getController();
             addUnitPatientController.setTableViews(patientsTableView, unitsTableView);
 
+            closePrevOpenStage();
+            prevOpenStage = primaryStage;
+
         } else {
 
             Stage primaryStage = new Stage();
@@ -296,6 +302,10 @@ public class DigiHealthController {
 
             AddPatientToUnitController addPatientToUnitController = fxmlLoader.getController();
             addPatientToUnitController.setUnitID(patientOnUnitID);
+
+            closePrevOpenStage();
+            prevOpenStage = primaryStage;
+
         }
     }
 
@@ -323,6 +333,9 @@ public class DigiHealthController {
         patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
         patientSummaryController.setPatient(digiSystem.getPatient(patientID));
         patientSummaryController.setPatientTableView(patientsTableView);
+
+        closePrevOpenStage();
+        prevOpenStage = primaryStage;
     }
 
     public void viewMedicalNotes() throws IOException {
@@ -346,6 +359,10 @@ public class DigiHealthController {
         medicalNoteController.setPatient(selected);
         medicalNoteController.setTopLabel();
         medicalNoteController.setCellValueFactories();
+
+        closePrevOpenStage();
+        prevOpenStage = primaryStage;
+
     }
 
     public void search() {
@@ -444,5 +461,12 @@ public class DigiHealthController {
         patientsOnUnitButton.setVisible(true);
         bigUnitNameLabel.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " units");
+    }
+
+    private void closePrevOpenStage() {
+
+        if(prevOpenStage != null) {
+            prevOpenStage.close();
+        }
     }
 }

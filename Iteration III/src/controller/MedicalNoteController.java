@@ -187,7 +187,14 @@ public class MedicalNoteController {
         MedicalNote medicalNote = noteTableView.getSelectionModel().getSelectedItem();
 
         if(medicalNote != null) {
-            medicalNote.setDeleted(true);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this note?",
+                    ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+            alert.showAndWait();
+
+            if(alert.getResult() == ButtonType.YES)
+                medicalNote.setDeleted(true);
         }
 
         noteTableView.refresh();
