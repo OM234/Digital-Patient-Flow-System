@@ -1,18 +1,15 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class makeData {
 
     DigiSystem digiSystem = DigiSystem.getInstance();
 
-    public void debug() throws FileNotFoundException {
+    public void debug() throws IOException {
 
         addUsers();
         makeUnits();
@@ -21,12 +18,18 @@ public class makeData {
         makeHeightWeightBMIDOB();
         makeContactInformation();
         makeMedicalNotes();
+        makeMedications();
     }
 
     public void addUsers() {
 
         new AUser("", "");
         new AUser("admin", "password");
+        new AUser("admin2", "password");
+        new AUser("admin3", "password");
+        new AUser("admin4", "password");
+        new AUser("admin5", "password");
+        new AUser("admin6", "password");
     }
 
     public void makeUnits() {
@@ -233,4 +236,53 @@ public class makeData {
         }
         return note;
     }
+
+    private void makeMedications() throws IOException {
+
+        List<String> medNames = new ArrayList<>();
+        Random rand = new Random();
+
+        Medication.frequencyList = new ArrayList<>(Arrays.asList("DIE", "BID", "TID", "QID"));
+        Medication.unitsList = new ArrayList<>(Arrays.asList("mg", "g", "ml", "units"));
+        Medication.routeList = new ArrayList<>(Arrays.asList("PO","PR","SC", "IM","SL"));
+
+        List<User> userList = new ArrayList<>(digiSystem.getMapOfUsers().values());
+
+        getMedicationNames(medNames);
+
+
+
+        digiSystem.getMapOfPatients().values().forEach(e -> {
+
+            for(int i = 0; i < rand.nextInt(10); i++) {
+
+                String name = medNames.get(rand.nextInt(medNames.size()));
+                int dose = rand.nextInt(300)+50;
+                String units = Medication.unitsList.get(rand.nextInt(Medication.unitsList.size()));
+                String route = Medication.routeList.get(rand.nextInt(Medication.routeList.size()));
+                String frequency = Medication.frequencyList.get(rand.nextInt(Medication.frequencyList.size()));
+                String prescriberID = userList.get(rand.nextInt(userList.size())).getUserID();
+                LocalDate prescribed = LocalDate.of(rand.nextInt(30)+1970, rand.nextInt(11)+1,
+                        rand.nextInt(26)+1);
+                LocalDate expires = LocalDate.of(rand.nextInt(30)+2000, rand.nextInt(11)+1,
+                        rand.nextInt(26)+1);
+
+                Medication medication = new Medication(name, dose, units, route, frequency, prescriberID, prescribed, expires);
+
+                e.addMedication(medication);
+            }
+        });
+
+    }
+
+    private void getMedicationNames(List<String> medNames) throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader("src/model/Medications.txt"));
+        String name = "";
+
+        while((name = reader.readLine()) != null)
+            medNames.add(name);
+    }
+
+
 }

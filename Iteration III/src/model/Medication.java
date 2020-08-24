@@ -1,32 +1,23 @@
 package model;
 
 import java.time.LocalDate;
-
-enum Units {
-    MG {public String toString() {return "mg";}},
-    ML {public String toString() {return "ml";}},
-}
-
-enum Route {
-    PO, SL, SC, IM, PR
-}
-
-enum Frequency {
-    DIE, BID, TID, QID
-}
+import java.util.List;
 
 public class Medication {
 
-    String name;
-    Double dose;
-    Units units;
-    Route route;
-    Frequency frequency;
-    String prescriberID;
-    LocalDate prescribed;
-    LocalDate expires;
+    private String name;
+    private int dose;
+    private String units;
+    private String route;
+    private String frequency;
+    private String prescriberID;
+    private LocalDate prescribed;
+    private LocalDate expires;
+    public static List<String> unitsList;
+    public static List<String> routeList;
+    public static List<String> frequencyList;
 
-    public Medication(String name, Double dose, Units units, Route route, Frequency frequency, String prescriberID,
+    public Medication(String name, int dose, String units, String route, String frequency, String prescriberID,
                       LocalDate prescribed, LocalDate expires) {
 
         this.name = name;
@@ -47,35 +38,35 @@ public class Medication {
         this.name = name;
     }
 
-    public Double getDose() {
+    public int getDose() {
         return dose;
     }
 
-    public void setDose(Double dose) {
+    public void setDose(int dose) {
         this.dose = dose;
     }
 
-    public Units getUnits() {
+    public String getUnits() {
         return units;
     }
 
-    public void setUnits(Units units) {
+    public void setUnits(String units) {
         this.units = units;
     }
 
-    public Route getRoute() {
+    public String getRoute() {
         return route;
     }
 
-    public void setRoute(Route route) {
+    public void setRoute(String route) {
         this.route = route;
     }
 
-    public Frequency getFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(Frequency frequency) {
+    public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
 

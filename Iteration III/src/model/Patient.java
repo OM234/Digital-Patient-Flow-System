@@ -22,6 +22,7 @@ public class Patient {
     private ContactInformation contactInformation;
     private char gender;
     private List<MedicalNote> medicalNotes;
+    private List<Medication> medications;
 
     public Patient(String patientID, String firstName, String lastName, char gender) {
 
@@ -41,6 +42,7 @@ public class Patient {
         this.DOB = LocalDate.of(0,1,1);
         this.contactInformation = new ContactInformation();
         this.medicalNotes = new ArrayList<>();
+        this.medications = new ArrayList<>();
 
         digiSystem.addPatient(this);
     }
@@ -147,5 +149,20 @@ public class Patient {
     public int getNextMedicalNoteID(){
 
         return medicalNotes.size() + 1;
+    }
+
+    public List<Medication> getMedications() {
+
+        return medications;
+    }
+
+    public void addMedication(Medication medication) {
+
+        medications.add(medication);
+    }
+
+    public void removeMedication(Medication medication) {
+
+        medications.remove(medication);
     }
 }

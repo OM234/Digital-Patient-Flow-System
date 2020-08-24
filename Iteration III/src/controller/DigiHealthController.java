@@ -366,8 +366,30 @@ public class DigiHealthController {
 
     }
 
-    public void viewPatientMedications() {
+    public void viewPatientMedications() throws IOException {
 
+        Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
+
+        if(patientsTableView.getSelectionModel().getSelectedItem() == null) {
+
+            return;
+        }
+
+        Stage primaryStage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/Medications.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+        primaryStage.show();
+
+        MedicationsController medicalNoteController = fxmlLoader.getController();
+        medicalNoteController.setPatient(selected);
+        medicalNoteController.setTopLabel();
+        medicalNoteController.setCellFactoryValues();
+
+        closePrevOpenStage();
+        prevOpenStage = primaryStage;
     }
 
     public void search() {
