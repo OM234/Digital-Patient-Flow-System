@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="482.0" prefWidth="1144.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MedicationsController">
+    <children>
+        <AnchorPane fx:id="allMedicationsPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="medicationsTopLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="554.0" text="Medications" textFill="WHITE" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="medicationTableView" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="167.0" AnchorPane.topAnchor="75.0">
+                    <columns>
+                        <TableColumn fx:id="datePrescribedCol" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Date Prescribed" />
+                        <TableColumn fx:id="dateExpireCol" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Date expires" />
+                        <TableColumn fx:id="nameCol" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" sortable="false" text="Name" />
+                        <TableColumn fx:id="doseCol" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" sortable="false" text="Dose" />
+                        <TableColumn fx:id="routeCol" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" sortable="false" text="Route" />
+                        <TableColumn fx:id="frequencyCol" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" sortable="false" text="Frequency" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

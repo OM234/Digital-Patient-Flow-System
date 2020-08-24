@@ -32,6 +32,7 @@ public class DigiHealthController {
     @FXML private Button patientsOnUnitButton;
     @FXML private Button patientSummaryButton;
     @FXML private Button medicalNotesButton;
+    @FXML private Button patientMedicationsButton;
     @FXML private Button searchButton;
     @FXML private RadioButton unitsRadioButton;
     @FXML private RadioButton allPatientsRadioButton;
@@ -365,6 +366,10 @@ public class DigiHealthController {
 
     }
 
+    public void viewPatientMedications() {
+
+    }
+
     public void search() {
 
         String search = searchTextField.getText();
@@ -448,6 +453,7 @@ public class DigiHealthController {
         patientsTableView.setVisible(true);
         patientSummaryButton.setVisible(true);
         medicalNotesButton.setVisible(true);
+        patientMedicationsButton.setVisible(true);
         patientsOnUnitButton.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " patients");
     }
@@ -458,6 +464,7 @@ public class DigiHealthController {
         patientsTableView.setVisible(false);
         patientSummaryButton.setVisible(false);
         medicalNotesButton.setVisible(false);
+        patientMedicationsButton.setVisible(false);
         patientsOnUnitButton.setVisible(true);
         bigUnitNameLabel.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " units");
