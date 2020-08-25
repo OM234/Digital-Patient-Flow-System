@@ -3,7 +3,6 @@ package model;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class makeData {
 
@@ -240,17 +239,16 @@ public class makeData {
     private void makeMedications() throws IOException {
 
         List<String> medNames = new ArrayList<>();
+        Medication.medicationNames = new TreeSet<>();
         Random rand = new Random();
 
         Medication.frequencyList = new ArrayList<>(Arrays.asList("DIE", "BID", "TID", "QID"));
         Medication.unitsList = new ArrayList<>(Arrays.asList("mg", "g", "ml", "units"));
-        Medication.routeList = new ArrayList<>(Arrays.asList("PO","PR","SC", "IM","SL"));
+        Medication.routeList = new ArrayList<>(Arrays.asList("PO","PR","SC", "IM","SL", "IV"));
 
         List<User> userList = new ArrayList<>(digiSystem.getMapOfUsers().values());
 
         getMedicationNames(medNames);
-
-
 
         digiSystem.getMapOfPatients().values().forEach(e -> {
 
@@ -280,8 +278,10 @@ public class makeData {
         BufferedReader reader = new BufferedReader(new FileReader("src/model/Medications.txt"));
         String name = "";
 
-        while((name = reader.readLine()) != null)
+        while((name = reader.readLine()) != null) {
             medNames.add(name);
+            Medication.medicationNames.add(name);
+        }
     }
 
 

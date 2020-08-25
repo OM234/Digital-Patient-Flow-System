@@ -23,7 +23,7 @@ public class DigiHealthController {
     private boolean viewingPatientsOnUnits = false;
     private String patientOnUnitID;
     private Stage prevOpenStage;
-
+    private DigiHealthController digiHealthController;
     @FXML private Button viewUnitsButton;
     @FXML private Button viewPatientsButton;
     @FXML private Button addButton;
@@ -50,6 +50,11 @@ public class DigiHealthController {
 
         initializePatientTable();
         initializeUnitTable();
+    }
+
+    public void setDigiHealthController (DigiHealthController digiHealthController) {
+
+        this.digiHealthController = digiHealthController;
     }
 
     public void initializePatientTable() {
@@ -303,10 +308,10 @@ public class DigiHealthController {
 
             AddPatientToUnitController addPatientToUnitController = fxmlLoader.getController();
             addPatientToUnitController.setUnitID(patientOnUnitID);
+            addPatientToUnitController.setDigiHealthController(digiHealthController);
 
             closePrevOpenStage();
             prevOpenStage = primaryStage;
-
         }
     }
 

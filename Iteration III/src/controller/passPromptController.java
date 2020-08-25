@@ -52,11 +52,16 @@ public class passPromptController {
         stage.close();
 
         Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/DigiHealth.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/DigiHealth.fxml"));
+        Parent root = fxmlLoader.load();
+        //Parent root = FXMLLoader.load(getClass().getResource("/view/DigiHealth.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
         primaryStage.setTitle("DigiHealth");
         primaryStage.show();
+
+        DigiHealthController digiHealthController = fxmlLoader.getController();
+        digiHealthController.setDigiHealthController(digiHealthController);
     }
 }

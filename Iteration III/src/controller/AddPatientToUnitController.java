@@ -11,10 +11,9 @@ public class AddPatientToUnitController {
     private DigiSystem digiSystem = DigiSystem.getInstance();
     private String unitID;
 
-    @FXML
-    private TextField ptIDTextArea;
-    @FXML
-    private Label addPatientLabel;
+    @FXML private TextField ptIDTextArea;
+    @FXML private Label addPatientLabel;
+    @FXML private DigiHealthController digiHealthController;
 
 
     public void addPatientToUnit() {
@@ -32,6 +31,8 @@ public class AddPatientToUnitController {
                     ptIDTextArea.clear();
                     ptIDTextArea.setPromptText("Patient added to unit");
 
+                    digiHealthController.populatePatientsOnUnitTable();
+
                 } else {
 
                     turnTextFieldToRed(ptIDTextArea, "Already on unit");
@@ -45,6 +46,11 @@ public class AddPatientToUnitController {
             turnTextFieldToRed(ptIDTextArea, "Patient does not exist");
         }
 
+    }
+
+    public void setDigiHealthController(DigiHealthController digiHealthController) {
+
+        this.digiHealthController = digiHealthController;
     }
 
     public void turnTextFieldToRed(TextField textField, String prompt) {

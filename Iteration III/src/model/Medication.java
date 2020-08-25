@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public class Medication {
 
@@ -16,6 +17,7 @@ public class Medication {
     public static List<String> unitsList;
     public static List<String> routeList;
     public static List<String> frequencyList;
+    public static Set<String> medicationNames;
 
     public Medication(String name, int dose, String units, String route, String frequency, String prescriberID,
                       LocalDate prescribed, LocalDate expires) {
