@@ -27,13 +27,11 @@ public class DigiHealthController {
     @FXML private Button viewUnitsButton;
     @FXML private Button viewPatientsButton;
     @FXML private Button addButton;
-    @FXML private Button addPatientToUnitButton;
     @FXML private Button removeButton;
     @FXML private Button patientsOnUnitButton;
     @FXML private Button patientSummaryButton;
     @FXML private Button medicalNotesButton;
     @FXML private Button patientMedicationsButton;
-    @FXML private Button searchButton;
     @FXML private RadioButton unitsRadioButton;
     @FXML private RadioButton allPatientsRadioButton;
     @FXML private RadioButton patientsOnUnitRadioButton;
@@ -42,6 +40,8 @@ public class DigiHealthController {
     @FXML private TableView<Patient> patientsTableView;
     @FXML private Label bottomViewingLabel;
     @FXML private Label bigUnitNameLabel;
+    @FXML private Label addLabel;
+    @FXML private Label deleteLabel;
 
 
     public void initialize() {
@@ -483,6 +483,8 @@ public class DigiHealthController {
         patientMedicationsButton.setVisible(true);
         patientsOnUnitButton.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " patients");
+
+        setAddDeleteLabels();
     }
 
     public void unitView(int count) {
@@ -495,6 +497,22 @@ public class DigiHealthController {
         patientsOnUnitButton.setVisible(true);
         bigUnitNameLabel.setVisible(false);
         bottomViewingLabel.setText("Viewing " + count + " units");
+
+        setAddDeleteLabels();
+    }
+
+    private void setAddDeleteLabels() {
+
+        if(!viewingPatientsOnUnits) {
+
+            addLabel.setText("New unit/patient");
+            deleteLabel.setText("Delete unit/patient");
+
+        } else {
+
+            addLabel.setText("Add patient to unit");
+            deleteLabel.setText("Remove from unit");
+        }
     }
 
     private void closePrevOpenStage() {

@@ -12,20 +12,21 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Button fx:id="viewUnitsButton" layoutX="14.0" layoutY="132.0" mnemonicParsing="false" onAction="#TableViewAppear" prefHeight="54.0" prefWidth="116.0" text="All Units" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="132.0" />
-        <Button fx:id="viewPatientsButton" layoutX="14.0" layoutY="197.0" mnemonicParsing="false" onAction="#TableViewAppear" prefHeight="54.0" prefWidth="116.0" text="All Patients" textOverrun="CLIP" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="197.0" />
-        <TableView fx:id="unitsTableView" layoutX="155.0" layoutY="132.0" prefHeight="452.0" prefWidth="727.0" visible="false" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="132.0" />
-        <TableView fx:id="patientsTableView" layoutX="155.0" layoutY="132.0" prefHeight="333.0" prefWidth="445.0" visible="false" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="132.0" />
+        <Button fx:id="viewUnitsButton" layoutX="14.0" layoutY="132.0" mnemonicParsing="false" onAction="#TableViewAppear" prefHeight="54.0" prefWidth="116.0" text="All Units" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="150.0" />
+        <Button fx:id="viewPatientsButton" layoutX="14.0" layoutY="197.0" mnemonicParsing="false" onAction="#TableViewAppear" prefHeight="54.0" prefWidth="116.0" text="All Patients" textOverrun="CLIP" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="215.0" />
+        <TableView fx:id="unitsTableView" layoutX="155.0" layoutY="132.0" prefHeight="452.0" prefWidth="727.0" visible="false" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="150.0" />
+        <TableView fx:id="patientsTableView" layoutX="155.0" layoutY="132.0" prefHeight="333.0" prefWidth="445.0" visible="false" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="150.0" />
         <GridPane alignment="CENTER" layoutX="422.0" layoutY="64.0" prefHeight="54.0" prefWidth="201.0" AnchorPane.leftAnchor="422.0" AnchorPane.rightAnchor="422.0" AnchorPane.topAnchor="64.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="50.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="50.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="150.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="150.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="addButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addUnitOrPatient" prefHeight="46.0" prefWidth="59.0" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                <Button fx:id="addButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addUnitOrPatient" prefHeight="46.0" prefWidth="59.0" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                     <graphic>
                         <ImageView fitHeight="36.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -34,7 +35,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="removeButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deletePatOrUnit" prefHeight="46.0" prefWidth="59.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                <Button fx:id="removeButton" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deletePatOrUnit" prefHeight="46.0" prefWidth="59.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                     <graphic>
                         <ImageView fitHeight="12.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -43,6 +44,8 @@
                         </ImageView>
                     </graphic>
                 </Button>
+            <Label fx:id="addLabel" alignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label fx:id="deleteLabel" alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             </children>
         </GridPane>
         <Label fx:id="bigUnitNameLabel" layoutX="14.0" layoutY="7.0" prefHeight="32.0" prefWidth="248.0" text="Unit Name Ex" textFill="#fc0204" visible="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0">
@@ -50,22 +53,22 @@
                 <Font name="System Bold" size="22.0" />
             </font>
         </Label>
-        <Button fx:id="patientsOnUnitButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="625.0" layoutY="132.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#populatePatientsOnUnitTable" prefHeight="54.0" prefWidth="116.0" text="Patients On &#10;Unit&#10;" textAlignment="CENTER" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="132.0">
+        <Button fx:id="patientsOnUnitButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="625.0" layoutY="132.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#populatePatientsOnUnitTable" prefHeight="54.0" prefWidth="116.0" text="Patients On &#10;Unit&#10;" textAlignment="CENTER" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
         </Button>
-        <Button fx:id="patientSummaryButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="639.0" layoutY="197.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewPatientSummary" prefHeight="54.0" prefWidth="116.0" text="Patient &#10;Summary" textAlignment="CENTER" textOverrun="CLIP" visible="false" wrapText="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="132.0">
+        <Button fx:id="patientSummaryButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="639.0" layoutY="197.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewPatientSummary" prefHeight="54.0" prefWidth="116.0" text="Patient &#10;Summary" textAlignment="CENTER" textOverrun="CLIP" visible="false" wrapText="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
         </Button>
-      <Button fx:id="medicalNotesButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="902.0" layoutY="197.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewMedicalNotes" prefHeight="54.0" prefWidth="116.0" text="Patient Notes&#10;&#10;" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="197.0">
+      <Button fx:id="medicalNotesButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="902.0" layoutY="197.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewMedicalNotes" prefHeight="54.0" prefWidth="116.0" text="Patient Notes&#10;&#10;" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="215.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="patientMedicationsButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="912.0" layoutY="207.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewPatientMedications" prefHeight="54.0" prefWidth="116.0" text="Medications" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="262.0">
+      <Button fx:id="patientMedicationsButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="912.0" layoutY="207.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewPatientMedications" prefHeight="54.0" prefWidth="116.0" text="Medications" textOverrun="CLIP" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="277.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
