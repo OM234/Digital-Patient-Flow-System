@@ -1,7 +1,7 @@
 package model;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 //TODO: make all objects private, tighten up encapsulation
 public class DigiSystem {
 
@@ -9,11 +9,14 @@ public class DigiSystem {
     private Map<String, User> listOfUsers;
     private Map<String, Unit2> listOfUnits;
     private Map<String, Patient> listOfPatients;
+    private User currentUser;
 
     private DigiSystem() {
+
         listOfUsers = new HashMap<>();
         listOfUnits = new HashMap<>();
         listOfPatients = new HashMap<>();
+        currentUser = null;
     }
 
     public static DigiSystem getInstance() { // Singleton design pattern
@@ -49,6 +52,28 @@ public class DigiSystem {
     public boolean hasUser(String userID) {
 
         return listOfUsers.containsKey(userID);
+    }
+
+    public void setCurrentUser(String userID){
+
+        if(!this.listOfUsers.containsKey(userID)) {
+
+            try {
+                throw new Exception("User does not exist");
+
+                } catch(Exception e) {
+
+                    System.out.println("user does not exist");
+                    System.exit(0);
+                }
+            }
+
+        currentUser = this.listOfUsers.get(userID);
+    }
+
+    public User getCurrentUser() {
+
+        return currentUser;
     }
 
     public boolean addUnit(Unit2 unit) {

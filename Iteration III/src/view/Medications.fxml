@@ -42,7 +42,7 @@
                 <GridPane prefHeight="41.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="600.0" prefWidth="600.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="600.0" minWidth="600.0" prefWidth="600.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -57,7 +57,7 @@
                                 <Insets left="-1.0" />
                             </GridPane.margin>
                         </Button>
-                        <Button fx:id="enterButton" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="800.0" text="Enter" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                        <Button fx:id="enterButton" maxWidth="-Infinity" mnemonicParsing="false" onAction="#enterMedication" prefWidth="800.0" text="Enter" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
                             <font>
                                 <Font size="15.0" />
                             </font>
@@ -65,6 +65,7 @@
                                 <Insets right="-1.0" />
                             </GridPane.margin>
                         </Button>
+                  <Label fx:id="medicationAddedLabel" text="Label" textFill="RED" visible="false" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
                 <GridPane alignment="CENTER" layoutX="80.0" layoutY="200.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0">
@@ -113,15 +114,15 @@
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
                         <ComboBox fx:id="nameComboBox" GridPane.rowIndex="1" />
-                        <TextField fx:id="nameTextField" alignment="CENTER" promptText="Enter medication name" GridPane.rowIndex="3" />
-                        <TextField fx:id="doseTextField" alignment="CENTER" promptText="Enter dose" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField fx:id="frequencyTextField" alignment="CENTER" promptText="Enter Frequency" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+                        <TextField fx:id="nameTextField" alignment="CENTER" onMouseClicked="#turnNodeDefaultColor" promptText="Enter medication name" GridPane.rowIndex="3" />
+                        <TextField fx:id="doseTextField" alignment="CENTER" onMouseClicked="#turnNodeDefaultColor" promptText="Enter dose" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="frequencyTextField" alignment="CENTER" onMouseClicked="#turnNodeDefaultColor" promptText="Enter Frequency" GridPane.columnIndex="8" GridPane.rowIndex="3" />
                         <ComboBox fx:id="unitsComboBox" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                         <ComboBox fx:id="routeComboBox" prefWidth="150.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                         <ComboBox fx:id="frequencyComboBox" prefWidth="150.0" GridPane.columnIndex="8" GridPane.rowIndex="1" />
                         <DatePicker fx:id="expirationDatePicker" promptText="Select Expiration" GridPane.columnIndex="10" GridPane.rowIndex="1" />
-                  <TextField fx:id="unitsTextField" alignment="CENTER" promptText="Enter units" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <TextField fx:id="routeTextField" alignment="CENTER" promptText="Enter route" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                  <TextField fx:id="unitsTextField" alignment="CENTER" onMouseClicked="#turnNodeDefaultColor" promptText="Enter units" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <TextField fx:id="routeTextField" alignment="CENTER" onMouseClicked="#turnNodeDefaultColor" promptText="Enter route" GridPane.columnIndex="6" GridPane.rowIndex="3" />
                     </children>
                 </GridPane>
             </children>

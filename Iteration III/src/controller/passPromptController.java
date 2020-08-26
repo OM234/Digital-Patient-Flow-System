@@ -15,16 +15,15 @@ public class passPromptController {
 
     DigiSystem digiSystem = DigiSystem.getInstance();
 
-    @FXML
-    private TextField userIDTextBox;
-    @FXML
-    private PasswordField passPassField;
-    @FXML
+    @FXML private TextField userIDTextBox;
+    @FXML private PasswordField passPassField;
+    private String userID;
+    private String pass;
 
     public void passChecker() throws IOException {
 
-        String userID = userIDTextBox.getText();
-        String pass = passPassField.getText();
+        userID = userIDTextBox.getText();
+        pass = passPassField.getText();
 
         userIDTextBox.clear();
         passPassField.clear();
@@ -47,6 +46,8 @@ public class passPromptController {
     }
 
     private void loadDigiHealth() throws IOException {
+
+        digiSystem.setCurrentUser(userID);
 
         Stage stage = (Stage) userIDTextBox.getScene().getWindow();
         stage.close();

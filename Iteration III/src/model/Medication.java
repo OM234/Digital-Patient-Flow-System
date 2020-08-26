@@ -7,7 +7,7 @@ import java.util.Set;
 public class Medication {
 
     private String name;
-    private int dose;
+    private double dose;
     private String units;
     private String route;
     private String frequency;
@@ -19,7 +19,7 @@ public class Medication {
     public static List<String> frequencyList;
     public static Set<String> medicationNames;
 
-    public Medication(String name, int dose, String units, String route, String frequency, String prescriberID,
+    public Medication(String name, double dose, String units, String route, String frequency, String prescriberID,
                       LocalDate prescribed, LocalDate expires) {
 
         this.name = name;
@@ -40,11 +40,11 @@ public class Medication {
         this.name = name;
     }
 
-    public int getDose() {
+    public double getDose() {
         return dose;
     }
 
-    public void setDose(int dose) {
+    public void setDose(double dose) {
         this.dose = dose;
     }
 
