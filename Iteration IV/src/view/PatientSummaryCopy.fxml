@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="416.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientSummaryController">
+   <children>
+      <Label fx:id="patientSummaryLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="554.0" text="Patient Summary" textFill="WHITE" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="1.0" layoutY="44.0" prefHeight="204.0" prefWidth="732.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="46.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" prefWidth="34.13330030441284" />
+          <ColumnConstraints hgrow="NEVER" maxWidth="293.4000244140625" minWidth="10.0" prefWidth="96.86664428710938" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="531.7999801635742" minWidth="10.0" prefWidth="141.93335571289066" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="427.8" minWidth="10.0" prefWidth="121.93339233398439" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="427.8" minWidth="6.200048828124977" prefWidth="189.66660766601564" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="164.33330078125005" minWidth="10.0" prefWidth="123.26667480468745" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="23.266699218749977" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints fillHeight="false" maxHeight="382.6" minHeight="10.0" prefHeight="207.53336486816406" valignment="CENTER" vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <VBox fillWidth="false" maxHeight="175.0" minHeight="175.0" prefHeight="175.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <children>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Patient ID:" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="First Name:" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Last Name:" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="DOB, age" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Gender:" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Height (cm):" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="Weight (kg):" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" minHeight="20.0" prefHeight="20.0" text="BMI:" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox fillWidth="false" maxHeight="175.0" minHeight="175.0" prefHeight="175.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <children>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="12345" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Osman" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Momoh" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="June 5 1990, 30" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Male" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="172" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="75" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox maxHeight="175.0" minHeight="175.0" prefHeight="175.0" prefWidth="100.0" GridPane.columnIndex="3">
+               <children>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Street Number:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Street Name:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Postal Code:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="City:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Province:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Country:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Telephone:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Email:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox maxHeight="175.0" minHeight="175.0" prefHeight="175.0" prefWidth="100.0" GridPane.columnIndex="4">
+               <children>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="2021" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Atwater" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="H3H 2P2" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Montreal" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Quebec" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="Canada" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="(514)123-4567" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="20.0" prefHeight="20.0" prefWidth="104.0" text="frost57@gmail.com" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="116.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="44.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Edit%20image.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </GridPane>
+      <GridPane layoutX="1.0" layoutY="250.0" prefHeight="134.0" prefWidth="732.0" AnchorPane.bottomAnchor="-12.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="116.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="44.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Notes%20Image.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Pill%20image.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
