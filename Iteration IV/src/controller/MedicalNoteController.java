@@ -19,6 +19,7 @@ public class MedicalNoteController {
     @FXML private Label medicalNoteLabel;
     @FXML private Label medicalNoteLabel2;
     @FXML private TableView<MedicalNote> noteTableView;
+    @FXML private TableColumn<MedicalNote, String> writerColumn;
     @FXML private TableColumn<MedicalNote, String> dateColumn;
     @FXML private TableColumn<MedicalNote, String> pulseColumn;
     @FXML private TableColumn<MedicalNote, String> bpColumn;
@@ -44,6 +45,7 @@ public class MedicalNoteController {
 
     public void setCellValueFactories() {
 
+        writerColumn.setCellValueFactory(new PropertyValueFactory<>("writerID"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         pulseColumn.setCellValueFactory(new PropertyValueFactory<>("pulse"));
         bpColumn.setCellValueFactory(new PropertyValueFactory<>("BP"));

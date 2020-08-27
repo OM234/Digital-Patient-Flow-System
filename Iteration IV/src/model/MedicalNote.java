@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class MedicalNote {
 
+    private String writerID;
     private Integer pulse;
     private int noteID;
     private Integer o2Sat;
@@ -18,6 +19,7 @@ public class MedicalNote {
     
     public MedicalNote() {
 
+        writerID = "";
         BP = "";
         bloodPressure = new BloodPressure(-1, -1);
         pulse = null;
@@ -25,6 +27,14 @@ public class MedicalNote {
         deleted = false;
         note = new SimpleStringProperty("");
         date = LocalDate.now();
+    }
+
+    public String getWriterID() {
+        return writerID;
+    }
+
+    public void setWriterID(String writerID) {
+        this.writerID = writerID;
     }
 
     public String getBP() {

@@ -162,6 +162,7 @@ public class makeData {
     public void makeMedicalNotes() {
 
         Random random = new Random();
+        List<User> userList = new ArrayList<>(digiSystem.getMapOfUsers().values());
 
         digiSystem.getMapOfPatients().values().forEach(patient -> {
 
@@ -169,6 +170,7 @@ public class makeData {
 
                 MedicalNote medicalNote = new MedicalNote();
                 medicalNote.setNoteID(patient.getNextMedicalNoteID());
+                medicalNote.setWriterID(userList.get(random.nextInt(userList.size())).getUserID());
                 medicalNote.setTemperature(random.nextDouble() * 2.5 + 35.5);
                 medicalNote.setO2Sat(random.nextInt(8) + 93);
                 medicalNote.setPulse(random.nextInt(71) + 50);
