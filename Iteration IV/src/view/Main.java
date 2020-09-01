@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import persistence.*;
 
 public class Main extends Application {
 
@@ -20,6 +21,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         debug.debug();
+        Connection connection = new Connection();
+        connection.getConnection();
     }
 
     public static void main(String[] args) {

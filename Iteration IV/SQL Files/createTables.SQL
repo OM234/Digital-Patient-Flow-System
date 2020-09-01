@@ -77,8 +77,22 @@ CREATE TABLE IF NOT EXISTS patient_medication (
 CREATE INDEX patient_medication__index
     on patient_medication (patientID);
 
-CREATE TABLE medical_note (
+CREATE TABLE IF NOT EXISTS medical_note (
 
     patientID VARCHAR(100),
-    
-)
+    writerID VARCHAR(100),
+    pulse int,
+    noteID int,
+    o2Sat int,
+    sbp int,
+    dbp int,
+    temp double,
+    deleted boolean,
+    note VARCHAR(10000),
+    date Date,
+    PRIMARY KEY(patientID, noteID),
+    FOREIGN KEY (patientID) REFERENCES patient(patientID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (writerID) REFERENCES user(userID) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+CREATE INDEX patientID ON medical_note(patientID);
