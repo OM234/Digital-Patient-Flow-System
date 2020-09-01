@@ -21,8 +21,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         debug.debug();
-        Connection connection = new Connection();
-        connection.getConnection();
+        Connection connection = Connection.getInstance();
     }
 
     public static void main(String[] args) {

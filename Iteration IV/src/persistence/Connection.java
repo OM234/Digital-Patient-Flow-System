@@ -6,29 +6,41 @@ import java.util.Properties;
 
 public class Connection {
 
+    private static Connection singleInstance = null;
+    private static java.sql.Connection conn;
     String userName = "root";
     String password = "MyNewPass";
     String dbms = "mysql";
     String serverName = "localhost";
     String portNumber = "3306";
 
-    public java.sql.Connection getConnection() throws SQLException, ClassNotFoundException {
+    private Connection() {
 
+        conn = null;
+    }
 
-//        Class.forName("oracle.jdbc.driver.OracleDriver");
+    public static Connection getInstance() throws SQLException {
 
-        java.sql.Connection conn = null;
-//        Properties connectionProps = new Properties();
-//        connectionProps.put("user", this.userName);
-//        connectionProps.put("password", this.password);
-//
-//        conn = DriverManager.getConnection(
-//                "jdbc:" + this.dbms + "://" +
-//                        this.serverName +
-//                        ":" + this.portNumber + "/",
-//                connectionProps);
-//
-//        System.out.println("Connected to database");
+        if(singleInstance == null) {
+            singleInstance = new Connection();
+            singleInstance.getConnection();
+        }
+        return singleInstance;
+    }
+
+    public java.sql.Connection getConnection() throws SQLException {
+
+        Properties connectionProps = new Properties();
+        connectionProps.put("user", this.userName);
+        connectionProps.put("password", this.password);
+
+        conn = DriverManager.getConnection(
+                "jdbc:" + this.dbms + "://" +
+                        this.serverName +
+                        ":" + this.portNumber + "/digihealth",
+                connectionProps);
+
+        System.out.println("Connected to database");
         return conn;
     }
 }
