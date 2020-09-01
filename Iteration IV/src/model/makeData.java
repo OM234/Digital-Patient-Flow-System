@@ -1,14 +1,25 @@
 package model;
 
+import persistence.UserDAO;
+import services.DigiServices;
+
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class makeData {
 
-    DigiSystem digiSystem = DigiSystem.getInstance();
+    DigiSystem digiSystem;
+    DigiServices digiServices;
 
-    public void debug() throws IOException {
+    public makeData() throws SQLException{
+
+        digiSystem = DigiSystem.getInstance();
+        digiServices = DigiServices.getInstance();
+    }
+
+    public void debug() throws IOException, SQLException {
 
         addUsers();
         makeUnits();
@@ -20,15 +31,15 @@ public class makeData {
         makeMedications();
     }
 
-    public void addUsers() {
+    public void addUsers() throws SQLException {
 
-        new AUser("", "");
-        new AUser("admin", "password");
-        new AUser("admin2", "password");
-        new AUser("admin3", "password");
-        new AUser("admin4", "password");
-        new AUser("admin5", "password");
-        new AUser("admin6", "password");
+        digiServices.addUser(new AUser("", ""));
+        digiSystem.addUser(new AUser("", ""));
+        for(int i = 0 ; i < 100 ; i++) {
+            User user = new AUser("healthProf" + (i+1), "password" + (i+1));
+            digiServices.addUser(user);
+            digiSystem.addUser(user);
+        }
     }
 
     public void makeUnits() {

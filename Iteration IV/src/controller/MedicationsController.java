@@ -10,7 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import model.DigiSystem;
 import model.Medication;
 import model.Patient;
+import services.DigiServices;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -47,12 +49,14 @@ public class MedicationsController {
     private List<TextField> textFields;
     private Patient patient;
     private Medication selected;
-    private DigiSystem digiSystem;
+    //private DigiSystem digiSystem;
+    private DigiServices digiServices;
 
-    public MedicationsController(){
+    public MedicationsController() throws SQLException {
 
         this.selected = null;
-        digiSystem = DigiSystem.getInstance();
+        //digiSystem = DigiSystem.getInstance();
+        digiServices = DigiServices.getInstance();
     }
 
     public void initialize() {
@@ -303,7 +307,7 @@ public class MedicationsController {
                 .getSelectedItem() : routeTextField.getText();
         frequency = !frequencyComboBox.getSelectionModel().getSelectedItem().equals("...") ? frequencyComboBox.getSelectionModel()
                 .getSelectedItem() : frequencyTextField.getText();
-        prescriberID = digiSystem.getCurrentUser().getUserID();
+        prescriberID = digiServices.getCurrentUser().getUserID();
         prescribed = LocalDate.now();
         expires = expirationDatePicker.getValue();
 

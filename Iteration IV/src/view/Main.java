@@ -7,10 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import persistence.*;
+import java.sql.SQLException;
 
 public class Main extends Application {
 
     makeData debug = new makeData();
+
+    public Main() throws SQLException {}
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -21,7 +24,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         debug.debug();
-        Connection connection = Connection.getInstance();
+        UserDAO userDAO = new UserDAO();
+        userDAO.getAll();
     }
 
     public static void main(String[] args) {

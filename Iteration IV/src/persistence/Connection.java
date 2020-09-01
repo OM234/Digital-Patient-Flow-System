@@ -30,6 +30,10 @@ public class Connection {
 
     public java.sql.Connection getConnection() throws SQLException {
 
+        if(conn != null) {
+            return conn;
+        }
+
         Properties connectionProps = new Properties();
         connectionProps.put("user", this.userName);
         connectionProps.put("password", this.password);

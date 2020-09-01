@@ -12,17 +12,17 @@ public abstract class User {
 
     public User(String userID, String password) {
 
-        this.digiSystem = DigiSystem.getInstance();
-
-        if(digiSystem.hasUser(userID)){
-            throw new IllegalArgumentException("User already exists");
-        }
+//        this.digiSystem = DigiSystem.getInstance();
+//
+//        if(digiSystem.hasUser(userID)){
+//            throw new IllegalArgumentException("User already exists");
+//        }
 
         this.userID = userID;
         this.password = password;
         this.unitsOfUser = new HashMap<>();
 
-        digiSystem.addUser(this);
+//        digiSystem.addUser(this);
     }
 
     public String getUserID() {

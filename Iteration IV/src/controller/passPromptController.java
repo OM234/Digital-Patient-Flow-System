@@ -8,19 +8,25 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.DigiSystem;
-
+import services.DigiServices;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class passPromptController {
 
-    DigiSystem digiSystem = DigiSystem.getInstance();
-
+    //DigiSystem digiSystem = DigiSystem.getInstance();
+    DigiServices digiServices;
     @FXML private TextField userIDTextBox;
     @FXML private PasswordField passPassField;
     private String userID;
     private String pass;
 
-    public void passChecker() throws IOException {
+    public passPromptController() throws SQLException {
+
+        digiServices = DigiServices.getInstance();
+    }
+
+    public void passChecker() throws IOException, SQLException {
 
         userID = userIDTextBox.getText();
         pass = passPassField.getText();
@@ -28,7 +34,7 @@ public class passPromptController {
         userIDTextBox.clear();
         passPassField.clear();
 
-        if (digiSystem.passChecker(userID, pass)) {
+        if (digiServices.passChecker(userID, pass)) {
 
             loadDigiHealth();
 
@@ -47,7 +53,7 @@ public class passPromptController {
 
     private void loadDigiHealth() throws IOException {
 
-        digiSystem.setCurrentUser(userID);
+        //digiServices.setCurrentUser(userID);
 
         Stage stage = (Stage) userIDTextBox.getScene().getWindow();
         stage.close();
