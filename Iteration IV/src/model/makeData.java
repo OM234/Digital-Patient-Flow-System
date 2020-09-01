@@ -54,7 +54,7 @@ public class makeData {
         }
     }
 
-    public void makePatients() throws FileNotFoundException {
+    public void makePatients() throws FileNotFoundException, SQLException {
 
         ArrayList<String> namesList = new ArrayList<>();
         File names = new File("src/model/Names.txt");
@@ -66,13 +66,19 @@ public class makeData {
 
         Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
+
+            Patient patient;
+
             int index = rand.nextInt(namesList.size());
             String firstName = namesList.get(index);
             index = rand.nextInt(namesList.size());
             String lastName = namesList.get(index);
             String id = Integer.toString((i + 1) * 312);
             char gender = index % 2 == 0 ? 'M' : 'F';
+
+            patient = new Patient(id);
             new Patient(id, firstName, lastName, gender);
+
         }
     }
 

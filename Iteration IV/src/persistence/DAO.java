@@ -9,5 +9,5 @@ public interface DAO<T> {
     List<T> getAll() throws SQLException;
     void save(T t) throws SQLException;
     void update(T t, String[] params);
-    void delete(T t);
+    void delete(T t) throws SQLException;
 }

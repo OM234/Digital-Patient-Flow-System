@@ -71,9 +71,10 @@ public class DigiServices {
         if(!userDAO.get(userID).isEmpty() && userDAO.get(userID).get(0).getPassword().equals(password)) {
 
             setCurrentUser(userDAO.get(userID).get(0));
+
             return true;
 
-        } else{
+        } else {
 
             return false;
         }

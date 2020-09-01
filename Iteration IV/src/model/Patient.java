@@ -1,9 +1,11 @@
 package model;
 
+import services.DigiServices;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class Patient {
 
+    private DigiServices digiServices;
     private DigiSystem digiSystem;
     private SimpleStringProperty patientID;
     private SimpleStringProperty firstName;
@@ -23,6 +26,12 @@ public class Patient {
     private char gender;
     private List<MedicalNote> medicalNotes;
     private List<Medication> medications;
+
+    public Patient(String patientID) throws SQLException {
+
+        digiServices = DigiServices.getInstance();
+        this.patientID.set(patientID);
+    }
 
     public Patient(String patientID, String firstName, String lastName, char gender) {
 
