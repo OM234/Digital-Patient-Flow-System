@@ -8,12 +8,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.DigiServices;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class passPromptController {
 
-    //DigiSystem digiSystem = DigiSystem.getInstance();
     DigiServices digiServices;
     @FXML private TextField userIDTextBox;
     @FXML private PasswordField passPassField;
@@ -52,7 +52,6 @@ public class passPromptController {
 
     private void loadDigiHealth() throws IOException {
 
-        //digiServices.setCurrentUser(userID);
 
         Stage stage = (Stage) userIDTextBox.getScene().getWindow();
         stage.close();
@@ -60,7 +59,6 @@ public class passPromptController {
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/DigiHealth.fxml"));
         Parent root = fxmlLoader.load();
-        //Parent root = FXMLLoader.load(getClass().getResource("/view/DigiHealth.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());

@@ -16,6 +16,7 @@ public class UnitDAO implements DAO<Unit> {
     java.sql.Connection conn;
     private static final String INSERT_SQL = "insert into unit values (?,?);";
     private static final String UPDATE_SQL = "update unit set unitID = ?, name = ? where unitID = ?;";
+    private static final String DELETE_SQL = "delete from unit where unitID = ?;";
 
     public UnitDAO() throws SQLException {
 
@@ -77,7 +78,12 @@ public class UnitDAO implements DAO<Unit> {
     }
 
     @Override
-    public void delete(Unit Unit) throws SQLException {
+    public void delete(Unit unit) throws SQLException {
 
+        PreparedStatement statement = conn.prepareStatement(DELETE_SQL);
+
+        statement.setString(1, unit.getID());
+
+        statement.executeUpdate();
     }
 }

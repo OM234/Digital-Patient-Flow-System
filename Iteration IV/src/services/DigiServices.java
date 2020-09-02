@@ -4,6 +4,7 @@ import bean.*;
 import persistence.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DigiServices {
@@ -107,6 +108,19 @@ public class DigiServices {
      ******************** Patient Services ********************
      */
 
+    public Patient getPatient(String patientID) throws SQLException {
+
+        if(!hasPatient(patientID)) {
+
+            return null;
+
+        } else {
+
+            return patientDAO.get(patientID).get(0);
+        }
+
+    }
+
     public List<Patient> getAllPatients() throws SQLException {
 
         return patientDAO.getAll();
@@ -122,6 +136,19 @@ public class DigiServices {
 
             patientDAO.save(patient);
 
+            return true;
+        }
+    }
+
+    public boolean removePatient(Patient patient) throws SQLException {
+
+        if(!hasPatient(patient)) {
+
+            return false;
+
+        } else {
+
+            patientDAO.delete(patient);
             return true;
         }
     }
@@ -172,6 +199,18 @@ public class DigiServices {
         return unitDAO.getAll();
     }
 
+    public Unit getUnit(String unitID) throws SQLException {
+
+        if(!hasUnit(unitID)) {
+
+            return null;
+
+        } else {
+
+            return unitDAO.get(unitID).get(0);
+        }
+    }
+
     public boolean addUnit(Unit unit) throws SQLException {
 
         if(hasUnit(unit)) {
@@ -186,9 +225,35 @@ public class DigiServices {
         }
     }
 
+    public boolean removeUnit(Unit unit) throws SQLException {
+
+        if(!hasUnit(unit)) {
+
+            return false;
+
+        } else {
+
+            unitDAO.delete(unit);
+
+            return true;
+        }
+    }
+
     public boolean hasUnit(Unit unit) throws SQLException {
 
         if(!unitDAO.get(unit.getID()).isEmpty()) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
+    public boolean hasUnit(String unitID) throws SQLException {
+
+        if(!unitDAO.get(unitID).isEmpty()) {
 
             return true;
 
@@ -218,6 +283,33 @@ public class DigiServices {
 
             return false;
         }
+    }
+
+    public List<Patient> getPatientsOnUnit(Unit unit) throws SQLException {
+
+        List<PatientOnUnit> patientsOnUnit = patOnUnitDAO.get(unit.getID());
+        List<Patient> patientList = new ArrayList<>();
+
+        patientsOnUnit.forEach(e -> {
+
+            try {
+                patientList.add(getPatient(e.getPatientID()));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        return patientList;
+    }
+
+    public boolean removePatientFromUnit(Patient patient, Unit unit) throws SQLException {
+
+        PatientOnUnit patientOnUnit = new PatientOnUnit();
+        patientOnUnit.setPatientID(patient.getID());
+        patientOnUnit.setUnitID(unit.getID());
+        patOnUnitDAO.delete(patientOnUnit);
+
+        return true;
     }
 
     /*

@@ -1,6 +1,7 @@
 package persistence;
 
 import bean.Patient;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ public class PatientDAO implements DAO<Patient>{
     private static final String INSERT_SQL = "insert into patient values (?,?,?,?,?,?,?,?);";
     private static final String UPDATE_SQL = "update patient set patientID = ?, firstName = ?, lastName = ?, " +
             "height = ?, weight = ?,  BMI = ?, DOB = ?, Gender = ? where patientID = ?;";
+    private static final String DELETE_SQL = "delete from patient where patientID = ?;";
 
     public PatientDAO() throws SQLException {
 
@@ -101,5 +103,10 @@ public class PatientDAO implements DAO<Patient>{
     @Override
     public void delete(Patient patient) throws SQLException {
 
+        PreparedStatement statement = conn.prepareStatement(DELETE_SQL);
+
+        statement.setString(1, patient.getID());
+
+        statement.executeUpdate();
     }
 }

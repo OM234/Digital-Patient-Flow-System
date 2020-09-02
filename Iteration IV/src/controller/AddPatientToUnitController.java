@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.DigiSystem;
 
+import java.sql.SQLException;
+
 public class AddPatientToUnitController {
 
     private DigiSystem digiSystem = DigiSystem.getInstance();
@@ -16,7 +18,7 @@ public class AddPatientToUnitController {
     @FXML private DigiHealthController digiHealthController;
 
 
-    public void addPatientToUnit() {
+    public void addPatientToUnit() throws SQLException {
 
         String patientID = ptIDTextArea.getText();
 
