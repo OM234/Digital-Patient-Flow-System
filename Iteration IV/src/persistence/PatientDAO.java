@@ -66,7 +66,6 @@ public class PatientDAO implements DAO<Patient>{
     @Override
     public void save(Patient patient) throws SQLException {
 
-
         PreparedStatement statement = conn.prepareStatement(INSERT_SQL);
         statement.setString(1, patient.getID());
         statement.setString(2, patient.getFirstName());

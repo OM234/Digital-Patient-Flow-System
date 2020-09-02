@@ -2,7 +2,7 @@ package bean;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class contactInfo {
+public class ContactInfo {
 
     private String patientID;
     private String streetNumber;
@@ -14,7 +14,7 @@ public class contactInfo {
     private String phoneNumber;
     private String email;
 
-    public contactInfo() {}
+    public ContactInfo() {}
 
     public String getPatientID() {
         return patientID;

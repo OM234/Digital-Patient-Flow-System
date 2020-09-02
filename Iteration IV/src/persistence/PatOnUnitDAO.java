@@ -5,6 +5,7 @@ import bean.PatientOnUnit;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,14 @@ public class PatOnUnitDAO implements DAO<PatientOnUnit> {
         statement.setString(1, patientOnUnit.getUnitID());
         statement.setString(2, patientOnUnit.getPatientID());
 
-        statement.executeUpdate();
+        try {
+
+            statement.executeUpdate();
+
+        } catch (SQLIntegrityConstraintViolationException ex ) {
+
+            System.out.println("Patient already on unit");
+        }
     }
 
     @Override

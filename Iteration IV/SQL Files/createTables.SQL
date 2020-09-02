@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS medication_prescriber (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS patient_medication (
+CREATE TABLE IF NOT EXISTS medication (
 
     patientID VARCHAR(100),
     prescriberID VARCHAR(100),

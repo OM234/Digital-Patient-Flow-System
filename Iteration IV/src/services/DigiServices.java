@@ -1,12 +1,8 @@
 package services;
 
-import bean.Patient;
-import bean.Unit;
-import model.Unit2;
-import bean.User;
-import persistence.PatientDAO;
-import persistence.UnitDAO;
-import persistence.UserDAO;
+import bean.*;
+import persistence.*;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,6 +12,10 @@ public class DigiServices {
     private UserDAO userDAO;
     private PatientDAO patientDAO;
     private UnitDAO unitDAO;
+    private PatOnUnitDAO patOnUnitDAO;
+    private MedicalNoteDAO medicalNoteDAO;
+    private ContactInfoDAO contactInfoDAO;
+    private MedicationDAO medicationDAO;
     private User currentUser;
 
     private DigiServices() throws SQLException {
@@ -24,6 +24,10 @@ public class DigiServices {
         userDAO = new UserDAO();
         patientDAO = new PatientDAO();
         unitDAO = new UnitDAO();
+        patOnUnitDAO = new PatOnUnitDAO();
+        medicalNoteDAO = new MedicalNoteDAO();
+        contactInfoDAO = new ContactInfoDAO();
+        medicationDAO = new MedicationDAO();
     }
 
     public static DigiServices getInstance() throws SQLException {
@@ -55,6 +59,11 @@ public class DigiServices {
             userDAO.save(user);
             return true;
         }
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+
+        return userDAO.getAll();
     }
 
     public void setCurrentUser(User user) throws SQLException {
@@ -129,18 +138,17 @@ public class DigiServices {
         }
     }
 
-//    public boolean setFirstName(String patientID, String name) throws SQLException{
-//
-//        if(!patientDAO.get(patientID).isEmpty()) {
-//
-//            patientDAO.update(new Patient(patientID), "firstName", name);
-//            return true;
-//
-//        } else {
-//
-//            return false;
-//        }
-//    }
+    public boolean hasPatient(String patientID) throws SQLException {
+
+        if(!patientDAO.get(patientID).isEmpty()) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
 
     public boolean updatePatient(Patient patient) throws SQLException {
 
@@ -155,36 +163,14 @@ public class DigiServices {
         }
     }
 
-//    public boolean setLastName(String patientID, String name) throws SQLException {
-//
-//        if(!patientDAO.get(patientID).isEmpty()) {
-//
-//            patientDAO.update(new Patient(patientID), "lastName", name);
-//            return true;
-//
-//        } else {
-//
-//            return false;
-//        }
-//    }
-//
-//    public boolean setGender(String patientID, char gender) throws SQLException {
-//
-//
-//        if(!patientDAO.get(patientID).isEmpty()) {
-//
-//            patientDAO.update(new Patient(patientID), "gender", Character.toString(gender));
-//            return true;
-//
-//        } else {
-//
-//            return false;
-//        }
-//    }
-
     /*
      ******************** Unit Services ********************
      */
+
+    public List<Unit> getAllUnits() throws SQLException {
+
+        return unitDAO.getAll();
+    }
 
     public boolean addUnit(Unit unit) throws SQLException {
 
@@ -212,15 +198,78 @@ public class DigiServices {
         }
     }
 
-    public boolean addPatToUnit(Unit unitID, Patient patient) throws SQLException {
+    /*
+     ******************** PatOnUnit Services ********************
+     */
 
-//        if(hasUnit(unitID) && hasPatient(patientID)) {
-//
-//            return true;
-//        } else {
-//
-//            return false;
-//        }
-        return false;
+
+    public boolean addPatToUnit(Unit unit, Patient patient) throws SQLException {
+
+        if(hasUnit(unit) && hasPatient(patient)) {
+
+
+            PatientOnUnit patientOnUnit = new PatientOnUnit();
+            patientOnUnit.setUnitID(unit.getID());
+            patientOnUnit.setPatientID(patient.getID());
+            patOnUnitDAO.save(patientOnUnit);
+            return true;
+
+        } else {
+
+            return false;
+        }
     }
+
+    /*
+     ******************** MedicalNote Services ********************
+     */
+
+    public boolean addMedicalNote(MedicalNote medicalNote) throws SQLException {
+
+        if(!hasPatient(medicalNote.getPatientID())) {
+
+            return false;
+
+        } else {
+
+            medicalNoteDAO.save(medicalNote);
+            return true;
+        }
+    }
+
+    /*
+     ******************** ContactInfo Services ********************
+     */
+
+    public boolean addContactInfo(ContactInfo contactInfo) throws SQLException {
+
+        if(!hasPatient(contactInfo.getPatientID())) {
+
+            return false;
+
+        } else {
+
+            contactInfoDAO.save(contactInfo);
+            return true;
+        }
+    }
+
+    /*
+     ******************** Medication Services ********************
+     */
+
+    public boolean addMedication(Medication medication) throws SQLException {
+
+        if(!hasPatient(medication.getPatientID())) {
+
+            return false;
+
+        } else {
+
+            medicationDAO.save(medication);
+            return true;
+        }
+    }
+
+
 }

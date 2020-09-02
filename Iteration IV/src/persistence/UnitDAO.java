@@ -34,7 +34,12 @@ public class UnitDAO implements DAO<Unit> {
 
     @Override
     public List<Unit> getAll() throws SQLException {
-        return null;
+
+        List<Unit> units = new ArrayList<>();
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from unit");
+
+        return getUnitList(units, statement, resultSet);
     }
 
     private List<Unit> getUnitList(List<Unit> units, Statement statement, ResultSet resultSet) throws SQLException {

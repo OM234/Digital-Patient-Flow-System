@@ -2,7 +2,7 @@ package bean;
 
 import java.time.LocalDate;
 
-public class patientMedication {
+public class Medication {
 
     private String patientID;
     private String prescriberID;
@@ -14,7 +14,7 @@ public class patientMedication {
     private LocalDate prescribed;
     private LocalDate expires;
 
-    public patientMedication() {}
+    public Medication() {}
 
     public String getPatientID() {
         return patientID;

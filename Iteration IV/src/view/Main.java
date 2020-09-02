@@ -25,9 +25,8 @@ public class Main extends Application {
         primaryStage.setTitle("DigiHealth");
         primaryStage.setScene(scene);
         primaryStage.show();
-        debug.debug();
-        UserDAO userDAO = new UserDAO();
-        userDAO.getAll();
+        //debug.debug();
+
     }
 
     public static void main(String[] args) {
