@@ -1,7 +1,6 @@
 package persistence;
 
-import model.AUser;
-import model.User;
+import bean.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,7 +42,9 @@ public class UserDAO implements DAO<User> {
 
             String userId = resultSet.getString("userID");
             String password = resultSet.getString("password");
-            User user = new AUser(userId, password);
+            User user = new User();
+            user.setID(userId);
+            user.setPassword(password);
             users.add(user);
         }
 
@@ -57,13 +58,13 @@ public class UserDAO implements DAO<User> {
     public void save(User user) throws SQLException {
 
         Statement statement = conn.createStatement();
-        statement.execute("insert into user values (\""+ user.getUserID() +"\", \""+ user.getPassword() +"\");");
+        statement.execute("insert into user values (\""+ user.getID() +"\", \""+ user.getPassword() +"\");");
 
         statement.close();
     }
 
     @Override
-    public void update(User user, String[] params) {
+    public void update(User user) {
 
     }
 

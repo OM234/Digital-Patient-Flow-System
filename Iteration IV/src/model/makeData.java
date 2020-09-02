@@ -1,22 +1,24 @@
 package model;
 
-import persistence.UserDAO;
+import persistence.PatientDAO;
 import services.DigiServices;
-
 import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
+import bean.User;
 
 public class makeData {
 
     DigiSystem digiSystem;
     DigiServices digiServices;
+    PatientDAO patientDAO;
 
     public makeData() throws SQLException{
 
         digiSystem = DigiSystem.getInstance();
         digiServices = DigiServices.getInstance();
+        patientDAO = new PatientDAO();
     }
 
     public void debug() throws IOException, SQLException {
@@ -33,16 +35,21 @@ public class makeData {
 
     public void addUsers() throws SQLException {
 
-        digiServices.addUser(new AUser("", ""));
-        digiSystem.addUser(new AUser("", ""));
+        User user1 = new User();
+        user1.setID("");
+        user1.setPassword("");
+        digiServices.addUser(user1);
+        digiSystem.addUser(user1);
         for(int i = 0 ; i < 100 ; i++) {
-            User user = new AUser("healthProf" + (i+1), "password" + (i+1));
+            User user = new User();
+            user.setID("healthProf" + (i+1));
+            user.setPassword("password" + (i+1));
             digiServices.addUser(user);
             digiSystem.addUser(user);
         }
     }
 
-    public void makeUnits() {
+    public void makeUnits() throws SQLException {
 
         String[] unitNames = {"ER", "ICU", "Medicine", "Surgery", "Ophthalmology", "Cardiology", "Geriatrics", "Psychiatry",
             "Pediatrics", "Rehabilitation", "Dialysis"};
@@ -50,7 +57,11 @@ public class makeData {
         Random rand = new Random();
         for (int i = 0; i < 50; i++) {
             int indexNames = rand.nextInt(unitNames.length);
-            new Unit2(Integer.toString(i * 123), unitNames[indexNames] + "#" + i);
+            Unit2 unit = new Unit2(Integer.toString(i * 123), unitNames[indexNames] + "#" + i);
+            bean.Unit unit1 = new bean.Unit();
+            unit1.setID(Integer.toString(i * 123));
+            unit1.setName(unitNames[indexNames] + "#" + i);
+            digiServices.addUnit(unit1);
         }
     }
 
@@ -65,7 +76,7 @@ public class makeData {
         }
 
         Random rand = new Random();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
 
             Patient patient;
 
@@ -77,8 +88,15 @@ public class makeData {
             char gender = index % 2 == 0 ? 'M' : 'F';
 
             patient = new Patient(id);
+            patient.setLastName(lastName);
+            patient.setGender(gender);
             new Patient(id, firstName, lastName, gender);
-
+            bean.Patient patient1 = new bean.Patient();
+            patient1.setID(id);
+            patient1.setFirstName(firstName);
+            patient1.setLastName(lastName);
+            patient1.setGender(gender);
+            digiServices.addPatient(patient1);
         }
     }
 
@@ -96,14 +114,14 @@ public class makeData {
             patList.add(digiSystem.getMapOfPatients().get(patientID));
         }
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
             int patInd = rand.nextInt(patList.size());
             int unitInd = rand.nextInt(unitsList.size());
             unitsList.get(unitInd).addPatientToUnit(patList.get(patInd).getPatientID());
         }
     }
 
-    public void makeHeightWeightBMIDOB() {
+    public void makeHeightWeightBMIDOB() throws SQLException {
 
         Collection<Patient> patientList = digiSystem.getMapOfPatients().values();
         Random rand = new Random();
@@ -113,7 +131,21 @@ public class makeData {
             e.setWeight(rand.nextInt(28) + 54);
             //e.setBMI(e.getWeight() / Math.pow((e.getHeight()/100.0),2));
             e.setDOB(LocalDate.of(rand.nextInt(80)+1920, rand.nextInt(11)+1, rand.nextInt(28)+1));
-    });
+        });
+
+        List<bean.Patient> patientList1 = digiServices.getAllPatients();
+
+        patientList1.stream().forEach(e -> {
+            e.setHeight(rand.nextInt(30) + 150);
+            e.setWeight(rand.nextInt(28) + 54);
+            e.setBMI(e.getWeight() / Math.pow((e.getHeight()/100.0),2));
+            e.setDOB(LocalDate.of(rand.nextInt(80)+1920, rand.nextInt(11)+1, rand.nextInt(28)+1));
+            try {
+                digiServices.updatePatient(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public void makeContactInformation() throws FileNotFoundException {
@@ -187,7 +219,7 @@ public class makeData {
 
                 MedicalNote medicalNote = new MedicalNote();
                 medicalNote.setNoteID(patient.getNextMedicalNoteID());
-                medicalNote.setWriterID(userList.get(random.nextInt(userList.size())).getUserID());
+                medicalNote.setWriterID(userList.get(random.nextInt(userList.size())).getID());
                 medicalNote.setTemperature(random.nextDouble() * 2.5 + 35.5);
                 medicalNote.setO2Sat(random.nextInt(8) + 93);
                 medicalNote.setPulse(random.nextInt(71) + 50);
@@ -278,7 +310,7 @@ public class makeData {
                 String units = Medication.unitsList.get(rand.nextInt(Medication.unitsList.size()));
                 String route = Medication.routeList.get(rand.nextInt(Medication.routeList.size()));
                 String frequency = Medication.frequencyList.get(rand.nextInt(Medication.frequencyList.size()));
-                String prescriberID = userList.get(rand.nextInt(userList.size())).getUserID();
+                String prescriberID = userList.get(rand.nextInt(userList.size())).getID();
                 LocalDate prescribed = LocalDate.of(rand.nextInt(30)+1970, rand.nextInt(11)+1,
                         rand.nextInt(26)+1);
                 LocalDate expires = LocalDate.of(rand.nextInt(30)+2000, rand.nextInt(11)+1,

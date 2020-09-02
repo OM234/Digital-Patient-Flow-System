@@ -17,9 +17,9 @@ public /*abstract*/ class Unit2 {
 
         this.digiSystem = DigiSystem.getInstance();
 
-        if(digiSystem.hasUnit(unitID)){
-            throw new IllegalArgumentException("Unit already exists");
-        }
+//        if(digiSystem.hasUnit(unitID)){
+//            throw new IllegalArgumentException("Unit already exists");
+//        }
 
         this.unitID = new SimpleStringProperty(unitID);
         this.unitName = new SimpleStringProperty(unitName);

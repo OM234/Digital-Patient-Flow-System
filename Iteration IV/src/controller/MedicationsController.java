@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.DigiSystem;
 import model.Medication;
 import model.Patient;
 import services.DigiServices;
@@ -307,7 +306,7 @@ public class MedicationsController {
                 .getSelectedItem() : routeTextField.getText();
         frequency = !frequencyComboBox.getSelectionModel().getSelectedItem().equals("...") ? frequencyComboBox.getSelectionModel()
                 .getSelectedItem() : frequencyTextField.getText();
-        prescriberID = digiServices.getCurrentUser().getUserID();
+        prescriberID = digiServices.getCurrentUser().getID();
         prescribed = LocalDate.now();
         expires = expirationDatePicker.getValue();
 

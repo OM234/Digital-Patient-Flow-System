@@ -5147,13 +5147,13 @@ Beamish
 Beamon
 Beamont
 Beamsley
-Bean
-Bean Creek
-Bean Field
-Bean Hill
-Bean Hill Orchard
-Bean Hollow
-Bean Leach
+bean
+bean Creek
+bean Field
+bean Hill
+bean Hill Orchard
+bean Hollow
+bean Leach
 Beancroft
 Beane
 Beanes
@@ -30108,7 +30108,7 @@ Gilardi
 Gilardoni
 Gilba
 Gilbert
-Gilbert L Bean
+Gilbert L bean
 Gilberto
 Gilbertson
 Gilbey
@@ -75200,7 +75200,7 @@ Southeast Allen
 Southeast Andrews
 Southeast Bain
 Southeast Bassett
-Southeast Bean
+Southeast bean
 Southeast Berry
 Southeast Bush
 Southeast Cambridge

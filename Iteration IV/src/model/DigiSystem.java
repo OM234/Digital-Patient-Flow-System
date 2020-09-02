@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import bean.User;
 //TODO: make all objects private, tighten up encapsulation
 public class DigiSystem {
 
@@ -29,7 +30,7 @@ public class DigiSystem {
 
     public boolean addUser(User user) {
 
-        String userID = user.getUserID();
+        String userID = user.getID();
 
         if(listOfUsers.containsKey(userID)) {
             return false;
@@ -95,10 +96,10 @@ public class DigiSystem {
             for(String userID : listOfUsers.keySet()) {
 
                 User user = listOfUsers.get(userID);
-                if(user.hasUnitInList(unitID)) {
-
-                    user.removeUnitFromUser(unitID);
-                }
+//                if(user.hasUnitInList(unitID)) {
+//
+//                    user.removeUnitFromUser(unitID);
+//                }
             }
 
             listOfUnits.remove(unitID);

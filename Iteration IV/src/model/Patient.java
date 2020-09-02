@@ -15,12 +15,13 @@ public class Patient {
 
     private DigiServices digiServices;
     private DigiSystem digiSystem;
-    private SimpleStringProperty patientID;
-    private SimpleStringProperty firstName;
-    private SimpleStringProperty lastName;
-    private SimpleIntegerProperty height;
-    private SimpleDoubleProperty weight;
-    private SimpleDoubleProperty BMI;
+    //private SimpleStringProperty patientID;
+    private String patientID;
+    private String firstName;
+    private String lastName;
+    private int height;
+    private double weight;
+    private double BMI;
     private LocalDate DOB;
     private ContactInformation contactInformation;
     private char gender;
@@ -30,7 +31,7 @@ public class Patient {
     public Patient(String patientID) throws SQLException {
 
         digiServices = DigiServices.getInstance();
-        this.patientID.set(patientID);
+        this.patientID = patientID;
     }
 
     public Patient(String patientID, String firstName, String lastName, char gender) {
@@ -41,13 +42,10 @@ public class Patient {
             throw new IllegalArgumentException("Patient already exists");
         }
 
-        this.patientID = new SimpleStringProperty(patientID);
-        this.firstName = new SimpleStringProperty(firstName);
-        this.lastName = new SimpleStringProperty(lastName);
+        this.patientID = patientID;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
-        this.height = new SimpleIntegerProperty();
-        this.weight = new SimpleDoubleProperty();
-        this.BMI = new SimpleDoubleProperty();
         this.DOB = LocalDate.of(0,1,1);
         this.contactInformation = new ContactInformation();
         this.medicalNotes = new ArrayList<>();
@@ -57,32 +55,51 @@ public class Patient {
     }
 
     public String getPatientID() {
-        return patientID.get();
+        return patientID;
     }
 
     public void setPatientID(String patientID) {
-        this.patientID.set(patientID);
+        this.patientID = patientID;
     }
 
     public String getFirstName() {
-        return firstName.get();
-    }
-
-    public SimpleStringProperty firstNameProperty() {
-
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName.set(firstName);
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName.get();
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName.set(lastName);
+        this.lastName = lastName;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getBMI() {
+        return BMI;
+    }
+
+    public void setBMI(double BMI) {
+        this.BMI = BMI;
     }
 
     public char getGender() {
@@ -91,33 +108,6 @@ public class Patient {
 
     public void setGender(char gender) {
         this.gender = gender;
-    }
-
-    public int getHeight() {
-
-        return height.get();
-    }
-
-    public void setHeight(int height) {
-
-        this.height.set(height);
-    }
-
-    public double getWeight() {
-
-        return weight.get();
-    }
-
-    public void setWeight(double weight) {
-
-        this.weight.set(weight);
-    }
-
-    public double getBMI() {
-
-        BMI.set(this.getWeight() / Math.pow((this.getHeight()/100.0),2));
-
-        return BMI.get();
     }
 
     public LocalDate getDOB() {

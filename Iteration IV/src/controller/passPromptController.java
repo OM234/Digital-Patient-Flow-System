@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-//import model.DigiSystem;
 import services.DigiServices;
 import java.io.IOException;
 import java.sql.SQLException;

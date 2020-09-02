@@ -11,9 +11,11 @@ import java.sql.SQLException;
 
 public class Main extends Application {
 
-    makeData debug = new makeData();
+    makeData debug;
 
-    public Main() throws SQLException {}
+    public Main() throws SQLException {
+        debug = new makeData();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
