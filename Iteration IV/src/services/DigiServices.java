@@ -136,6 +136,10 @@ public class DigiServices {
 
             patientDAO.save(patient);
 
+            ContactInfo contactInfo = new ContactInfo();
+            contactInfo.setPatientID(patient.getID());
+            addContactInfo(contactInfo);
+
             return true;
         }
     }

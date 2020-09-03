@@ -1,13 +1,14 @@
 package controller;
 
+import bean.Patient;
+import bean.Unit;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import model.DigiSystem;
-import model.Patient;
-import model.Unit2;
+import services.DigiServices;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.List;
 
 public class AddUnitPatientController {
 
-    DigiSystem digiSystem = DigiSystem.getInstance();
+    DigiServices digiServices;
     TableView<Patient> patientsTableView;
-    TableView<Unit2> unitsTableView;
+    TableView<Unit> unitsTableView;
 
     @FXML private Label patientCreatedLabel;
     @FXML private Label unitCreatedLabel;
@@ -30,7 +31,12 @@ public class AddUnitPatientController {
     @FXML private ToggleButton maleToggleButton;
     @FXML private ToggleButton femaleToggleButton;
 
-    public void addPatient() {
+    public AddUnitPatientController() throws SQLException {
+
+        digiServices = DigiServices.getInstance();
+    }
+
+    public void addPatient() throws SQLException {
 
         String patientID = ptIDTextArea.getText();
         String firstName = firstNameTextArea.getText();
@@ -42,9 +48,14 @@ public class AddUnitPatientController {
         allInputtedWell = allInputtedWell && checkID(ptIDTextArea);
         allInputtedWell = allInputtedWell & genderSelected(); //TODO : change
 
-        if (allInputtedWell && !digiSystem.hasPatient(patientID)) {
+        if (allInputtedWell && !digiServices.hasPatient(patientID)) {
 
-            Patient added = new Patient(patientID, firstName, lastName, gender);
+            Patient added = new Patient();
+            added.setID(patientID);
+            added.setFirstName(firstName);
+            added.setLastName(lastName);
+            added.setGender(gender);
+            digiServices.addPatient(added);
 
             ptIDTextArea.clear();
             firstNameTextArea.clear();
@@ -56,14 +67,14 @@ public class AddUnitPatientController {
 
             scrollToPatientSelection(added);
 
-        } else if (digiSystem.hasPatient(patientID)) {
+        } else if (digiServices.hasPatient(patientID)) {
 
             ptIDTextArea.clear();
             turnTextFieldToRed(ptIDTextArea, "already exists");
         }
     }
 
-    public void addUnit() {
+    public void addUnit() throws SQLException {
 
         String unitID = unitIDTextField.getText();
         String unitName = unitNameTextField.getText();
@@ -72,9 +83,12 @@ public class AddUnitPatientController {
         allInputtedWell = textFieldsNotEmpty(new ArrayList<>(Arrays.asList(unitIDTextField, unitNameTextField)));
         allInputtedWell = allInputtedWell && checkID(unitIDTextField);
 
-        if (allInputtedWell && !digiSystem.hasUnit(unitID)) {
+        if (allInputtedWell && !digiServices.hasUnit(unitID)) {
 
-            Unit2 added = new Unit2(unitID, unitName);
+            Unit added = new Unit();
+            added.setID(unitID);
+            added.setName(unitName);
+            digiServices.addUnit(added);
 
             unitIDTextField.clear();
             unitNameTextField.clear();
@@ -84,7 +98,7 @@ public class AddUnitPatientController {
 
             scrollToSelection(added);
 
-        } else if (digiSystem.hasUnit(unitID)) {
+        } else if (digiServices.hasUnit(unitID)) {
 
             unitIDTextField.clear();
             turnTextFieldToRed(unitIDTextField, "already exists");
@@ -192,18 +206,18 @@ public class AddUnitPatientController {
         return !(genderToggleGroup.getSelectedToggle() == null);
     }
 
-    public void setTableViews(TableView<Patient> patientsTableView, TableView<Unit2> unitsTableView) {
+    public void setTableViews(TableView<Patient> patientsTableView, TableView<Unit> unitsTableView) {
 
         this.patientsTableView = patientsTableView;
         this.unitsTableView = unitsTableView;
     }
 
-    public void scrollToSelection(Unit2 added) {
+    public void scrollToSelection(Unit added) {
 
         int index;
 
         unitsTableView.getItems().add(added);
-        unitsTableView.setItems(unitsTableView.getItems());
+        //unitsTableView.setItems(unitsTableView.getItems());
         index = unitsTableView.getItems().indexOf(added);
         unitsTableView.getSelectionModel().select(added);
         unitsTableView.scrollTo(index);
@@ -214,7 +228,7 @@ public class AddUnitPatientController {
         int index;
 
         patientsTableView.getItems().add(added);
-        patientsTableView.setItems(patientsTableView.getItems());
+        //patientsTableView.setItems(patientsTableView.getItems());
         index = patientsTableView.getItems().indexOf(added);
         patientsTableView.getSelectionModel().select(added);
         patientsTableView.scrollTo(index);
