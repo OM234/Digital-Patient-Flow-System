@@ -276,10 +276,25 @@ public class DigiServices {
 
         if(hasUnit(unit) && hasPatient(patient)) {
 
-
             PatientOnUnit patientOnUnit = new PatientOnUnit();
             patientOnUnit.setUnitID(unit.getID());
             patientOnUnit.setPatientID(patient.getID());
+            patOnUnitDAO.save(patientOnUnit);
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
+    public boolean addPatToUnit(String unitID, String patientID) throws SQLException {
+
+        if(hasUnit(unitID) && hasPatient(patientID)) {
+
+            PatientOnUnit patientOnUnit = new PatientOnUnit();
+            patientOnUnit.setUnitID(unitID);
+            patientOnUnit.setPatientID(patientID);
             patOnUnitDAO.save(patientOnUnit);
             return true;
 
@@ -306,6 +321,23 @@ public class DigiServices {
         return patientList;
     }
 
+    public List<Patient> getPatientsOnUnit(String unitID) throws SQLException {
+
+        List<PatientOnUnit> patientsOnUnit = patOnUnitDAO.get(unitID);
+        List<Patient> patientList = new ArrayList<>();
+
+        patientsOnUnit.forEach(e -> {
+
+            try {
+                patientList.add(getPatient(e.getPatientID()));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        return patientList;
+    }
+
     public boolean removePatientFromUnit(Patient patient, Unit unit) throws SQLException {
 
         PatientOnUnit patientOnUnit = new PatientOnUnit();
@@ -314,6 +346,12 @@ public class DigiServices {
         patOnUnitDAO.delete(patientOnUnit);
 
         return true;
+    }
+
+    public boolean patientOnUnit(String unitID, String patientID) throws SQLException {
+
+        List<Patient> patientList = getPatientsOnUnit(unitID);
+        return patientList.stream().anyMatch(e -> e.getID().equals(patientID));
     }
 
     /*

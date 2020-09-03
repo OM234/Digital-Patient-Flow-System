@@ -284,7 +284,7 @@ public class DigiHealthController {
         }
     }
 
-    public void addUnitOrPatient() throws IOException {
+    public void addUnitOrPatient() throws IOException, SQLException {
 
         if(!viewingPatientsOnUnits) {
 

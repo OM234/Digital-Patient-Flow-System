@@ -4,32 +4,36 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import model.DigiSystem;
+import services.DigiServices;
 
 import java.sql.SQLException;
 
 public class AddPatientToUnitController {
 
-    private DigiSystem digiSystem = DigiSystem.getInstance();
+    private DigiServices digiServices;
     private String unitID;
 
     @FXML private TextField ptIDTextArea;
     @FXML private Label addPatientLabel;
     @FXML private DigiHealthController digiHealthController;
 
+    public AddPatientToUnitController() throws SQLException {
+
+        digiServices = DigiServices.getInstance();
+    }
 
     public void addPatientToUnit() throws SQLException {
 
         String patientID = ptIDTextArea.getText();
 
-        if(digiSystem.hasPatient(patientID)) {
+        if(digiServices.hasPatient(patientID)) {
 
-            if (digiSystem.hasUnit(unitID)) {
+            if (digiServices.hasUnit(unitID)) {
 
-                if (!digiSystem.patientOnUnit(patientID, unitID)) {
+                if (!digiServices.patientOnUnit(patientID, unitID)) {
 
-                    System.out.println("pt id: " + patientID + "\n" + "unit ID: " + unitID + "\n" + "on unit: " + digiSystem.patientOnUnit(patientID, unitID));
-                    digiSystem.addPatientToUnit(patientID, unitID);
+                    //System.out.println("pt id: " + patientID + "\n" + "unit ID: " + unitID + "\n" + "on unit: " + digiSystem.patientOnUnit(patientID, unitID));
+                    digiServices.addPatToUnit(unitID, patientID);
                     ptIDTextArea.clear();
                     ptIDTextArea.setPromptText("Patient added to unit");
 
@@ -68,11 +72,11 @@ public class AddPatientToUnitController {
         ((TextField) event.getSource()).setStyle("-fx-control-inner-background: WHITE;");
     }
 
-    public void setUnitID(String unitID) {
+    public void setUnitID(String unitID) throws SQLException {
 
         this.unitID = unitID;
 
-        addPatientLabel.setText("Add patient to " + digiSystem.getUnitName(unitID));
+        addPatientLabel.setText("Add patient to " + digiServices.getUnit(unitID).getName());
     }
 
 }
