@@ -1,5 +1,7 @@
 package controller;
 
+import bean.Medication;
+import bean.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,8 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.Medication;
-import model.Patient;
 import services.DigiServices;
 
 import java.sql.SQLException;
@@ -48,7 +48,6 @@ public class MedicationsController {
     private List<TextField> textFields;
     private Patient patient;
     private Medication selected;
-    //private DigiSystem digiSystem;
     private DigiServices digiServices;
 
     public MedicationsController() throws SQLException {

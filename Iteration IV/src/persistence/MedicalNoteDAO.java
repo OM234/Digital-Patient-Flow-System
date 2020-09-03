@@ -16,7 +16,7 @@ public class MedicalNoteDAO implements DAO<MedicalNote> {
     private static final String GET_SQL = "select * from medical_note where patientID = ?";
     private static final String GETALL_SQL = "select * from medical_note";
     private static final String INSERT_SQL = "insert into medical_note values (?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_SQL = "update contact_info set deleted = ? where patientID = ? AND noteID = ?";
+    private static final String UPDATE_SQL = "update medical_note set deleted = ? where patientID = ? AND noteID = ?";
 
     public MedicalNoteDAO() throws SQLException {
 
@@ -93,11 +93,6 @@ public class MedicalNoteDAO implements DAO<MedicalNote> {
     @Override
     public void update(MedicalNote medicalNote) throws SQLException {
 
-    }
-
-    @Override
-    public void delete(MedicalNote medicalNote) throws SQLException {
-
         PreparedStatement statement = conn.prepareStatement(UPDATE_SQL);
 
         statement.setBoolean(1, medicalNote.isDeleted());
@@ -105,5 +100,10 @@ public class MedicalNoteDAO implements DAO<MedicalNote> {
         statement.setInt(3, medicalNote.getNoteID());
 
         statement.executeUpdate();
+    }
+
+    @Override
+    public void delete(MedicalNote medicalNote) throws SQLException {
+
     }
 }

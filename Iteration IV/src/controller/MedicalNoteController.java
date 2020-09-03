@@ -1,5 +1,7 @@
 package controller;
 
+import bean.MedicalNote;
+import bean.Patient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,9 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.MedicalNote;
-import model.Patient;
+import services.DigiServices;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class MedicalNoteController {
@@ -35,6 +37,12 @@ public class MedicalNoteController {
     @FXML private TextField tempTextField;
     @FXML private TextArea noteTextArea;
     Patient patient;
+    DigiServices digiServices;
+
+    public MedicalNoteController() throws SQLException {
+
+        digiServices = DigiServices.getInstance();
+    }
 
     public void initialize() {
 
@@ -43,13 +51,13 @@ public class MedicalNoteController {
 
     }
 
-    public void setCellValueFactories() {
+    public void setCellValueFactories() throws SQLException {
 
         writerColumn.setCellValueFactory(new PropertyValueFactory<>("writerID"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         pulseColumn.setCellValueFactory(new PropertyValueFactory<>("pulse"));
         bpColumn.setCellValueFactory(new PropertyValueFactory<>("BP"));
-        tempColumn.setCellValueFactory(new PropertyValueFactory<>("temperature"));
+        tempColumn.setCellValueFactory(new PropertyValueFactory<>("temp"));
         satColumn.setCellValueFactory(new PropertyValueFactory<>("o2Sat"));
         noteColumn.setCellValueFactory(new PropertyValueFactory<>("note"));
 
@@ -76,9 +84,9 @@ public class MedicalNoteController {
         });
     }
 
-    private ObservableList<MedicalNote> getNotesObsList() {
+    private ObservableList<MedicalNote> getNotesObsList() throws SQLException {
 
-        ObservableList<MedicalNote> noteList = FXCollections.observableList(patient.getMedicalNotes());
+        ObservableList<MedicalNote> noteList = FXCollections.observableList(digiServices.getMedicalNotes(patient.getID()));
 
         return noteList;
     }
@@ -90,13 +98,13 @@ public class MedicalNoteController {
 
     public void setTopLabel() {
 
-        medicalNoteLabel.setText("Medical Notes for Patient # " + patient.getPatientID() + " " + patient.getFirstName()
+        medicalNoteLabel.setText("Medical Notes for Patient # " + patient.getID() + " " + patient.getFirstName()
                 + " " + patient.getLastName() );
-        medicalNoteLabel2.setText("Medical Notes for Patient # " + patient.getPatientID() + " " + patient.getFirstName()
+        medicalNoteLabel2.setText("Medical Notes for Patient # " + patient.getID() + " " + patient.getFirstName()
                 + " " + patient.getLastName() );
     }
 
-    public void enterCheckValues(){
+    public void enterCheckValues() throws SQLException {
 
         boolean tempOkay, sbpOkay, dbpOkay, sp02Okay, pulseOkay;
 
@@ -115,11 +123,11 @@ public class MedicalNoteController {
             turnTextFieldErrorColor(dbpTextField);
         }
 
-        if(sp02Okay && dbpOkay && sp02Okay && pulseOkay && tempOkay) {
+        if(sbpOkay && dbpOkay && sp02Okay && pulseOkay && tempOkay) {
             createNewNote();
             clearNewNotesValues();
             viewAllNotesPane();
-            noteTableView.setItems(FXCollections.observableList(patient.getMedicalNotes()));
+            noteTableView.setItems(FXCollections.observableList(digiServices.getMedicalNotes(patient.getID())));
         }
     }
 
@@ -133,7 +141,7 @@ public class MedicalNoteController {
         noteTextArea.clear();
     }
 
-    private void createNewNote() {
+    private void createNewNote() throws SQLException {
 
         MedicalNote medicalNote = new MedicalNote();
 
@@ -141,7 +149,8 @@ public class MedicalNoteController {
             medicalNote.setNote(noteTextArea.getText());
         }
         if(!sbpTextField.getText().equals("")) {
-            medicalNote.setBP(Integer.parseInt(sbpTextField.getText()), Integer.parseInt(dbpTextField.getText()));
+            medicalNote.setSbp(Integer.parseInt(sbpTextField.getText()));
+            medicalNote.setDbp(Integer.parseInt(dbpTextField.getText()));
         }
         if(!pulseTextField.getText().equals("")) {
             medicalNote.setPulse(Integer.parseInt(pulseTextField.getText()));
@@ -150,13 +159,15 @@ public class MedicalNoteController {
             medicalNote.setO2Sat(Integer.parseInt(sp02TextField.getText()));
         }
         if(!tempTextField.getText().equals("")) {
-            medicalNote.setTemperature(Double.parseDouble(tempTextField.getText()));
+            medicalNote.setTemp(Double.parseDouble(tempTextField.getText()));
         }
 
+        medicalNote.setPatientID(patient.getID());
+        medicalNote.setWriterID(digiServices.getCurrentUser().getID());
         medicalNote.setDate(LocalDate.now());
-        medicalNote.setNoteID(patient.getNextMedicalNoteID());
+        medicalNote.setNoteID(digiServices.getNextMedicalNoteID(patient.getID()));
 
-        patient.addMedicalNote(medicalNote);
+        digiServices.addMedicalNote(medicalNote);
     }
 
     private boolean checkNumTextFields(TextField textField, boolean isInt) {
@@ -184,7 +195,7 @@ public class MedicalNoteController {
         return true;
     }
 
-    public void deleteNote() {
+    public void deleteNote() throws SQLException {
 
         MedicalNote medicalNote = noteTableView.getSelectionModel().getSelectedItem();
 
@@ -195,8 +206,11 @@ public class MedicalNoteController {
 
             alert.showAndWait();
 
-            if(alert.getResult() == ButtonType.YES)
+            if(alert.getResult() == ButtonType.YES) {
+
                 medicalNote.setDeleted(true);
+                digiServices.setMedicalNoteDeleted(medicalNote);
+            }
         }
 
         noteTableView.refresh();

@@ -371,6 +371,29 @@ public class DigiServices {
         }
     }
 
+    public List<MedicalNote> getMedicalNotes(String patientID) throws SQLException {
+
+        if(!hasPatient(patientID)) {
+
+            return new ArrayList<MedicalNote>();
+
+        } else {
+
+            return medicalNoteDAO.get(patientID);
+        }
+    }
+
+    public int getNextMedicalNoteID(String patientID) throws SQLException {
+
+        return medicalNoteDAO.get(patientID).size();
+    }
+
+    public boolean setMedicalNoteDeleted(MedicalNote medicalNote) throws SQLException {
+
+        medicalNoteDAO.update(medicalNote);
+        return true;
+    }
+
     /*
      ******************** ContactInfo Services ********************
      */

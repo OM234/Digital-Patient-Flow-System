@@ -74,6 +74,11 @@ public class MedicalNote {
         this.dbp = dbp;
     }
 
+    public String getBP() {
+
+        return sbp + "/" + dbp;
+    }
+
     public double getTemp() {
         return temp;
     }

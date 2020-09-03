@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 public class DigiHealthController {
 
-    //private DigiSystem digiSystem = DigiSystem.getInstance();
     private DigiServices digiServices;
     private boolean viewingPatientsOnUnits = false;
     private String patientOnUnitID;
@@ -38,8 +37,6 @@ public class DigiHealthController {
     @FXML private RadioButton allPatientsRadioButton;
     @FXML private RadioButton patientsOnUnitRadioButton;
     @FXML private TextField searchTextField;
-//    @FXML private TableView<Unit2> unitsTableView;
-//    @FXML private TableView<bean.Patient> patientsTableView;
     @FXML private TableView<Unit> unitsTableView;
     @FXML private TableView<Patient> patientsTableView;
     @FXML private Label bottomViewingLabel;
@@ -353,7 +350,7 @@ public class DigiHealthController {
         prevOpenStage = primaryStage;
     }
 
-    public void viewMedicalNotes() throws IOException {
+    public void viewMedicalNotes() throws IOException, SQLException {
 
         Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
 
@@ -371,7 +368,7 @@ public class DigiHealthController {
         primaryStage.show();
 
         MedicalNoteController medicalNoteController = fxmlLoader.getController();
-        //medicalNoteController.setPatient(selected); TODO: Uncomment
+        medicalNoteController.setPatient(selected);
         medicalNoteController.setTopLabel();
         medicalNoteController.setCellValueFactories();
 
@@ -397,10 +394,10 @@ public class DigiHealthController {
         scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
         primaryStage.show();
 
-        MedicationsController medicalNoteController = fxmlLoader.getController();
-        //medicalNoteController.setPatient(selected); TODO: Uncomment
-        medicalNoteController.setTopLabel();
-        medicalNoteController.setCellFactoryValues();
+        MedicationsController medicationsController = fxmlLoader.getController();
+        medicationsController.setPatient(selected);
+        medicationsController.setTopLabel();
+        medicationsController.setCellFactoryValues();
 
         closePrevOpenStage();
         prevOpenStage = primaryStage;
@@ -444,7 +441,6 @@ public class DigiHealthController {
 
         } else {
 
-            //Unit selected = digiSystem.getUnit(patientOnUnitID);
             Unit selected = digiServices.getUnit(patientOnUnitID);
 
             searchList = FXCollections.observableArrayList(getPatientsOnUnitObsList(selected)
