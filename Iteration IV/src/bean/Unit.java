@@ -1,5 +1,9 @@
 package bean;
 
+import services.DigiServices;
+
+import java.sql.SQLException;
+
 public class Unit {
 
     private String ID;
@@ -21,5 +25,11 @@ public class Unit {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getNumPatients() throws SQLException {
+
+        DigiServices digiServices = DigiServices.getInstance();
+        return digiServices.getPatientsOnUnit(this).size();
     }
 }
