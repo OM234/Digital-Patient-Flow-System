@@ -3,8 +3,11 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import model.Patient;
+import bean.Patient;
+import bean.ContactInfo;
+import services.DigiServices;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,8 @@ import java.util.List;
 public class PatientSummaryController {
 
     Patient patient;
+    ContactInfo contactInfo;
+    DigiServices digiServices;
     private List<TextField> textFields;
     TableView<Patient> patientsTableView;
 
@@ -39,6 +44,10 @@ public class PatientSummaryController {
     @FXML private Button acceptButton;
     @FXML private Button rejectButton;
 
+    public PatientSummaryController() throws SQLException {
+
+        digiServices = DigiServices.getInstance();
+    }
 
     public void initialize() {
 
@@ -51,9 +60,10 @@ public class PatientSummaryController {
         otherRadioButton.setOpacity(1.0);
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(Patient patient) throws SQLException {
 
         this.patient = patient;
+        this.contactInfo = digiServices.getContactInfo(patient);
 
         initialPopulateTextFields();
     }
@@ -81,20 +91,20 @@ public class PatientSummaryController {
 
     public void initialPopulateTextFields() {
 
-        patientIDTextField.setText(patient.getPatientID());
+        patientIDTextField.setText(contactInfo.getPatientID());
         firstNameTextField.setText(patient.getFirstName());
         lastNameTextField.setText(patient.getLastName());
         weightTextField.setText(Double.toString(patient.getWeight()));
         heightTextField.setText(Integer.toString(patient.getHeight()));
         DOBDatePicker.setValue(patient.getDOB());
-        streetNumberTextField.setText(patient.getContactInformation().getStreetNumber());
-        streetNameTextField.setText(patient.getContactInformation().getStreetName());
-        postalCodeTextField.setText(patient.getContactInformation().getPostalCode());
-        cityTextField.setText(patient.getContactInformation().getCity());
-        provinceTextField.setText(patient.getContactInformation().getProvince());
-        countryTextField.setText(patient.getContactInformation().getCountry());
-        emailTextField.setText(patient.getContactInformation().getEmail());
-        telephoneTextField.setText(patient.getContactInformation().getPhoneNumber());
+        streetNumberTextField.setText(contactInfo.getStreetNumber());
+        streetNameTextField.setText(contactInfo.getStreetName());
+        postalCodeTextField.setText(contactInfo.getPostalCode());
+        cityTextField.setText(contactInfo.getCity());
+        provinceTextField.setText(contactInfo.getProvince());
+        countryTextField.setText(contactInfo.getCountry());
+        emailTextField.setText(contactInfo.getEmail());
+        telephoneTextField.setText(contactInfo.getPhoneNumber());
 
         if (patient.getWeight() != 0 && patient.getHeight() != 0) {
 
@@ -103,6 +113,7 @@ public class PatientSummaryController {
         if (patient.getDOB().compareTo(LocalDate.of(0000, 1, 1)) != 0 &&
                 patient.getDOB().compareTo(LocalDate.of(0001, 1, 1)) != 0) {
 
+            int age =
             ageTextField.setText(Integer.toString(patient.getAge()));
         }
 

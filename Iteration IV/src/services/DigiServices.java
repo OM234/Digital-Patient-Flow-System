@@ -346,6 +346,11 @@ public class DigiServices {
         }
     }
 
+    public ContactInfo getContactInfo(Patient patient) throws SQLException {
+
+        return contactInfoDAO.get(patient.getID()).get(0);
+    }
+
     /*
      ******************** Medication Services ********************
      */

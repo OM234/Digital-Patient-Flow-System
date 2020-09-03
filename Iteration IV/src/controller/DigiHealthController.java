@@ -350,9 +350,9 @@ public class DigiHealthController {
 
         PatientSummaryController patientSummaryController = fxmlLoader.getController();
         patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
-        //patientSummaryController.setPatient(digiServices.getPatient(patientID)); TODO: Uncomment
+        patientSummaryController.setPatient(digiServices.getPatient(patientID));
         //patientSummaryController.setPatient(digiSystem.getPatient(patientID));
-        //patientSummaryController.setPatientTableView(patientsTableView); TODO: Uncomment
+        patientSummaryController.setPatientTableView(patientsTableView);
 
         closePrevOpenStage();
         prevOpenStage = primaryStage;
