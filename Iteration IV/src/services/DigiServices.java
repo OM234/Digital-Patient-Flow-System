@@ -17,6 +17,7 @@ public class DigiServices {
     private MedicalNoteDAO medicalNoteDAO;
     private ContactInfoDAO contactInfoDAO;
     private MedicationDAO medicationDAO;
+    private MedicationNameDAO medicationNameDAO;
     private User currentUser;
 
     private DigiServices() throws SQLException {
@@ -29,6 +30,7 @@ public class DigiServices {
         medicalNoteDAO = new MedicalNoteDAO();
         contactInfoDAO = new ContactInfoDAO();
         medicationDAO = new MedicationDAO();
+        medicationNameDAO = new MedicationNameDAO();
     }
 
     public static DigiServices getInstance() throws SQLException {
@@ -436,6 +438,29 @@ public class DigiServices {
 
             medicationDAO.save(medication);
             return true;
+        }
+    }
+
+    public List<String> getMedicationNames() throws SQLException {
+
+        return medicationNameDAO.getAll();
+    }
+
+    public boolean removeMedication(Medication medication) throws SQLException {
+
+        medicationDAO.delete(medication);
+        return true;
+    }
+
+    public List<Medication> getPatientMedications(String patientID) throws SQLException {
+
+        if(!hasPatient(patientID)) {
+
+            return new ArrayList<Medication>();
+
+        } else {
+
+            return medicationDAO.get(patientID);
         }
     }
 

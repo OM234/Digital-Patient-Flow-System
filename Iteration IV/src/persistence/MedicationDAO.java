@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +58,8 @@ public class MedicationDAO implements DAO<Medication> {
             medication.setDose(resultSet.getInt("dose"));
             medication.setFrequency(resultSet.getString("frequency"));
             medication.setUnits(resultSet.getString("units"));
-//            medication.setPrescribed(resultSet.getString("prescribed"));
-//            medication.setExpires(resultSet.getString("expires"));
+            medication.setPrescribed(LocalDate.parse(resultSet.getString("prescribed")));
+            medication.setExpires(LocalDate.parse(resultSet.getString("expires")));
 
             medications.add(medication);
         }
@@ -103,8 +104,8 @@ public class MedicationDAO implements DAO<Medication> {
         statement.setDouble(5, medication.getDose());
         statement.setString(6, medication.getFrequency());
         statement.setString(7, medication.getUnits());
-        statement.setDate(8, null);
-        statement.setDate(9, null);
+        statement.setDate(8, Date.valueOf(medication.getPrescribed().toString()));
+        statement.setDate(9, Date.valueOf(medication.getExpires().toString()));
 
         statement.executeUpdate();
     }

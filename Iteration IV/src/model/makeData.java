@@ -1,13 +1,13 @@
 package model;
 
 import bean.ContactInfo;
-import persistence.PatientDAO;
+import bean.User;
 import services.DigiServices;
+
 import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
-import bean.User;
 
 public class makeData {
 
@@ -24,14 +24,14 @@ public class makeData {
 
     public void debug() throws IOException, SQLException {
 
-        addUsers();
-        makeUnits();
-        makePatients();
-        addPatientsToUnits();
-        makeHeightWeightBMIDOB();
-        makeContactInformation();
-        makeMedicalNotes();
-        makeMedications();
+//        addUsers();
+//        makeUnits();
+//        makePatients();
+//        addPatientsToUnits();
+//        makeHeightWeightBMIDOB();
+//        makeContactInformation();
+//        makeMedicalNotes();
+//        makeMedications();
     }
 
     public void addUsers() throws SQLException {
@@ -474,6 +474,11 @@ public class makeData {
             medNames.add(name);
             Medication.medicationNames.add(name);
         }
+
+        medNames.forEach(e -> {
+
+            System.out.print("('" + e + "'), ");
+        });
     }
 
 

@@ -53,11 +53,10 @@ public class MedicationsController {
     public MedicationsController() throws SQLException {
 
         this.selected = null;
-        //digiSystem = DigiSystem.getInstance();
         digiServices = DigiServices.getInstance();
     }
 
-    public void initialize() {
+    public void initialize() throws SQLException {
 
         viewAllMedicationsPane();
 
@@ -84,27 +83,27 @@ public class MedicationsController {
                 doseTextField, frequencyTextField));
     }
 
-    private void setNamesComboxBox() {
+    private void setNamesComboxBox() throws SQLException {
 
-        nameComboBox.setItems(FXCollections.observableList(new ArrayList<String>(Medication.medicationNames)));
+        nameComboBox.setItems(FXCollections.observableList(digiServices.getMedicationNames()));
         setCommonComboBoxStuff(nameComboBox, nameTextField);
     }
 
     public void setUnitsComboxBox() {
 
-        unitsComboBox.setItems(FXCollections.observableList(new ArrayList<>(Medication.unitsList)));
+        unitsComboBox.setItems(FXCollections.observableList(new ArrayList<>(Medication.UNITS_LIST)));
         setCommonComboBoxStuff(unitsComboBox, unitsTextField);
     }
 
     public void setRouteComboxBox() {
 
-        routeComboBox.setItems(FXCollections.observableList(new ArrayList<>(Medication.routeList)));
+        routeComboBox.setItems(FXCollections.observableList(new ArrayList<>(Medication.ROUTE_LIST)));
         setCommonComboBoxStuff(routeComboBox, routeTextField);
     }
 
     public void setFrequencyComboxBox() {
 
-        frequencyComboBox.setItems(FXCollections.observableList(new ArrayList<>(Medication.frequencyList)));
+        frequencyComboBox.setItems(FXCollections.observableList(new ArrayList<>(Medication.FREQUENCY_LIST)));
         setCommonComboBoxStuff(frequencyComboBox, frequencyTextField);
     }
 
@@ -147,18 +146,18 @@ public class MedicationsController {
 
     public void setTopLabel() {
 
-        medicationsTopLabel.setText("Medications for Patient # " + patient.getPatientID() + " " + patient.getFirstName()
+        medicationsTopLabel.setText("Medications for Patient # " + patient.getID() + " " + patient.getFirstName()
                 + " " + patient.getLastName() );
-        medicationsTopLabel2.setText("Medications for Patient # " + patient.getPatientID() + " " + patient.getFirstName()
+        medicationsTopLabel2.setText("Medications for Patient # " + patient.getID() + " " + patient.getFirstName()
                 + " " + patient.getLastName() );
     }
 
-    public void setCellFactoryValues(){
+    public void setCellFactoryValues() throws SQLException {
 
         prescriberIDCol.setCellValueFactory(new PropertyValueFactory<>("prescriberID"));
         datePrescribedCol.setCellValueFactory(new PropertyValueFactory<>("prescribed"));
         dateExpireCol.setCellValueFactory(new PropertyValueFactory<>("expires"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("medName"));
         doseCol.setCellValueFactory(new PropertyValueFactory<>("dose"));
         routeCol.setCellValueFactory(new PropertyValueFactory<>("route"));
         unitsCol.setCellValueFactory(new PropertyValueFactory<>("units"));
@@ -168,14 +167,14 @@ public class MedicationsController {
         medicationTableView.setItems(obsList);
     }
 
-    private ObservableList<Medication> getMedicationObsList() {
+    private ObservableList<Medication> getMedicationObsList() throws SQLException {
 
-        ObservableList<Medication> obsList = FXCollections.observableList(patient.getMedications());
+        ObservableList<Medication> obsList = FXCollections.observableList(digiServices.getPatientMedications(patient.getID()));
 
         return obsList;
     }
 
-    public void deleteMedication() {
+    public void deleteMedication() throws SQLException {
 
         selected = medicationTableView.getSelectionModel().getSelectedItem();
 
@@ -188,13 +187,13 @@ public class MedicationsController {
 
             if(alert.getResult() == ButtonType.YES) {
 
-                patient.removeMedication(selected);
-                medicationTableView.refresh();
+                digiServices.removeMedication(selected);
+                medicationTableView.setItems(getMedicationObsList());
             }
         }
     }
 
-    public void enterMedication() {
+    public void enterMedication() throws SQLException {
 
         boolean allValidFields = true;
         allValidFields = checkComboBoxes();
@@ -285,7 +284,7 @@ public class MedicationsController {
         return true;
     }
 
-    public void createNewMedication() {
+    public void createNewMedication() throws SQLException {
 
         String name;
         double dose;
@@ -309,8 +308,19 @@ public class MedicationsController {
         prescribed = LocalDate.now();
         expires = expirationDatePicker.getValue();
 
-        Medication medication = new Medication(name, dose, units, route, frequency, prescriberID, prescribed, expires);
-        patient.addMedication(medication);
+        Medication medication = new Medication();
+
+        medication.setPatientID(patient.getID());
+        medication.setMedName(name);
+        medication.setDose(dose);
+        medication.setUnits(units);
+        medication.setRoute(route);
+        medication.setFrequency(frequency);
+        medication.setPrescriberID(prescriberID);
+        medication.setPrescribed(prescribed);
+        medication.setExpires(expires);
+
+        digiServices.addMedication(medication);
 
         clearValues();
         displayMedicationAdded(medication);
@@ -320,7 +330,7 @@ public class MedicationsController {
     private void displayMedicationAdded(Medication medication) {
 
         medicationAddedLabel.setVisible(true);
-        medicationAddedLabel.setText(medication.getName() + " " + medication.getDose() + " " +  medication.getUnits() +
+        medicationAddedLabel.setText(medication.getMedName() + " " + medication.getDose() + " " +  medication.getUnits() +
                 " " + medication.getRoute() + " " + medication.getFrequency() + " by" + medication.getPrescriberID()
                 + " prescribed"  );
     }

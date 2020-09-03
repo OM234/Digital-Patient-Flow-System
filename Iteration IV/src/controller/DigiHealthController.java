@@ -377,7 +377,7 @@ public class DigiHealthController {
 
     }
 
-    public void viewPatientMedications() throws IOException {
+    public void viewPatientMedications() throws IOException, SQLException {
 
         Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
 

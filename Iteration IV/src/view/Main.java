@@ -1,12 +1,12 @@
 package view;
 
-import model.makeData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import persistence.*;
+import model.makeData;
+
 import java.sql.SQLException;
 
 public class Main extends Application {
@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.setTitle("DigiHealth");
         primaryStage.setScene(scene);
         primaryStage.show();
-        //debug.debug();
+        debug.debug();
 
     }
 
