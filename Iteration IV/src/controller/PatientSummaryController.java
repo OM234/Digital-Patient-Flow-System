@@ -1,10 +1,9 @@
 package controller;
 
-
+import bean.ContactInfo;
+import bean.Patient;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import bean.Patient;
-import bean.ContactInfo;
 import services.DigiServices;
 
 import java.sql.SQLException;
@@ -65,11 +64,13 @@ public class PatientSummaryController {
         this.patient = patient;
         this.contactInfo = digiServices.getContactInfo(patient);
 
+        setPatientSummaryLabel();
         initialPopulateTextFields();
     }
 
-    public void setPatientSummaryLabel(String text) {
+    public void setPatientSummaryLabel() {
 
+        String text = ("Patient Summary for " + patient.getFirstName() + " " + patient.getLastName());
         patientSummaryLabel.setText(text);
     }
 
@@ -113,7 +114,6 @@ public class PatientSummaryController {
         if (patient.getDOB().compareTo(LocalDate.of(0000, 1, 1)) != 0 &&
                 patient.getDOB().compareTo(LocalDate.of(0001, 1, 1)) != 0) {
 
-            int age =
             ageTextField.setText(Integer.toString(patient.getAge()));
         }
 
@@ -170,34 +170,38 @@ public class PatientSummaryController {
         }
     }
 
-    public void acceptChanges() {
+    public void acceptChanges() throws SQLException {
 
         acceptButton.setVisible(false);
         rejectButton.setVisible(false);
+
+        patientsTableView.getItems().removeIf(e -> e.getID().equals(patient.getID()));
 
         patient.setFirstName(firstNameTextField.getText());
         patient.setLastName(lastNameTextField.getText());
         patient.setDOB(DOBDatePicker.getValue());
         patient.setHeight(Integer.parseInt(heightTextField.getText()));
         patient.setWeight(Double.parseDouble(weightTextField.getText()));
-        patient.getContactInformation().setStreetNumber(streetNumberTextField.getText());
-        patient.getContactInformation().setStreetName(streetNameTextField.getText());
-        patient.getContactInformation().setPostalCode(postalCodeTextField.getText());
-        patient.getContactInformation().setCity(cityTextField.getText());
-        patient.getContactInformation().setProvince(provinceTextField.getText());
-        patient.getContactInformation().setCountry(countryTextField.getText());
-        patient.getContactInformation().setPhoneNumber(telephoneTextField.getText());
-        patient.getContactInformation().setEmail(emailTextField.getText());
+        contactInfo.setStreetNumber(streetNumberTextField.getText());
+        contactInfo.setStreetName(streetNameTextField.getText());
+        contactInfo.setPostalCode(postalCodeTextField.getText());
+        contactInfo.setCity(cityTextField.getText());
+        contactInfo.setProvince(provinceTextField.getText());
+        contactInfo.setCountry(countryTextField.getText());
+        contactInfo.setPhoneNumber(telephoneTextField.getText());
+        contactInfo.setEmail(emailTextField.getText());
         setGender();
 
-        disableEdit();
+        digiServices.updatePatient(patient);
+        digiServices.updateContactInfo(contactInfo);
+        setPatientSummaryLabel();
+        patientsTableView.getItems().add(patient);
 
+        disableEdit();
         scrollToPatient();
     }
 
-    private void scrollToPatient() {
-
-        patientsTableView.refresh();
+    private void scrollToPatient() throws SQLException {
 
         patientsTableView.getItems().stream().filter(e -> e == patient).findAny().ifPresent(e -> {
             patientsTableView.getSelectionModel().select(e);

@@ -1,11 +1,12 @@
 package persistence;
 
-import bean.ContactInfo;
 import bean.MedicalNote;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class MedicalNoteDAO implements DAO<MedicalNote> {
             medicalNote.setTemp(resultSet.getDouble("temp"));
             medicalNote.setDeleted(resultSet.getBoolean("deleted"));
             medicalNote.setNote(resultSet.getString("note"));
-            medicalNote.setDate(null);
+            medicalNote.setDate(LocalDate.parse(resultSet.getString("date")));
 
             medicalNotes.add(medicalNote);
         }
@@ -84,7 +85,7 @@ public class MedicalNoteDAO implements DAO<MedicalNote> {
         statement.setDouble(8, medicalNote.getTemp());
         statement.setBoolean(9, medicalNote.isDeleted());
         statement.setString(10, medicalNote.getNote());
-        statement.setDate(11, null);
+        statement.setDate(11, Date.valueOf(medicalNote.getDate()));
 
         statement.executeUpdate();
     }

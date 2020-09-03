@@ -203,11 +203,6 @@ public class DigiHealthController {
 
         ObservableList<Unit> allUnits = FXCollections.observableArrayList(digiServices.getAllUnits());
 
-//        for (String unitID : digiSystem.getMapOfUnits().keySet()) {
-//
-//            allUnits.add(digiSystem.getMapOfUnits().get(unitID));
-//        }
-
         return allUnits;
     }
 
@@ -303,7 +298,7 @@ public class DigiHealthController {
             primaryStage.show();
 
             AddUnitPatientController addUnitPatientController = fxmlLoader.getController();
-            //addUnitPatientController.setTableViews(patientsTableView, unitsTableView); TODO: Uncomment
+            addUnitPatientController.setTableViews(patientsTableView, unitsTableView);
 
             closePrevOpenStage();
             prevOpenStage = primaryStage;
@@ -349,7 +344,7 @@ public class DigiHealthController {
 
 
         PatientSummaryController patientSummaryController = fxmlLoader.getController();
-        patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
+        //patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
         patientSummaryController.setPatient(digiServices.getPatient(patientID));
         //patientSummaryController.setPatient(digiSystem.getPatient(patientID));
         patientSummaryController.setPatientTableView(patientsTableView);

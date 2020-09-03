@@ -1,6 +1,7 @@
 package bean;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Patient {
 
@@ -13,7 +14,10 @@ public class Patient {
     private LocalDate DOB;
     private char gender;
 
-    public Patient() {}
+    public Patient() {
+
+        DOB = LocalDate.of(0, 1, 1);
+    }
 
     public String getID() {
         return ID;
@@ -69,6 +73,11 @@ public class Patient {
 
     public void setDOB(LocalDate DOB) {
         this.DOB = DOB;
+    }
+
+    public int getAge() {
+
+        return Period.between(this.getDOB(), LocalDate.now()).getYears();
     }
 
     public char getGender() {

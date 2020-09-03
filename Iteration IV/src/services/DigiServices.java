@@ -351,6 +351,12 @@ public class DigiServices {
         return contactInfoDAO.get(patient.getID()).get(0);
     }
 
+    public boolean updateContactInfo(ContactInfo contactInfo) throws SQLException {
+
+        contactInfoDAO.update(contactInfo);
+        return true;
+    }
+
     /*
      ******************** Medication Services ********************
      */
