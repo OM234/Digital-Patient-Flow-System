@@ -1,4 +1,4 @@
-# Digital-Patient-Flow-System
+# Digital Patient Flow System (a.k.a DigiHealth)
 ## By Osman Momoh
 
 ## What this project does
