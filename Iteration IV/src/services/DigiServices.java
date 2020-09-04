@@ -368,6 +368,7 @@ public class DigiServices {
 
         } else {
 
+            medicalNote.setTemp(Math.round(medicalNote.getTemp()*10.0)/10.0);
             medicalNoteDAO.save(medicalNote);
             return true;
         }

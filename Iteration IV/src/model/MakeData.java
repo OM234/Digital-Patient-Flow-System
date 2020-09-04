@@ -9,44 +9,40 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class makeData {
+public class MakeData {
 
-    DigiSystem digiSystem;
     DigiServices digiServices;
     List<bean.Patient> patientList1;
     List<bean.User> userList2;
 
-    public makeData() throws SQLException{
+    public MakeData() throws SQLException{
 
-        digiSystem = DigiSystem.getInstance();
         digiServices = DigiServices.getInstance();
     }
 
-    public void debug() throws IOException, SQLException {
+    public void createRandomData() throws IOException, SQLException {
 
-//        addUsers();
-//        makeUnits();
-//        makePatients();
-//        addPatientsToUnits();
-//        makeHeightWeightBMIDOB();
-//        makeContactInformation();
-//        makeMedicalNotes();
-//        makeMedications();
+        addUsers();
+        makeUnits();
+        makePatients();
+        addPatientsToUnits();
+        makeHeightWeightBMIDOB();
+        makeContactInformation();
+        makeMedicalNotes();
+        makeMedications();
     }
 
     public void addUsers() throws SQLException {
 
         User user1 = new User();
-        user1.setID("");
-        user1.setPassword("");
+        user1.setID("admin");
+        user1.setPassword("pass");
         digiServices.addUser(user1);
-        digiSystem.addUser(user1);
         for(int i = 0 ; i < 100 ; i++) {
             User user = new User();
             user.setID("healthProf" + (i+1));
             user.setPassword("password" + (i+1));
             digiServices.addUser(user);
-            digiSystem.addUser(user);
         }
         userList2 = digiServices.getAllUsers();
     }
@@ -105,41 +101,21 @@ public class makeData {
     public void addPatientsToUnits() throws SQLException {
 
         Random rand = new Random();
-        ArrayList<Unit2> unitsList = new ArrayList<>();
-        ArrayList<Patient> patList = new ArrayList<>();
         List<bean.Unit> unitsList2 = new ArrayList<>();
-
-        for (String unitID : digiSystem.getMapOfUnits().keySet()) {
-            unitsList.add(digiSystem.getMapOfUnits().get(unitID));
-        }
-
-        for (String patientID : digiSystem.getMapOfPatients().keySet()) {
-            patList.add(digiSystem.getMapOfPatients().get(patientID));
-        }
 
         unitsList2 = digiServices.getAllUnits();
         patientList1 = digiServices.getAllPatients();
 
         for (int i = 0; i < 100; i++) {
-            int patInd = rand.nextInt(patList.size());
-            int unitInd = rand.nextInt(unitsList.size());
-            unitsList.get(unitInd).addPatientToUnit(patList.get(patInd).getPatientID());
+            int patInd = rand.nextInt(patientList1.size());
+            int unitInd = rand.nextInt(unitsList2.size());
             digiServices.addPatToUnit(unitsList2.get(unitInd), patientList1.get(patInd));
         }
     }
 
     public void makeHeightWeightBMIDOB() throws SQLException {
 
-        Collection<Patient> patientList = digiSystem.getMapOfPatients().values();
         Random rand = new Random();
-
-        patientList.stream().forEach(e -> {
-            e.setHeight(rand.nextInt(30) + 150);
-            e.setWeight(rand.nextInt(28) + 54);
-            //e.setBMI(e.getWeight() / Math.pow((e.getHeight()/100.0),2));
-            e.setDOB(LocalDate.of(rand.nextInt(80)+1920, rand.nextInt(11)+1, rand.nextInt(28)+1));
-        });
-
 
         patientList1.stream().forEach(e -> {
             e.setHeight(rand.nextInt(30) + 150);
@@ -199,19 +175,6 @@ public class makeData {
             phoneNumbers.add(reader.nextLine());
         }
 
-        digiSystem.getMapOfPatients().values().stream().forEach(e -> {
-
-            String[] add = addresses.get(rand.nextInt(addresses.size()));
-            e.getContactInformation().setStreetNumber(add[0]);
-            e.getContactInformation().setStreetName(add[1]);
-            e.getContactInformation().setCity(add[2]);
-            e.getContactInformation().setPostalCode(add[3]);
-            e.getContactInformation().setProvince(add[4]);
-            e.getContactInformation().setCountry("Canada");
-            e.getContactInformation().setEmail(e.getFirstName().toLowerCase() + "." + e.getLastName().toLowerCase() + "@gmail.com");
-            e.getContactInformation().setPhoneNumber(phoneNumbers.get(rand.nextInt(phoneNumbers.size())));
-        });
-
         patientList1.forEach(e -> {
 
             ContactInfo contactInfo = new ContactInfo();
@@ -228,7 +191,7 @@ public class makeData {
             contactInfo.setEmail(e.getFirstName().toLowerCase() + "." + e.getLastName().toLowerCase() + "@gmail.com");
 
             try {
-                digiServices.addContactInfo(contactInfo);
+                digiServices.updateContactInfo(contactInfo);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -237,31 +200,10 @@ public class makeData {
 
     }
 
-    public void makeMedicalNotes() {
+    public void makeMedicalNotes() throws SQLException {
 
         Random random = new Random();
-        List<User> userList = new ArrayList<>(digiSystem.getMapOfUsers().values());
-
-        digiSystem.getMapOfPatients().values().forEach(patient -> {
-
-            for(int i = 0; i < random.nextInt(3)+1 ; i++) {
-
-                MedicalNote medicalNote = new MedicalNote();
-                medicalNote.setNoteID(patient.getNextMedicalNoteID());
-                medicalNote.setWriterID(userList.get(random.nextInt(userList.size())).getID());
-                medicalNote.setTemperature(random.nextDouble() * 2.5 + 35.5);
-                medicalNote.setO2Sat(random.nextInt(8) + 93);
-                medicalNote.setPulse(random.nextInt(71) + 50);
-                medicalNote.setBP(random.nextInt(50) + 110, random.nextInt(30) + 55);
-                medicalNote.setDeleted((random.nextInt(21) > 19) ? true : false);
-                medicalNote.setDate(LocalDate.of(random.nextInt(30) + 1990, random.nextInt(12) + 1,
-                        random.nextInt(26) + 1));
-
-                String note = getNoteText(random, patient);
-                medicalNote.setNote(note);
-                patient.addMedicalNote(medicalNote);
-            }
-        });
+        List<User> userList = new ArrayList<>(digiServices.getAllUsers());
 
         patientList1.forEach(patient -> {
 
@@ -403,30 +345,8 @@ public class makeData {
         Medication.unitsList = new ArrayList<>(Arrays.asList("mg", "g", "ml", "units"));
         Medication.routeList = new ArrayList<>(Arrays.asList("PO","PR","SC", "IM","SL", "IV"));
 
-        List<User> userList = new ArrayList<>(digiSystem.getMapOfUsers().values());
 
         getMedicationNames(medNames);
-
-        digiSystem.getMapOfPatients().values().forEach(e -> {
-
-            for(int i = 0; i < rand.nextInt(10); i++) {
-
-                String name = medNames.get(rand.nextInt(medNames.size()));
-                int dose = rand.nextInt(300)+50;
-                String units = Medication.unitsList.get(rand.nextInt(Medication.unitsList.size()));
-                String route = Medication.routeList.get(rand.nextInt(Medication.routeList.size()));
-                String frequency = Medication.frequencyList.get(rand.nextInt(Medication.frequencyList.size()));
-                String prescriberID = userList.get(rand.nextInt(userList.size())).getID();
-                LocalDate prescribed = LocalDate.of(rand.nextInt(30)+1970, rand.nextInt(11)+1,
-                        rand.nextInt(26)+1);
-                LocalDate expires = LocalDate.of(rand.nextInt(30)+2000, rand.nextInt(11)+1,
-                        rand.nextInt(26)+1);
-
-                Medication medication = new Medication(name, dose, units, route, frequency, prescriberID, prescribed, expires);
-
-                e.addMedication(medication);
-            }
-        });
 
         patientList1.forEach(e -> {
 
@@ -474,11 +394,6 @@ public class makeData {
             medNames.add(name);
             Medication.medicationNames.add(name);
         }
-
-        medNames.forEach(e -> {
-
-            System.out.print("('" + e + "'), ");
-        });
     }
 
 

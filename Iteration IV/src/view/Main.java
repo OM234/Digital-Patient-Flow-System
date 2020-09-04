@@ -5,16 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.makeData;
+import model.MakeData;
 
 import java.sql.SQLException;
 
 public class Main extends Application {
 
-    makeData debug;
+    MakeData makeData;
 
     public Main() throws SQLException {
-        debug = new makeData();
+        makeData = new MakeData();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.setTitle("DigiHealth");
         primaryStage.setScene(scene);
         primaryStage.show();
-        debug.debug();
+        //makeData.createRandomData();
 
     }
 
