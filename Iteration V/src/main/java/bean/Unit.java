@@ -28,7 +28,6 @@ public class Unit {
     }
 
     public int getNumPatients() throws SQLException {
-
         DigiServices digiServices = DigiServices.getInstance();
         return digiServices.getPatientsOnUnit(this).size();
     }
