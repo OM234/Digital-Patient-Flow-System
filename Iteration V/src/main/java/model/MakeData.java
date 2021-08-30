@@ -14,6 +14,7 @@ public class MakeData {
     DigiServices digiServices;
     List<bean.Patient> patientList1;
     List<bean.User> userList2;
+    private final String baseDir = "src/main/java/model/";
 
     public MakeData() throws SQLException{
 
@@ -66,7 +67,7 @@ public class MakeData {
     public void makePatients() throws FileNotFoundException, SQLException {
 
         ArrayList<String> namesList = new ArrayList<>();
-        File names = new File("src/model/Names.txt");
+        File names = new File(baseDir + "Names.txt");
         Scanner reader = new Scanner(names);
 
         while (reader.hasNext()) {
@@ -102,7 +103,6 @@ public class MakeData {
 
         Random rand = new Random();
         List<bean.Unit> unitsList2 = new ArrayList<>();
-
         unitsList2 = digiServices.getAllUnits();
         patientList1 = digiServices.getAllPatients();
 
@@ -136,7 +136,7 @@ public class MakeData {
         Random rand = new Random();
         ArrayList<String[]> addresses = new ArrayList<>();
         ArrayList<String> phoneNumbers = new ArrayList<>();
-        File address = new File("src/model/Addresses.txt");
+        File address = new File(baseDir + "Addresses.txt");
         Scanner reader = new Scanner(address);
 
         while (reader.hasNextLine()) {
@@ -168,7 +168,7 @@ public class MakeData {
             i++;
         }
 
-        File phoneNumber = new File("src/model/PhoneNumbers.txt");
+        File phoneNumber = new File(baseDir + "PhoneNumbers.txt");
         reader = new Scanner(phoneNumber);
 
         while(reader.hasNextLine()) {
@@ -387,7 +387,7 @@ public class MakeData {
 
     private void getMedicationNames(List<String> medNames) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new FileReader("src/model/Medications.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader(baseDir + "Medications.txt"));
         String name = "";
 
         while((name = reader.readLine()) != null) {

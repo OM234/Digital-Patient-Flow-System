@@ -39,7 +39,7 @@ public class Patient {
         digiSystem = DigiSystem.getInstance();
 
         if(digiSystem.hasPatient(patientID)) {
-            throw new IllegalArgumentException("Patient already exists");
+            throw new IllegalArgumentException(String.format("Patient with ID %s already exists", patientID));
         }
 
         this.patientID = patientID;

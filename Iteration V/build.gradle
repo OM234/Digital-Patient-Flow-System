@@ -7,7 +7,7 @@ plugins {
 group ''
 version '5.0'
 
-mainClassName = 'view.Main'
+mainClassName = 'main.Main'
 
 repositories {
     mavenCentral()

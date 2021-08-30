@@ -10,35 +10,47 @@ import java.util.List;
 public class DigiServices {
 
     private static DigiServices digiServices = null;
-    private UserDAO userDAO;
-    private PatientDAO patientDAO;
-    private UnitDAO unitDAO;
-    private PatOnUnitDAO patOnUnitDAO;
-    private MedicalNoteDAO medicalNoteDAO;
-    private ContactInfoDAO contactInfoDAO;
-    private MedicationDAO medicationDAO;
-    private MedicationNameDAO medicationNameDAO;
+    private DAO<User> userDAO;
+    private DAO<Patient> patientDAO;
+    private DAO<Unit> unitDAO;
+    private DAO<PatientOnUnit> patOnUnitDAO;
+    private DAO<MedicalNote> medicalNoteDAO;
+    private DAO<ContactInfo> contactInfoDAO;
+    private DAO<Medication> medicationDAO;
+    private DAO<String> medicationNameDAO;
     private User currentUser;
 
-    private DigiServices() throws SQLException {
-        currentUser = null;
-        userDAO = new UserDAO();
-        patientDAO = new PatientDAO();
-        unitDAO = new UnitDAO();
-        patOnUnitDAO = new PatOnUnitDAO();
-        medicalNoteDAO = new MedicalNoteDAO();
-        contactInfoDAO = new ContactInfoDAO();
-        medicationDAO = new MedicationDAO();
-        medicationNameDAO = new MedicationNameDAO();
+    private DigiServices(DAO<User> userDAO, DAO<Patient> patientDAO, DAO<Unit> unitDAO, DAO<PatientOnUnit> patOnUnitDAO,
+                         DAO<MedicalNote> medicalNoteDAO, DAO<ContactInfo> contactInfoDAO,
+                         DAO<Medication> medicationDAO, DAO<String> medicationNameDAO) throws SQLException {
+        this.currentUser = null;
+        this.userDAO = userDAO;
+        this.patientDAO = patientDAO;
+        this.unitDAO = unitDAO;
+        this.patOnUnitDAO = patOnUnitDAO;
+        this.medicalNoteDAO = medicalNoteDAO;
+        this.contactInfoDAO = contactInfoDAO;
+        this.medicationDAO = medicationDAO;
+        this.medicationNameDAO = medicationNameDAO;
     }
 
-    public static DigiServices getInstance() throws SQLException {
+    public static DigiServices getInstance() {
         if(digiServices == null) {
-            digiServices = new DigiServices();
+            throw new IllegalStateException("DigiServices not yet instantiated");
         }
         return digiServices;
     }
 
+    public static DigiServices getInstance(DAO<User> userDAO, DAO<Patient> patientDAO, DAO<Unit> unitDAO,
+                                           DAO<PatientOnUnit> patOnUnitDAO, DAO<MedicalNote> medicalNoteDAO,
+                                           DAO<ContactInfo> contactInfoDAO, DAO<Medication> medicationDAO,
+                                           DAO<String> medicationNameDAO) throws SQLException {
+        if(digiServices == null) {
+            digiServices = new DigiServices(userDAO, patientDAO, unitDAO, patOnUnitDAO, medicalNoteDAO, contactInfoDAO,
+                    medicationDAO, medicationNameDAO);
+        }
+        return digiServices;
+    }
     /*
      ******************** User Services ********************
      */
