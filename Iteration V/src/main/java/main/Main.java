@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import persistence.*;
 import services.DigiServices;
+import services.UserServices;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -34,7 +35,8 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public void startServices() throws SQLException {
+    private void startServices() throws SQLException {
+        UserServices userServices = new UserServices(new UserDAO());
         DigiServices.getInstance(new UserDAO(), new PatientDAO(), new UnitDAO(), new PatOnUnitDAO(),
                 new MedicalNoteDAO(), new ContactInfoDAO(), new MedicationDAO(), new MedicationNameDAO());
     }

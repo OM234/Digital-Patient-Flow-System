@@ -23,12 +23,17 @@ sourceSets {
 }
 
 dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
     implementation 'org.openjfx:javafx:11.0.1'
     implementation 'mysql:mysql-connector-java:8.0.21'
-    compile 'junit:junit:4.12'
 }
 
 javafx {
     version = '11.0.2'
     modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+test {
+    useJUnitPlatform()
 }
