@@ -9,7 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import services.DigiServices;
+import services.MedicationServices;
+import services.UserServices;
+import services.cache.ServicesCache;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,6 +22,13 @@ import java.util.List;
 
 public class MedicationsController {
 
+    private final ServicesCache servicesCache;
+    private final MedicationServices medicationServices;
+    private final UserServices userServices;
+    private List<ComboBox<String>> comboBoxList;
+    private List<TextField> textFields;
+    private Patient patient;
+    private Medication selected;
     @FXML private AnchorPane allMedicationsPane;
     @FXML private AnchorPane addMedicationPane;
     @FXML private Label medicationsTopLabel;
@@ -44,16 +53,12 @@ public class MedicationsController {
     @FXML private TextField routeTextField;
     @FXML private TextField frequencyTextField;
     @FXML private DatePicker expirationDatePicker;
-    private List<ComboBox<String>> comboBoxList;
-    private List<TextField> textFields;
-    private Patient patient;
-    private Medication selected;
-    private DigiServices digiServices;
 
-    public MedicationsController() throws SQLException {
-
+    public MedicationsController(ServicesCache servicesCache) throws SQLException {
+        this.servicesCache = servicesCache;
+        medicationServices = servicesCache.getMedicationServices();
+        userServices = servicesCache.getUserServices();
         this.selected = null;
-        digiServices = DigiServices.getInstance();
     }
 
     public void initialize() throws SQLException {
@@ -85,7 +90,7 @@ public class MedicationsController {
 
     private void setNamesComboxBox() throws SQLException {
 
-        nameComboBox.setItems(FXCollections.observableList(digiServices.getMedicationNames()));
+        nameComboBox.setItems(FXCollections.observableList(medicationServices.getMedicationNames()));
         setCommonComboBoxStuff(nameComboBox, nameTextField);
     }
 
@@ -169,7 +174,7 @@ public class MedicationsController {
 
     private ObservableList<Medication> getMedicationObsList() throws SQLException {
 
-        ObservableList<Medication> obsList = FXCollections.observableList(digiServices.getPatientMedications(patient.getID()));
+        ObservableList<Medication> obsList = FXCollections.observableList(medicationServices.getPatientMedications(patient.getID()));
 
         return obsList;
     }
@@ -187,7 +192,7 @@ public class MedicationsController {
 
             if(alert.getResult() == ButtonType.YES) {
 
-                digiServices.removeMedication(selected);
+                medicationServices.removeMedication(selected);
                 medicationTableView.setItems(getMedicationObsList());
             }
         }
@@ -304,7 +309,7 @@ public class MedicationsController {
                 .getSelectedItem() : routeTextField.getText();
         frequency = !frequencyComboBox.getSelectionModel().getSelectedItem().equals("...") ? frequencyComboBox.getSelectionModel()
                 .getSelectedItem() : frequencyTextField.getText();
-        prescriberID = digiServices.getCurrentUser().getID();
+        prescriberID = userServices.getCurrentUser().getID();
         prescribed = LocalDate.now();
         expires = expirationDatePicker.getValue();
 
@@ -320,7 +325,7 @@ public class MedicationsController {
         medication.setPrescribed(prescribed);
         medication.setExpires(expires);
 
-        digiServices.addMedication(medication);
+        medicationServices.addMedication(medication);
 
         clearValues();
         displayMedicationAdded(medication);

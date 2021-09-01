@@ -11,13 +11,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import services.DigiServices;
+import services.MedicalNoteServices;
+import services.PatientServices;
+import services.UserServices;
+import services.cache.ServicesCache;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class MedicalNoteController {
 
+    private final ServicesCache servicesCache;
+    private final MedicalNoteServices medicalNoteServices;
+    private final PatientServices patientServices;
+    private final UserServices userServices;
     @FXML private Label medicalNoteLabel;
     @FXML private Label medicalNoteLabel2;
     @FXML private TableView<MedicalNote> noteTableView;
@@ -37,22 +44,21 @@ public class MedicalNoteController {
     @FXML private TextField tempTextField;
     @FXML private TextArea noteTextArea;
     Patient patient;
-    DigiServices digiServices;
 
-    public MedicalNoteController() throws SQLException {
-
-        digiServices = DigiServices.getInstance();
+    public MedicalNoteController(ServicesCache servicesCache) {
+        this.servicesCache = servicesCache;
+        medicalNoteServices = servicesCache.getMedicalNoteServices();
+        patientServices = servicesCache.getPatientServices();
+        userServices = servicesCache.getUserServices();
     }
 
     public void initialize() {
-
         allNotesPane.setVisible(true);
         newNotePane.setVisible(false);
 
     }
 
     public void setCellValueFactories() throws SQLException {
-
         writerColumn.setCellValueFactory(new PropertyValueFactory<>("writerID"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         pulseColumn.setCellValueFactory(new PropertyValueFactory<>("pulse"));
@@ -68,7 +74,6 @@ public class MedicalNoteController {
     }
 
     private void setCustomRowFactoryDeletedRow() {
-
         noteTableView.setRowFactory( e -> new TableRow<MedicalNote>() {
             @Override
             public void updateItem(MedicalNote item, boolean empty) {
@@ -85,19 +90,16 @@ public class MedicalNoteController {
     }
 
     private ObservableList<MedicalNote> getNotesObsList() throws SQLException {
-
-        ObservableList<MedicalNote> noteList = FXCollections.observableList(digiServices.getMedicalNotes(patient.getID()));
+        ObservableList<MedicalNote> noteList = FXCollections.observableList(medicalNoteServices.getMedicalNotes(patient.getID()));
 
         return noteList;
     }
     
     public void setPatient(Patient patient){
-        
         this.patient = patient;
     }
 
     public void setTopLabel() {
-
         medicalNoteLabel.setText("Medical Notes for Patient # " + patient.getID() + " " + patient.getFirstName()
                 + " " + patient.getLastName() );
         medicalNoteLabel2.setText("Medical Notes for Patient # " + patient.getID() + " " + patient.getFirstName()
@@ -105,7 +107,6 @@ public class MedicalNoteController {
     }
 
     public void enterCheckValues() throws SQLException {
-
         boolean tempOkay, sbpOkay, dbpOkay, sp02Okay, pulseOkay;
 
         sbpOkay = checkNumTextFields(sbpTextField, true);
@@ -127,12 +128,11 @@ public class MedicalNoteController {
             createNewNote();
             clearNewNotesValues();
             viewAllNotesPane();
-            noteTableView.setItems(FXCollections.observableList(digiServices.getMedicalNotes(patient.getID())));
+            noteTableView.setItems(FXCollections.observableList(medicalNoteServices.getMedicalNotes(patient.getID())));
         }
     }
 
     private void clearNewNotesValues() {
-
         sbpTextField.clear();
         dbpTextField.clear();
         sp02TextField.clear();
@@ -142,7 +142,6 @@ public class MedicalNoteController {
     }
 
     private void createNewNote() throws SQLException {
-
         MedicalNote medicalNote = new MedicalNote();
 
         if(!noteTextArea.getText().equals("")) {
@@ -163,15 +162,14 @@ public class MedicalNoteController {
         }
 
         medicalNote.setPatientID(patient.getID());
-        medicalNote.setWriterID(digiServices.getCurrentUser().getID());
+        medicalNote.setWriterID(userServices.getCurrentUser().getID());
         medicalNote.setDate(LocalDate.now());
-        medicalNote.setNoteID(digiServices.getNextMedicalNoteID(patient.getID()));
+        medicalNote.setNoteID(medicalNoteServices.getNextMedicalNoteID(patient.getID()));
 
-        digiServices.addMedicalNote(medicalNote);
+        medicalNoteServices.addMedicalNote(medicalNote);
     }
 
     private boolean checkNumTextFields(TextField textField, boolean isInt) {
-
         double textFieldValue = -1;
 
         if(!textField.getText().equals("")) {
@@ -196,7 +194,6 @@ public class MedicalNoteController {
     }
 
     public void deleteNote() throws SQLException {
-
         MedicalNote medicalNote = noteTableView.getSelectionModel().getSelectedItem();
 
         if(medicalNote != null) {
@@ -209,7 +206,7 @@ public class MedicalNoteController {
             if(alert.getResult() == ButtonType.YES) {
 
                 medicalNote.setDeleted(true);
-                digiServices.setMedicalNoteDeleted(medicalNote);
+                medicalNoteServices.setMedicalNoteDeleted(medicalNote);
             }
         }
 
@@ -217,29 +214,24 @@ public class MedicalNoteController {
     }
 
     public void viewEnterNotePane(){
-
         allNotesPane.setVisible(false);
         newNotePane.setVisible(true);
     }
 
     public void viewAllNotesPane() {
-
         allNotesPane.setVisible(true);
         newNotePane.setVisible(false);
     }
 
     public void turnTextFieldErrorColor(TextField textField) {
-
         textField.setStyle("-fx-control-inner-background: RED;");
     }
 
     public void turnTextFieldDefaultColor(MouseEvent e) {
-
         ((TextField)e.getSource()).setStyle("-fx-control-inner-background: WHITE;");
     }
 
     public void turnTextFieldDefaultColorKey(KeyEvent e) {
-
         ((TextField)e.getSource()).setStyle("-fx-control-inner-background: WHITE;");
     }
 

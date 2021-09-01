@@ -2,6 +2,8 @@ package controller;
 
 import bean.Patient;
 import bean.Unit;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import services.cache.ServicesCache;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class DigiHealthController {
@@ -91,11 +94,24 @@ public class DigiHealthController {
 
         unitIDCol.setCellValueFactory(new PropertyValueFactory<Unit, String>("ID"));
         unitNameCol.setCellValueFactory(new PropertyValueFactory<Unit, String>("name"));
-        numPatCol.setCellValueFactory(new PropertyValueFactory<Unit, String>("NumPatients"));
+        numPatCol.setCellValueFactory(this::getNumPatientsOnUnit);
 
         unitNameCol.prefWidthProperty().bind(unitsTableView.widthProperty().multiply(0.4));
 
         unitsTableView.getColumns().addAll(unitIDCol, unitNameCol, numPatCol);
+    }
+
+    private SimpleStringProperty getNumPatientsOnUnit(TableColumn.CellDataFeatures<Unit, String> unitCell) {
+        Unit unit = unitCell.getValue();
+        List<Patient> patientsList = null;
+        try {
+            patientsList = patOnUnitServices.getPatientsOnUnit(unit.getID());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return new SimpleStringProperty("error");
+        }
+        int numPatients = patientsList.size();
+        return new SimpleStringProperty(Integer.toString(numPatients));
     }
 
     public void TableViewAppear(ActionEvent event) throws SQLException {
@@ -275,13 +291,32 @@ public class DigiHealthController {
     public void addUnitOrPatient() throws IOException, SQLException {
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader;
+
         if(!viewingPatientsOnUnits) {
-            fxmlLoader = getAddUnitOrPatientFxmlLoader(primaryStage, "/view/AddUnitPatient.fxml");
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddUnitPatient.fxml"));
+            fxmlLoader.setController(new AddUnitPatientController(servicesCache));
+
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+            primaryStage.setTitle("Add Patient or Unit");
+            primaryStage.show();
+
             AddUnitPatientController addUnitPatientController = fxmlLoader.getController();
             addUnitPatientController.setTableViews(patientsTableView, unitsTableView);
 
         } else {
-            fxmlLoader = getAddUnitOrPatientFxmlLoader(primaryStage, "/view/AddPatientToUnit.fxml");
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddPatientToUnit.fxml"));
+            fxmlLoader.setController(new AddPatientToUnitController(servicesCache));
+
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+            primaryStage.setTitle("Add Patient or Unit");
+            primaryStage.show();
+
             AddPatientToUnitController addPatientToUnitController = fxmlLoader.getController();
             addPatientToUnitController.setUnitID(patientOnUnitID);
             addPatientToUnitController.setDigiHealthController(digiHealthController);
@@ -289,18 +324,6 @@ public class DigiHealthController {
         }
         closePrevOpenStage();
         prevOpenStage = primaryStage;
-    }
-
-    private FXMLLoader getAddUnitOrPatientFxmlLoader(Stage primaryStage, String filePath) throws IOException {
-        FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource(filePath));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
-        primaryStage.setTitle("Add Patient or Unit");
-        primaryStage.show();
-        return fxmlLoader;
     }
 
     public void viewPatientSummary() throws IOException, SQLException {
@@ -314,6 +337,7 @@ public class DigiHealthController {
 
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PatientSummary.fxml"));
+        fxmlLoader.setController(new PatientSummaryController(servicesCache));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -340,6 +364,7 @@ public class DigiHealthController {
 
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MedicalNotes.fxml"));
+        fxmlLoader.setController(new MedicalNoteController(servicesCache));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -365,6 +390,7 @@ public class DigiHealthController {
 
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/Medications.fxml"));
+        fxmlLoader.setController(new MedicationsController(servicesCache));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

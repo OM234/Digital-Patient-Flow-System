@@ -4,36 +4,44 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import services.DigiServices;
+import services.PatOnUnitServices;
 import services.PatientServices;
+import services.UnitServices;
+import services.cache.ServicesCache;
 
 import java.sql.SQLException;
 
 public class AddPatientToUnitController {
 
-    private DigiServices digiServices;
+    private final ServicesCache servicesCache;
+    private final PatientServices patientServices;
+    private final UnitServices unitServices;
+    private final PatOnUnitServices patOnUnitServices;
     private String unitID;
 
     @FXML private TextField ptIDTextArea;
     @FXML private Label addPatientLabel;
     @FXML private DigiHealthController digiHealthController;
 
-    public AddPatientToUnitController() throws SQLException {
-        digiServices = DigiServices.getInstance();
+    public AddPatientToUnitController(ServicesCache servicesCache) throws SQLException {
+        this.servicesCache = servicesCache;
+        patientServices = servicesCache.getPatientServices();
+        unitServices = servicesCache.getUnitServices();
+        patOnUnitServices = servicesCache.getPatOnUnitServices();
     }
 
     public void addPatientToUnit() throws SQLException {
 
         String patientID = ptIDTextArea.getText();
 
-        if(digiServices.hasPatient(patientID)) {
+        if(patientServices.hasPatient(patientID)) {
 
-            if (digiServices.hasUnit(unitID)) {
+            if (unitServices.hasUnit(unitID)) {
 
-                if (!digiServices.patientOnUnit(patientID, unitID)) {
+                if (!patOnUnitServices.patientOnUnit(patientID, unitID)) {
 
                     //System.out.println("pt id: " + patientID + "\n" + "unit ID: " + unitID + "\n" + "on unit: " + digiSystem.patientOnUnit(patientID, unitID));
-                    digiServices.addPatToUnit(unitID, patientID);
+                    patOnUnitServices.addPatToUnit(unitID, patientID);
                     ptIDTextArea.clear();
                     ptIDTextArea.setPromptText("Patient added to unit");
 
@@ -76,7 +84,7 @@ public class AddPatientToUnitController {
 
         this.unitID = unitID;
 
-        addPatientLabel.setText("Add patient to " + digiServices.getUnit(unitID).getName());
+        addPatientLabel.setText("Add patient to " + unitServices.getUnit(unitID).getName());
     }
 
 }

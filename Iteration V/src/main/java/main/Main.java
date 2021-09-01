@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.MakeData;
 import persistence.*;
 import services.*;
 import services.cache.ServicesCache;
@@ -14,12 +15,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main extends Application {
-    //MakeData makeData;
-
-    public Main() throws SQLException, IOException {
-        //makeData = new MakeData();
-        //makeData.createRandomData();
-    }
 
     public static void main(String[] args) {
         launch(args);
@@ -27,9 +22,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        startServices(); //TODO: remove
+        //createRandomData();
         Scene scene = getScene();
         showStage(primaryStage, scene);
+    }
+
+    private void createRandomData() {
+        new MakeData(getServicesCache()).createRandomData();
+        System.exit(0);
     }
 
 
@@ -52,12 +52,6 @@ public class Main extends Application {
         primaryStage.setTitle("DigiHealth");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    private void startServices() throws SQLException {
-        UserServices userServices = new UserServices(new UserDAO());
-        DigiServices.getInstance(new UserDAO(), new PatientDAO(), new UnitDAO(), new PatOnUnitDAO(),
-                new MedicalNoteDAO(), new ContactInfoDAO(), new MedicationDAO(), new MedicationNameDAO());
     }
 
     private ServicesCache getServicesCache() {

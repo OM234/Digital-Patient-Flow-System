@@ -4,7 +4,8 @@ import bean.ContactInfo;
 import bean.Patient;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import services.DigiServices;
+import services.PatientServices;
+import services.cache.ServicesCache;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -13,12 +14,12 @@ import java.util.List;
 
 public class PatientSummaryController {
 
+    private final ServicesCache servicesCache;
+    private final PatientServices patientServices;
     Patient patient;
     ContactInfo contactInfo;
-    DigiServices digiServices;
     private List<TextField> textFields;
     TableView<Patient> patientsTableView;
-
     @FXML private Label patientSummaryLabel;
     @FXML private TextField patientIDTextField;
     @FXML private TextField firstNameTextField;
@@ -43,13 +44,12 @@ public class PatientSummaryController {
     @FXML private Button acceptButton;
     @FXML private Button rejectButton;
 
-    public PatientSummaryController() throws SQLException {
-
-        digiServices = DigiServices.getInstance();
+    public PatientSummaryController(ServicesCache servicesCache) {
+        this.servicesCache = servicesCache;
+        patientServices = servicesCache.getPatientServices();
     }
 
     public void initialize() {
-
         makeTextFieldsList();
 
         DOBDatePicker.setOpacity(1.0);
@@ -62,7 +62,7 @@ public class PatientSummaryController {
     public void setPatient(Patient patient) throws SQLException {
 
         this.patient = patient;
-        this.contactInfo = digiServices.getContactInfo(patient);
+        this.contactInfo = patientServices.getContactInfo(patient);
 
         setPatientSummaryLabel();
         initialPopulateTextFields();
@@ -192,8 +192,8 @@ public class PatientSummaryController {
         contactInfo.setEmail(emailTextField.getText());
         setGender();
 
-        digiServices.updatePatient(patient);
-        digiServices.updateContactInfo(contactInfo);
+        patientServices.updatePatient(patient);
+        patientServices.updateContactInfo(contactInfo);
         setPatientSummaryLabel();
         patientsTableView.getItems().add(patient);
 

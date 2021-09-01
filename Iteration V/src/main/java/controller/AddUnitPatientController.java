@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import services.DigiServices;
+import services.PatientServices;
+import services.UnitServices;
+import services.cache.ServicesCache;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +17,9 @@ import java.util.List;
 
 
 public class AddUnitPatientController {
-
-    DigiServices digiServices;
+    private final ServicesCache servicesCache;
+    private final PatientServices patientServices;
+    private final UnitServices unitServices;
     TableView<Patient> patientsTableView;
     TableView<Unit> unitsTableView;
 
@@ -31,9 +34,10 @@ public class AddUnitPatientController {
     @FXML private ToggleButton maleToggleButton;
     @FXML private ToggleButton femaleToggleButton;
 
-    public AddUnitPatientController() throws SQLException {
-
-        digiServices = DigiServices.getInstance();
+    public AddUnitPatientController(ServicesCache servicesCache) throws SQLException {
+        this.servicesCache = servicesCache;
+        patientServices = servicesCache.getPatientServices();
+        unitServices = servicesCache.getUnitServices();
     }
 
     public void addPatient() throws SQLException {
@@ -48,14 +52,14 @@ public class AddUnitPatientController {
         allInputtedWell = allInputtedWell && checkID(ptIDTextArea);
         allInputtedWell = allInputtedWell & genderSelected(); //TODO : change
 
-        if (allInputtedWell && !digiServices.hasPatient(patientID)) {
+        if (allInputtedWell && !patientServices.hasPatient(patientID)) {
 
             Patient added = new Patient();
             added.setID(patientID);
             added.setFirstName(firstName);
             added.setLastName(lastName);
             added.setGender(gender);
-            digiServices.addPatient(added);
+            patientServices.addPatient(added);
 
             ptIDTextArea.clear();
             firstNameTextArea.clear();
@@ -67,7 +71,7 @@ public class AddUnitPatientController {
 
             scrollToPatientSelection(added);
 
-        } else if (digiServices.hasPatient(patientID)) {
+        } else if (patientServices.hasPatient(patientID)) {
 
             ptIDTextArea.clear();
             turnTextFieldToRed(ptIDTextArea, "already exists");
@@ -83,12 +87,12 @@ public class AddUnitPatientController {
         allInputtedWell = textFieldsNotEmpty(new ArrayList<>(Arrays.asList(unitIDTextField, unitNameTextField)));
         allInputtedWell = allInputtedWell && checkID(unitIDTextField);
 
-        if (allInputtedWell && !digiServices.hasUnit(unitID)) {
+        if (allInputtedWell && !unitServices.hasUnit(unitID)) {
 
             Unit added = new Unit();
             added.setID(unitID);
             added.setName(unitName);
-            digiServices.addUnit(added);
+            unitServices.addUnit(added);
 
             unitIDTextField.clear();
             unitNameTextField.clear();
@@ -98,7 +102,7 @@ public class AddUnitPatientController {
 
             scrollToSelection(added);
 
-        } else if (digiServices.hasUnit(unitID)) {
+        } else if (unitServices.hasUnit(unitID)) {
 
             unitIDTextField.clear();
             turnTextFieldToRed(unitIDTextField, "already exists");
