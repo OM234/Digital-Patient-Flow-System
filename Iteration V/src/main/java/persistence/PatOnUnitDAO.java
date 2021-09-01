@@ -18,9 +18,12 @@ public class PatOnUnitDAO implements DAO<PatientOnUnit> {
     private static final String DELETE_SQL = "delete from patonunit where patientID = ? AND unitID = ?";
     //private static final String UPDATE_SQL = "update unit set unitID = ?, name = ? where unitID = ?;";
 
-    public PatOnUnitDAO() throws SQLException {
-
-        conn = Connection.getInstance().getConnection();
+    public PatOnUnitDAO() {
+        try {
+            conn = Connection.getInstance().getConnection();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
     @Override

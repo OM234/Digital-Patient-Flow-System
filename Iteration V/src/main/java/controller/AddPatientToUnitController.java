@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import services.DigiServices;
+import services.PatientServices;
 
 import java.sql.SQLException;
 
@@ -18,7 +19,6 @@ public class AddPatientToUnitController {
     @FXML private DigiHealthController digiHealthController;
 
     public AddPatientToUnitController() throws SQLException {
-
         digiServices = DigiServices.getInstance();
     }
 

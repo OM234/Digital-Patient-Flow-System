@@ -12,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import services.DigiServices;
+import services.PatOnUnitServices;
+import services.PatientServices;
+import services.UnitServices;
+import services.cache.ServicesCache;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,7 +23,10 @@ import java.util.stream.Collectors;
 
 public class DigiHealthController {
 
-    private DigiServices digiServices;
+    private final ServicesCache servicesCache;
+    private final UnitServices unitServices;
+    private final PatientServices patientServices;
+    private final PatOnUnitServices patOnUnitServices;
     private boolean viewingPatientsOnUnits = false;
     private String patientOnUnitID;
     private Stage prevOpenStage;
@@ -44,26 +50,24 @@ public class DigiHealthController {
     @FXML private Label addLabel;
     @FXML private Label deleteLabel;
 
-    public DigiHealthController() throws SQLException {
-
-        digiServices = DigiServices.getInstance();
+    public DigiHealthController(ServicesCache servicesCache) {
+        this.servicesCache = servicesCache;
+        unitServices = servicesCache.getUnitServices();
+        patientServices = servicesCache.getPatientServices();
+        patOnUnitServices = servicesCache.getPatOnUnitServices();
     }
 
     public void initialize() {
-
         prevOpenStage = null;
-
         initializePatientTable();
         initializeUnitTable();
     }
 
     public void setDigiHealthController (DigiHealthController digiHealthController) {
-
         this.digiHealthController = digiHealthController;
     }
 
     public void initializePatientTable() {
-
         TableColumn<bean.Patient, String> patientIDCol = new TableColumn<>("Patient ID");
         TableColumn<bean.Patient, String> patientFirstNameCol = new TableColumn<>("First Name");
         TableColumn<bean.Patient, String> patientLastNameCol = new TableColumn<>("Last Name");
@@ -81,7 +85,6 @@ public class DigiHealthController {
     }
 
     public void initializeUnitTable() {
-
         TableColumn<Unit, String> unitIDCol = new TableColumn<>("Unit ID");
         TableColumn<Unit, String> unitNameCol = new TableColumn<>("Unit Name");
         TableColumn<Unit, String> numPatCol = new TableColumn<>("# Patients");
@@ -96,7 +99,6 @@ public class DigiHealthController {
     }
 
     public void TableViewAppear(ActionEvent event) throws SQLException {
-
         addButton.setDisable(false);
         removeButton.setDisable(false);
         bigUnitNameLabel.setVisible(false);
@@ -119,7 +121,6 @@ public class DigiHealthController {
     }
 
     public void populatePatientsTable() throws SQLException {
-
         patientsTableView.getItems().clear();
 
         ObservableList<Patient> obsList = getPatientsObsList();
@@ -129,12 +130,11 @@ public class DigiHealthController {
     }
 
     public void populatePatientsOnUnitTable() throws SQLException {
-
         Unit selected = unitsTableView.getSelectionModel().getSelectedItem();
 
         if(selected == null && viewingPatientsOnUnits) {
 
-            selected = digiServices.getUnit(patientOnUnitID);
+            selected = unitServices.getUnit(patientOnUnitID);
 //            selected = digiSystem.getUnit(patientOnUnitID);
 
         } else if (selected == null && !viewingPatientsOnUnits) {
@@ -163,8 +163,7 @@ public class DigiHealthController {
     }
 
     private ObservableList<bean.Patient> getPatientsObsList() throws SQLException {
-
-        ObservableList<bean.Patient> patientsList = FXCollections.observableArrayList(digiServices.getAllPatients());
+        ObservableList<bean.Patient> patientsList = FXCollections.observableArrayList(patientServices.getAllPatients());
 
 //        for (String patientID : digiSystem.getMapOfPatients().keySet()) {
 //
@@ -175,8 +174,7 @@ public class DigiHealthController {
     }
 
     private ObservableList<bean.Patient> getPatientsOnUnitObsList(Unit unit) throws SQLException {
-
-        ObservableList<Patient> patientsOnUnitList = FXCollections.observableArrayList(digiServices.getPatientsOnUnit(unit));
+        ObservableList<Patient> patientsOnUnitList = FXCollections.observableArrayList(patOnUnitServices.getPatientsOnUnit(unit));
 
 //        for (String patientID : unit.getUnitPatientIDs()) {
 //
@@ -187,7 +185,6 @@ public class DigiHealthController {
     }
 
     private void populateUnitsTable() throws SQLException {
-
         unitsTableView.getItems().clear();
 
         ObservableList<Unit> obsList = getUnitsObsList();
@@ -197,14 +194,12 @@ public class DigiHealthController {
     }
 
     private ObservableList<Unit> getUnitsObsList() throws SQLException {
-
-        ObservableList<Unit> allUnits = FXCollections.observableArrayList(digiServices.getAllUnits());
+        ObservableList<Unit> allUnits = FXCollections.observableArrayList(unitServices.getAllUnits());
 
         return allUnits;
     }
 
     public void deletePatOrUnit() throws SQLException {
-
         if (unitsTableView.getSelectionModel().getSelectedItem() != null) {
 
             deleteUnit();
@@ -218,7 +213,6 @@ public class DigiHealthController {
     }
 
     public void deleteUnit() throws SQLException {
-
         Unit selected = unitsTableView.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + selected.getName() + " ?",
@@ -228,14 +222,13 @@ public class DigiHealthController {
         if (alert.getResult() == ButtonType.YES) {
 
             unitsTableView.getItems().remove(selected);
-            digiServices.removeUnit(selected);
+            unitServices.removeUnit(selected);
 //            digiSystem.removeUnit(selected.getUnitID());
             bottomViewingLabel.setText("Viewing " + unitsTableView.getItems().size() + " patients");
         }
     }
 
     public void deletePatientFromSystemOrUnit() throws SQLException {
-
         if (viewingPatientsOnUnits == false) {
 
             deletePatientFromSystem();
@@ -248,7 +241,6 @@ public class DigiHealthController {
     }
 
     public void deletePatientFromSystem() throws SQLException {
-
         Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + selected.getFirstName() + " " +
@@ -258,72 +250,61 @@ public class DigiHealthController {
         if (alert.getResult() == ButtonType.YES) {
 
             patientsTableView.getItems().remove(selected);
-            digiServices.removePatient(selected);
+            patientServices.removePatient(selected);
             //digiSystem.removePatient(selected.getPatientID());
             bottomViewingLabel.setText("Viewing " + patientsTableView.getItems().size() + " patients");
         }
     }
 
     public void deletePatientFromUnit() throws SQLException {
-
         Patient patientSelected = patientsTableView.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + patientSelected.getFirstName() +
-                " " + patientSelected.getLastName() + " from " + digiServices.getUnit(patientOnUnitID).getName() +
+                " " + patientSelected.getLastName() + " from " + unitServices.getUnit(patientOnUnitID).getName() +
                 "? ", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                 alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
 
-            digiServices.removePatientFromUnit(patientSelected, digiServices.getUnit(patientOnUnitID));
+            patOnUnitServices.removePatientFromUnit(patientSelected, unitServices.getUnit(patientOnUnitID));
             //digiSystem.removePatientFromUnit(patientSelectedID, patientOnUnitID);
             populatePatientsOnUnitTable();
         }
     }
 
     public void addUnitOrPatient() throws IOException, SQLException {
-
+        Stage primaryStage = new Stage();
+        FXMLLoader fxmlLoader;
         if(!viewingPatientsOnUnits) {
-
-            Stage primaryStage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddUnitPatient.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
-            primaryStage.setTitle("Add Patient or Unit");
-            primaryStage.show();
-
+            fxmlLoader = getAddUnitOrPatientFxmlLoader(primaryStage, "/view/AddUnitPatient.fxml");
             AddUnitPatientController addUnitPatientController = fxmlLoader.getController();
             addUnitPatientController.setTableViews(patientsTableView, unitsTableView);
 
-            closePrevOpenStage();
-            prevOpenStage = primaryStage;
-
         } else {
-
-            Stage primaryStage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AddPatientToUnit.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
-            primaryStage.setTitle("Add Patient or Unit");
-            primaryStage.show();
-
+            fxmlLoader = getAddUnitOrPatientFxmlLoader(primaryStage, "/view/AddPatientToUnit.fxml");
             AddPatientToUnitController addPatientToUnitController = fxmlLoader.getController();
             addPatientToUnitController.setUnitID(patientOnUnitID);
             addPatientToUnitController.setDigiHealthController(digiHealthController);
 
-            closePrevOpenStage();
-            prevOpenStage = primaryStage;
         }
+        closePrevOpenStage();
+        prevOpenStage = primaryStage;
+    }
+
+    private FXMLLoader getAddUnitOrPatientFxmlLoader(Stage primaryStage, String filePath) throws IOException {
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader(getClass().getResource(filePath));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
+        primaryStage.setTitle("Add Patient or Unit");
+        primaryStage.show();
+        return fxmlLoader;
     }
 
     public void viewPatientSummary() throws IOException, SQLException {
-
         if(patientsTableView.getSelectionModel().getSelectedItem() == null) {
-
             return;
         }
 
@@ -342,7 +323,7 @@ public class DigiHealthController {
 
         PatientSummaryController patientSummaryController = fxmlLoader.getController();
         //patientSummaryController.setPatientSummaryLabel("Patient Summary for " + firstName + " " + lastName);
-        patientSummaryController.setPatient(digiServices.getPatient(patientID));
+        patientSummaryController.setPatient(patientServices.getPatient(patientID));
         //patientSummaryController.setPatient(digiSystem.getPatient(patientID));
         patientSummaryController.setPatientTableView(patientsTableView);
 
@@ -351,11 +332,9 @@ public class DigiHealthController {
     }
 
     public void viewMedicalNotes() throws IOException, SQLException {
-
         Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
 
         if(patientsTableView.getSelectionModel().getSelectedItem() == null) {
-
             return;
         }
 
@@ -378,11 +357,9 @@ public class DigiHealthController {
     }
 
     public void viewPatientMedications() throws IOException, SQLException {
-
         Patient selected = patientsTableView.getSelectionModel().getSelectedItem();
 
         if(patientsTableView.getSelectionModel().getSelectedItem() == null) {
-
             return;
         }
 
@@ -404,44 +381,32 @@ public class DigiHealthController {
     }
 
     public void search() throws SQLException {
-
         String search = searchTextField.getText();
 
         if(search.equals("")) {
-
             return;
         }
-
         if(unitsRadioButton.isSelected()) {
-
             searchUnit(search);
-
         } else if (allPatientsRadioButton.isSelected()) {
-
             searchPatient(search, false);
-
         } else if (patientsOnUnitRadioButton.isSelected() ) {
-
             searchPatient(search, true);
         }
     }
 
     private void searchPatient(String search, boolean onUnit) throws SQLException {
-
         ObservableList<Patient> searchList;
 
         if(!onUnit) {
-
             searchList = FXCollections.observableArrayList(getPatientsObsList()
                     .stream()
                     .filter(e -> e.getID().equals(search) ||
                             e.getFirstName().equalsIgnoreCase(search) || e.getLastName().equalsIgnoreCase(search))
                     .collect(Collectors.toList())
             );
-
         } else {
-
-            Unit selected = digiServices.getUnit(patientOnUnitID);
+            Unit selected = unitServices.getUnit(patientOnUnitID);
 
             searchList = FXCollections.observableArrayList(getPatientsOnUnitObsList(selected)
                     .stream()
@@ -452,12 +417,10 @@ public class DigiHealthController {
         }
 
         if(!searchList.isEmpty() && !onUnit) {
-
             bigUnitNameLabel.setVisible(false);
         }
 
         if(!searchList.isEmpty()) {
-
             patientsTableView.setItems(searchList);
 
             patientView(searchList.size());
@@ -465,7 +428,6 @@ public class DigiHealthController {
     }
 
     private void searchUnit(String search) throws SQLException {
-
         ObservableList<Unit> searchList = FXCollections.observableArrayList(getUnitsObsList()
                 .stream()
                 .filter(e -> e.getID().equalsIgnoreCase(search) || e.getName().equalsIgnoreCase(search))
@@ -481,7 +443,6 @@ public class DigiHealthController {
     }
 
     public void patientView(int count) {
-
         unitsTableView.setVisible(false);
         patientsTableView.setVisible(true);
         patientSummaryButton.setVisible(true);
@@ -494,7 +455,6 @@ public class DigiHealthController {
     }
 
     public void unitView(int count) {
-
         unitsTableView.setVisible(true);
         patientsTableView.setVisible(false);
         patientSummaryButton.setVisible(false);
@@ -508,7 +468,6 @@ public class DigiHealthController {
     }
 
     private void setAddDeleteLabels() {
-
         if(!viewingPatientsOnUnits) {
 
             addLabel.setText("New unit/patient");

@@ -18,9 +18,12 @@ public class UnitDAO implements DAO<Unit> {
     private static final String UPDATE_SQL = "update unit set unitID = ?, name = ? where unitID = ?;";
     private static final String DELETE_SQL = "delete from unit where unitID = ?;";
 
-    public UnitDAO() throws SQLException {
-
-        conn = Connection.getInstance().getConnection();
+    public UnitDAO() {
+        try {
+            conn = Connection.getInstance().getConnection();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
     @Override

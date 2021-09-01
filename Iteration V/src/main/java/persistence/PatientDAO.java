@@ -15,9 +15,12 @@ public class PatientDAO implements DAO<Patient>{
             "height = ?, weight = ?,  BMI = ?, DOB = ?, Gender = ? where patientID = ?;";
     private static final String DELETE_SQL = "delete from patient where patientID = ?;";
 
-    public PatientDAO() throws SQLException {
-
-        conn = Connection.getInstance().getConnection();
+    public PatientDAO() {
+        try {
+            conn = Connection.getInstance().getConnection();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
     @Override

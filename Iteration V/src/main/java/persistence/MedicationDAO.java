@@ -19,9 +19,12 @@ public class MedicationDAO implements DAO<Medication> {
     private static final String DELETE_SQL = "delete from medication where patientID = ? AND prescriberID = ? AND medName = ?" +
             "AND route = ? AND dose = ? AND frequency = ? AND units = ? and prescribed = ? AND expires = ?";
 
-    public MedicationDAO() throws SQLException {
-
-        conn = Connection.getInstance().getConnection();
+    public MedicationDAO() {
+        try {
+            conn = Connection.getInstance().getConnection();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
     @Override

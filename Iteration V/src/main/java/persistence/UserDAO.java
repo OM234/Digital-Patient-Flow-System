@@ -11,9 +11,12 @@ public class UserDAO implements DAO<User> {
 
     java.sql.Connection conn;
 
-    public UserDAO() throws SQLException {
-
-        conn = Connection.getInstance().getConnection();
+    public UserDAO() {
+        try {
+            conn = Connection.getInstance().getConnection();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
     @Override

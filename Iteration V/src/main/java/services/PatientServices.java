@@ -10,11 +10,11 @@ import java.util.List;
 public class PatientServices {
 
     private final DAO<Patient> patientDAO;
-    private final ContactInfoServices contactInfoServices;
+    private final DAO<ContactInfo> contactInfoDAO;
 
-    public PatientServices(DAO<Patient> patientDAO, ContactInfoServices contactInfoServices) {
+    public PatientServices(DAO<Patient> patientDAO, DAO<ContactInfo> contactInfoDAO) {
         this.patientDAO = patientDAO;
-        this.contactInfoServices = contactInfoServices;
+        this.contactInfoDAO = contactInfoDAO;
     }
 
     public Patient getPatient(String patientID) throws SQLException {
@@ -37,7 +37,7 @@ public class PatientServices {
             patientDAO.save(patient);
             ContactInfo contactInfo = new ContactInfo();
             contactInfo.setPatientID(patient.getID());
-            contactInfoServices.addContactInfo(contactInfo);
+            addContactInfo(contactInfo);
             return true;
         }
     }
@@ -74,5 +74,23 @@ public class PatientServices {
         } else {
             return false;
         }
+    }
+
+    public boolean addContactInfo(ContactInfo contactInfo) throws SQLException {
+        if(!hasPatient(contactInfo.getPatientID())) {
+            return false;
+        } else {
+            contactInfoDAO.save(contactInfo);
+            return true;
+        }
+    }
+
+    public ContactInfo getContactInfo(Patient patient) throws SQLException {
+        return contactInfoDAO.get(patient.getID()).get(0);
+    }
+
+    public boolean updateContactInfo(ContactInfo contactInfo) throws SQLException {
+        contactInfoDAO.update(contactInfo);
+        return true;
     }
 }

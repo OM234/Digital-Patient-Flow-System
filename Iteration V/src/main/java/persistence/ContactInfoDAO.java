@@ -19,9 +19,12 @@ public class ContactInfoDAO implements DAO<ContactInfo>{
     private static final String UPDATE_SQL = "update contact_info set patientID = ?, streetNumber = ?, streetName = ?,postalCode = ?," +
             "city = ?, province = ?, country = ?, phoneNumber = ?, email = ? where patientID = ?";
 
-    public ContactInfoDAO() throws SQLException {
-
-        conn = Connection.getInstance().getConnection();
+    public ContactInfoDAO() {
+        try {
+            conn = Connection.getInstance().getConnection();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
     @Override
