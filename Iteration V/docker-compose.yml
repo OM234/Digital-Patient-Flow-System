@@ -1,18 +1,17 @@
-version: '5.0'
+version: '3.8'
 services:
-  db:
+  mysql:
     image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
+      MYSQL_DATABASE: 'digihealth'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - '3306:3306'
+      - '3307:3306'
     expose:
       - '3306'
     volumes:
-      - my-db:/var/lib/mysql
-volumes:
-  my-db:
+      - ./sql/CreateTable.sql:/docker-entrypoint-initdb.d/CreateTable.sql:rw

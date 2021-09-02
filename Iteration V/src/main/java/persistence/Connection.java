@@ -8,11 +8,11 @@ public class Connection {
 
     private static Connection singleInstance = null;
     private static java.sql.Connection conn;
-    String userName = "root";
-    String password = "MyNewPass";
+    String userName = "user";
+    String password = "password";
     String dbms = "mysql";
     String serverName = "localhost";
-    String portNumber = "3306";
+    String portNumber = "3307";
 
     private Connection() {
 
