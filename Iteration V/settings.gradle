@@ -1,1 +1,3 @@
 rootProject.name = 'DigiHealth'
+include 'application'
+
