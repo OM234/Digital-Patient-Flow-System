@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.MakeData;
+import initRandomData.MakeData;
 import persistence.*;
 import services.*;
 import services.cache.ServicesCache;

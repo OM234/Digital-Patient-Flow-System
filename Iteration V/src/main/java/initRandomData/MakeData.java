@@ -1,7 +1,6 @@
-package model;
+package initRandomData;
 
-import bean.ContactInfo;
-import bean.User;
+import bean.*;
 import services.*;
 import services.cache.ServicesCache;
 
@@ -19,8 +18,8 @@ public class MakeData {
     private final PatOnUnitServices patOnUnitServices;
     private final MedicalNoteServices medicalNoteServices;
     private final MedicationServices medicationServices;
-    List<bean.Patient> patientList1;
-    List<bean.User> userList2;
+    List<Patient> patientList1;
+    List<User> userList2;
     private final String baseDir = "src/main/java/model/";
 
     public MakeData(ServicesCache servicesCache) {
@@ -73,7 +72,9 @@ public class MakeData {
         Random rand = new Random();
         for (int i = 0; i < 50; i++) {
             int indexNames = rand.nextInt(unitNames.length);
-            Unit2 unit = new Unit2(Integer.toString(i * 123), unitNames[indexNames] + "#" + i);
+            Unit unit = new Unit();
+            unit.setID(Integer.toString(i * 123));
+            unit.setName(unitNames[indexNames] + "#" + i);
             bean.Unit unit1 = new bean.Unit();
             unit1.setID(Integer.toString(i * 123));
             unit1.setName(unitNames[indexNames] + "#" + i);
@@ -94,7 +95,7 @@ public class MakeData {
         Random rand = new Random();
         for (int i = 0; i < 100; i++) {
 
-            Patient patient;
+            Patient patient = new Patient();
 
             int index = rand.nextInt(namesList.size());
             String firstName = namesList.get(index);
@@ -103,16 +104,11 @@ public class MakeData {
             String id = Integer.toString((i + 1) * 312);
             char gender = index % 2 == 0 ? 'M' : 'F';
 
-            patient = new Patient(id);
+            patient.setID(id);
+            patient.setFirstName(firstName);
             patient.setLastName(lastName);
             patient.setGender(gender);
-            new Patient(id, firstName, lastName, gender);
-            bean.Patient patient1 = new bean.Patient();
-            patient1.setID(id);
-            patient1.setFirstName(firstName);
-            patient1.setLastName(lastName);
-            patient1.setGender(gender);
-            patientServices.addPatient(patient1);
+            patientServices.addPatient(patient);
         }
     }
 
@@ -251,57 +247,6 @@ public class MakeData {
 
     }
 
-    private String getNoteText(Random random, bean.Patient patient) {
-
-        String note = "";
-        switch(random.nextInt(3)) {
-            case 0:
-                note += patient.getFirstName() + " " + patient.getLastName() + " was seen today for a ";
-                break;
-            case 1:
-                note += "Patient was seen today for a ";
-                break;
-            case 2:
-                note += "I saw patient " + patient.getFirstName() + " " + patient.getLastName() +  " today for a ";
-                break;
-        }
-        switch(random.nextInt(3)){
-            case 0 :
-                note += "general wellness appointment.";
-                break;
-            case 1:
-                note += "health problem follow-up appointment.";
-                break;
-            case 2:
-                note += "counselling appointment.";
-                break;
-        }
-        switch(patient.getGender()) {
-            case 'F':
-                note += " Her health ";
-                break;
-            case 'M':
-                note += " His health ";
-                break;
-            case 'O':
-                note += " Their health ";
-                break;
-        }
-        switch(random.nextInt(3)){
-            case 0 :
-                note += "remains stable.";
-                break;
-            case 1:
-                note += "is deteriorating.";
-                break;
-            case 2:
-                note += "is improving.";
-                break;
-        }
-        return note;
-    }
-
-
     private String getNoteText(Random random, Patient patient) {
 
         String note = "";
@@ -354,13 +299,11 @@ public class MakeData {
 
     private void makeMedications() throws IOException {
 
-        List<String> medNames = new ArrayList<>();
-        Medication.medicationNames = new TreeSet<>();
         Random rand = new Random();
-
-        Medication.frequencyList = new ArrayList<>(Arrays.asList("DIE", "BID", "TID", "QID"));
-        Medication.unitsList = new ArrayList<>(Arrays.asList("mg", "g", "ml", "units"));
-        Medication.routeList = new ArrayList<>(Arrays.asList("PO","PR","SC", "IM","SL", "IV"));
+        List<String> medNames = new ArrayList<>();
+        List<String> frequencyList = new ArrayList<>(Arrays.asList("DIE", "BID", "TID", "QID"));
+        List<String> unitsList = new ArrayList<>(Arrays.asList("mg", "g", "ml", "units"));
+        List<String> routeList = new ArrayList<>(Arrays.asList("PO","PR","SC", "IM","SL", "IV"));
 
 
         getMedicationNames(medNames);
@@ -371,9 +314,9 @@ public class MakeData {
 
                 String name = medNames.get(rand.nextInt(medNames.size()));
                 int dose = rand.nextInt(300)+50;
-                String units = Medication.unitsList.get(rand.nextInt(Medication.unitsList.size()));
-                String route = Medication.routeList.get(rand.nextInt(Medication.routeList.size()));
-                String frequency = Medication.frequencyList.get(rand.nextInt(Medication.frequencyList.size()));
+                String units = unitsList.get(rand.nextInt(unitsList.size()));
+                String route = routeList.get(rand.nextInt(routeList.size()));
+                String frequency = frequencyList.get(rand.nextInt(frequencyList.size()));
                 String prescriberID = userList2.get(rand.nextInt(userList2.size())).getID();
                 LocalDate prescribed = LocalDate.of(rand.nextInt(30)+1970, rand.nextInt(11)+1,
                         rand.nextInt(26)+1);
@@ -409,7 +352,6 @@ public class MakeData {
 
         while((name = reader.readLine()) != null) {
             medNames.add(name);
-            Medication.medicationNames.add(name);
         }
     }
 
