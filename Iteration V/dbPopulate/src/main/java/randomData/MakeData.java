@@ -1,6 +1,9 @@
-package initRandomData;
+package randomData;
 
-import bean.*;
+import bean.ContactInfo;
+import bean.Patient;
+import bean.Unit;
+import bean.User;
 import services.*;
 import services.cache.ServicesCache;
 
@@ -20,7 +23,7 @@ public class MakeData {
     private final MedicationServices medicationServices;
     List<Patient> patientList1;
     List<User> userList2;
-    private final String baseDir = "src/main/java/model/";
+    private final String baseDir = "src/main/java/randomData/";
 
     public MakeData(ServicesCache servicesCache) {
         this.servicesCache = servicesCache;

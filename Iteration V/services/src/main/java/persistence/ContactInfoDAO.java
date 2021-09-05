@@ -1,7 +1,6 @@
 package persistence;
 
 import bean.ContactInfo;
-import bean.PatientOnUnit;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

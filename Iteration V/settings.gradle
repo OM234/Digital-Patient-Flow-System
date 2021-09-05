@@ -1,3 +1,5 @@
 rootProject.name = 'DigiHealth'
 include 'application'
+include 'dbPopulate'
+include 'services'
 

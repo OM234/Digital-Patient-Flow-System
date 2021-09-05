@@ -1,7 +1,5 @@
 package bean;
 
-import javafx.beans.property.SimpleStringProperty;
-
 public class ContactInfo {
 
     private String patientID;

@@ -17,7 +17,7 @@ public class PatientDAO implements DAO<Patient>{
 
     public PatientDAO() {
         try {
-            conn = Connection.getInstance().getConnection();
+            conn = persistence.Connection.getInstance().getConnection();
         } catch (SQLException e){
             System.out.println(e);
         }

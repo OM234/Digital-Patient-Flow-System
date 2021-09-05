@@ -1,52 +1,20 @@
-package main;
+package randomData;
 
-import controller.PassPromptController;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import persistence.*;
 import services.*;
 import services.cache.ServicesCache;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-public class Main extends Application {
-
+public class Main {
     public static void main(String[] args) {
-        launch(args);
+        createRandomData();
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Scene scene = getScene();
-        showStage(primaryStage, scene);
+    private static void createRandomData() {
+        new MakeData(getServicesCache()).createRandomData();
+        System.exit(0);
     }
 
-    private Scene getScene() throws SQLException, IOException {
-        FXMLLoader loader = getFxmlLoader();
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/view/Styles.css").toExternalForm());
-        return scene;
-    }
-
-    private FXMLLoader getFxmlLoader() throws SQLException {
-        PassPromptController passPromptController = new PassPromptController(getServicesCache());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PasswordPrompt.fxml"));
-        loader.setController(passPromptController);
-        return loader;
-    }
-
-    private void showStage(Stage primaryStage, Scene scene) {
-        primaryStage.setTitle("DigiHealth");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    private ServicesCache getServicesCache() {
+    private static ServicesCache getServicesCache() {
         ContactInfoDAO contactInfoDAO = new ContactInfoDAO();
         MedicalNoteDAO medicalNoteDAO = new MedicalNoteDAO();
         MedicationDAO medicationDAO = new MedicationDAO();
@@ -70,5 +38,3 @@ public class Main extends Application {
         return servicesCache;
     }
 }
-
-
