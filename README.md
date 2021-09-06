@@ -11,11 +11,21 @@ As a healthcare professional and computer science student, I was looking for fun
 
 ## How I made this
 
-This project is written in Java and MySQL. I used the JavaFX library. For the architectures I used MVC and 3-tier architectures.
+- This project is written in Java and MySQL. 
+- Build tool is Gradle.
+- DB is run with docker
+- UI is done with JavaFX library. 
+- Architectures used are MVC and 3-tier architectures.
 
 ## How to use it
 
-The SQL folder contains the file necessary for building the SQL tables. In main, uncomment "makeData.createRandomData();" to provide some random data for your MySQL table. Comment this out for subsequent runs. You can login with username: admin, password: pass.
+- Make sure to have docker-compose installed
+- Navigate to the latest folder (e.g. Iteration V)
+- Run `docker-compose up -d` this will trigger the db to start at `localhost:3307` with `username: 'user'` and `password: 'password'. The db is initialized with a schema located at /sql/CreateTables.sql
+- Run gradle command `gradlew dbPopulate:run` this will populate the tables. Only run this on first run
+- Run the application with `gradlew application:run`
+
+- Stop the db with `docker-compose down`
 
 ## Final notes
 

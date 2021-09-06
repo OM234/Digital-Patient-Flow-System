@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'jacoco'
+    id "io.freefair.lombok" version "4.1.6"
 }
 
 version '5.0'
@@ -10,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    testImplementation("com.google.code.bean-matchers:bean-matchers:0.13")
     implementation 'mysql:mysql-connector-java:8.0.21'
 }
 
@@ -18,3 +23,11 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+}

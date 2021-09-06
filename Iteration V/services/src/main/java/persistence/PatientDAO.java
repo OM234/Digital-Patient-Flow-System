@@ -48,13 +48,11 @@ public class PatientDAO implements DAO<Patient>{
 
         while(resultSet.next()) {
 
-            Patient patient = new Patient();
-            patient.setID(resultSet.getString("patientID"));
+            Patient patient = new Patient(resultSet.getString("patientID"));
             patient.setFirstName(resultSet.getString("firstName"));
             patient.setLastName(resultSet.getString("lastName"));
             patient.setHeight(Integer.parseInt(resultSet.getString("height")));
             patient.setWeight(Double.parseDouble(resultSet.getString("weight")));
-            patient.setBMI(Double.parseDouble(resultSet.getString("BMI")));
             patient.setDOB(LocalDate.parse(resultSet.getString("DOB")));
             patient.setGender(resultSet.getString("gender").charAt(0));
             patients.add(patient);

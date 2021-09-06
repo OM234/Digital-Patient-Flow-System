@@ -98,8 +98,6 @@ public class MakeData {
         Random rand = new Random();
         for (int i = 0; i < 100; i++) {
 
-            Patient patient = new Patient();
-
             int index = rand.nextInt(namesList.size());
             String firstName = namesList.get(index);
             index = rand.nextInt(namesList.size());
@@ -107,7 +105,7 @@ public class MakeData {
             String id = Integer.toString((i + 1) * 312);
             char gender = index % 2 == 0 ? 'M' : 'F';
 
-            patient.setID(id);
+            Patient patient = new Patient(id);
             patient.setFirstName(firstName);
             patient.setLastName(lastName);
             patient.setGender(gender);
@@ -136,7 +134,6 @@ public class MakeData {
         patientList1.stream().forEach(e -> {
             e.setHeight(rand.nextInt(30) + 150);
             e.setWeight(rand.nextInt(28) + 54);
-            e.setBMI(e.getWeight() / Math.pow((e.getHeight()/100.0),2));
             e.setDOB(LocalDate.of(rand.nextInt(80)+1920, rand.nextInt(11)+1, rand.nextInt(28)+1));
             try {
                 patientServices.updatePatient(e);

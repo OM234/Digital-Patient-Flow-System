@@ -54,8 +54,7 @@ public class AddUnitPatientController {
 
         if (allInputtedWell && !patientServices.hasPatient(patientID)) {
 
-            Patient added = new Patient();
-            added.setID(patientID);
+            Patient added = new Patient(patientID);
             added.setFirstName(firstName);
             added.setLastName(lastName);
             added.setGender(gender);
