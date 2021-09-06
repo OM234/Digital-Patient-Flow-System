@@ -21,7 +21,7 @@ As a healthcare professional and computer science student, I was looking for fun
 
 - Make sure to have docker-compose installed
 - Navigate to the latest folder (e.g. Iteration V)
-- Run `docker-compose up -d` this will trigger the db to start at `localhost:3307` with `username: 'user'` and `password: 'password'. The db is initialized with a schema located at /sql/CreateTables.sql
+- Run `docker-compose up -d` this will trigger the db to start at `localhost:3307` with `username: 'user'` and `password: 'password'`. The db is initialized with a schema located at /sql/CreateTables.sql
 - Run gradle command `gradlew dbPopulate:run` this will populate the tables. Only run this on first run
 - Run the application with `gradlew application:run`
 

@@ -15,12 +15,10 @@ class Connection {
     String portNumber = "3307";
 
     private Connection() {
-
         conn = null;
     }
 
     public static Connection getInstance() throws SQLException {
-
         if(singleInstance == null) {
             singleInstance = new Connection();
             singleInstance.getConnection();
@@ -29,7 +27,6 @@ class Connection {
     }
 
     public java.sql.Connection getConnection() throws SQLException {
-
         if(conn != null) {
             return conn;
         }

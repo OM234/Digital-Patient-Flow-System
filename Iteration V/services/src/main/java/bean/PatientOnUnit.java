@@ -1,25 +1,20 @@
 package bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/*
+    TODO: can't this class be replaced with a list in Unit?
+ */
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PatientOnUnit {
 
     private String patientID;
     private String unitID;
-
-    public PatientOnUnit() {}
-
-    public String getPatientID() {
-        return patientID;
-    }
-
-    public void setPatientID(String patientID) {
-        this.patientID = patientID;
-    }
-
-    public String getUnitID() {
-        return unitID;
-    }
-
-    public void setUnitID(String unitID) {
-        this.unitID = unitID;
-    }
 }
